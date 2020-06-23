@@ -16,5 +16,8 @@
 <link href="/adminlte/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
 <!-- Theme style -->
 <link href="/adminlte/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+<!-- Bootstrap time Picker -->
+<link href="/adminlte/css/timepicker/bootstrap-timepicker.min.css" rel="stylesheet"/>
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
 @stack('style')

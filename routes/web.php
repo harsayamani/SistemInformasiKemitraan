@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -25,6 +26,8 @@ Route::post('/admin/login/proses', 'AdminController@loginProses');
 
 Route::get('/admin/dashboard', 'AdminController@dashboardAdmin');
 
+Route::get('/admin/logout', 'AdminController@logout');
+
 //Route Proposal
 
 Route::get('/admin/kelola/proposal', 'DataProposalController@kelolaProposal');
@@ -38,3 +41,15 @@ Route::post('/admin/kelola/proposal/hapus', 'DataProposalController@hapusProposa
 Route::get('/admin/kelola/dataMitra', 'DataMitraController@kelolaDataMitra');
 
 Route::post('/admin/kelola/dataMitra/hapus', 'DataMitraController@hapusDataMitra');
+
+//Route Berita
+
+Route::get('/admin/kelola/berita', 'BeritaController@kelolaBerita');
+
+Route::get('/admin/kelola/berita/ubah/{judul_berita}', 'BeritaController@ubahBeritaIndex');
+
+Route::post('/admin/kelola/berita/tambah', 'BeritaController@tambahBerita');
+
+Route::post('/admin/kelola/berita/hapus', 'BeritaController@hapusBerita');
+
+Route::post('/admin/kelola/berita/ubah', 'BeritaController@ubahBerita');

@@ -209,7 +209,7 @@
                     var pemilik_jaminan = button.data('pemilik_jaminan');
                     var modal = $(this);
 
-                    modal.find('.modal-body #no_pk').html(no_pk);
+                    modal.find('.modal-body #nomor_pk').html(no_pk);
                     modal.find('.modal-body #nama_pk').html(nama_pk);
                     modal.find('.modal-body #usaha').html(usaha);
                     modal.find('.modal-body #pemilik').html(pemilik);

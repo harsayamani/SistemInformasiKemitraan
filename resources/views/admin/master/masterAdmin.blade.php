@@ -342,12 +342,12 @@
                     </div>
                 @endif
                 @if(Session::has('alert-danger'))
-                    <div class="form-group alert alert-danger">
+                    <div class="alert alert-danger">
                         <div>{{Session::get('alert-danger')}}</div>
                     </div>
                 @endif
                 @if(Session::has('alert-success'))
-                    <div class="form-group alert alert-success">
+                    <div class="alert alert-success">
                         <div>{{Session::get('alert-success')}}</div>
                     </div>
                 @endif

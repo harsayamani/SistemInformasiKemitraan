@@ -46,12 +46,12 @@ class AdminController extends Controller
         }
     }
 
-    public function logOut(){
+    public function logout(){
         if(!Session::get('loginAdmin')){
             return redirect('/admin/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
         }else{
             Session::forget('loginAdmin');
-            return redirect('/admin/dashboard')->with('alert-success', 'Anda berhasil logout!');
+            return redirect('/admin/login')->with('alert-success', 'Anda berhasil logout!');
         }
     }
 
