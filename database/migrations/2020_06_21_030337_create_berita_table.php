@@ -19,6 +19,7 @@ class CreateBeritaTable extends Migration
             $table->string('judul_berita');
             $table->longText('isi_berita');
             $table->string('keterangan');
+            $table->string('ilustrasi');
             $table->timestamps();
         });
     }

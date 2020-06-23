@@ -10,7 +10,7 @@ class DataProposal extends Model
 
     protected $primaryKey = 'no_proposal';
 
-    protected $fillable = ['no_proposal', 'kegiatan', 'tgl_pengajuan', 'unit_usaha', 'status'];
+    protected $fillable = ['no_proposal', 'kegiatan', 'nama_pengaju', 'tgl_pengajuan', 'unit_usaha', 'dana_aju', 'email','status'];
 
     public $incrementing = false;
 

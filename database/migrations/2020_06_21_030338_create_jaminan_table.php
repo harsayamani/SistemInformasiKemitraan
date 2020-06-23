@@ -15,8 +15,8 @@ class CreateJaminanTable extends Migration
     {
         Schema::create('jaminan', function (Blueprint $table) {
             $table->integer('no_jaminan')->primary();
-            $table->string('jaminan');
-            $table->string('pemilik_jaminan');
+            $table->string('jaminan')->nullable();
+            $table->string('pemilik_jaminan')->nullable();
             $table->timestamps();
         });
     }

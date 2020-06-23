@@ -15,19 +15,16 @@ class CreateDataMitraTable extends Migration
     {
         Schema::create('data_mitra', function (Blueprint $table) {
             $table->integer('no_pk')->primary();
-            $table->string('nama_pk');
-            $table->string('usaha');
-            $table->string('pemilik');
-            $table->bigInteger('ktp');
-            $table->string('jenis_kelamin', 1);
-            $table->string('tempat_lahir');
-            $table->string('tgl_lahir');
-            $table->string('no_telp');
-            $table->longText('alamat_kantor');
-            $table->longText('lokasi_usaha');
-            $table->string('ahli_waris');
-            $table->integer('jumlah_karyawan');
-            $table->bigInteger('no_rek');
+            $table->bigInteger('ktp')->nullable();
+            $table->string('jenis_kelamin', 1)->nullable();
+            $table->string('tempat_lahir')->nullable();
+            $table->string('tgl_lahir')->nullable();
+            $table->string('no_telp')->nullable();
+            $table->longText('alamat_kantor')->nullable();
+            $table->longText('lokasi_usaha')->nullable();
+            $table->string('ahli_waris')->nullable();
+            $table->integer('jumlah_karyawan')->nullable();
+            $table->bigInteger('no_rek')->nullable();
             $table->string('username');
             $table->foreign('username')->references('username')->on('users');
             $table->integer('no_jaminan');

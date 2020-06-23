@@ -21,6 +21,7 @@ class CreatePinjamanTable extends Migration
             $table->double('jumlah_pinjaman');
             $table->double('bunga');
             $table->double('total_pinjaman');
+            $table->integer('status');
             $table->timestamps();
         });
     }
