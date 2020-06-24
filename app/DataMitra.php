@@ -38,4 +38,9 @@ class DataMitra extends Model
     {
         return $this->hasMany('App\Pinjaman', 'no_pk');
     }
+
+    public function pengajuanDana()
+    {
+        return $this->hasMany('App\PengajuanDana', 'no_pk');
+    }
 }

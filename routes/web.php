@@ -53,3 +53,14 @@ Route::post('/admin/kelola/berita/tambah', 'BeritaController@tambahBerita');
 Route::post('/admin/kelola/berita/hapus', 'BeritaController@hapusBerita');
 
 Route::post('/admin/kelola/berita/ubah', 'BeritaController@ubahBerita');
+
+//Route Pinjaman
+
+Route::get('/admin/kelola/pinjaman', 'PinjamanController@kelolaPinjaman');
+
+Route::get('/admin/kelola/pinjaman/pengajuan/{no_pk}', 'PinjamanController@printDokumenPengajuan');
+
+Route::post('/admin/kelola/pinjaman/pengajuan/setujui', 'PinjamanController@setujuiPengajuan');
+
+Route::post('/admin/kelola/pinjaman/pengajuan/hapus', 'PinjamanController@hapusPengajuan');
+

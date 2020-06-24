@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePinjamanTable extends Migration
+class CreatePengajuanDanaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,11 @@ class CreatePinjamanTable extends Migration
      */
     public function up()
     {
-        Schema::create('pinjaman', function (Blueprint $table) {
-            $table->string('id_pinjaman')->primary();
+        Schema::create('pengajuan_dana', function (Blueprint $table) {
+            $table->string('id_pengajuan_dana')->primary();
             $table->integer('no_pk');
             $table->foreign('no_pk')->references('no_pk')->on('data_mitra');
-            $table->string('tgl_cair');
-            $table->double('jumlah_pinjaman');
-            $table->double('bunga');
-            $table->double('total_pinjaman');
-            $table->integer('lama_angsuran');
-            $table->double('nominal_angsuran');
+            $table->string('dokumen')->nullable();
             $table->integer('status');
             $table->timestamps();
         });
@@ -35,6 +30,6 @@ class CreatePinjamanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pinjaman');
+        Schema::dropIfExists('pengajuan_dana');
     }
 }
