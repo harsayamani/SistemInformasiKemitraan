@@ -64,3 +64,11 @@ Route::post('/admin/kelola/pinjaman/pengajuan/setujui', 'PinjamanController@setu
 
 Route::post('/admin/kelola/pinjaman/pengajuan/hapus', 'PinjamanController@hapusPengajuan');
 
+Route::post('/admin/kelola/pinjaman/namaPengaju', 'PinjamanController@getNamaPengaju');
+
+Route::post('/admin/kelola/pinjaman/tambah', 'PinjamanController@tambahPinjaman');
+
+//Route Angsuran
+
+Route::get('/admin/kelola/angsuran', 'AngsuranController@kelolaAngsuran');
+

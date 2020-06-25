@@ -19,12 +19,13 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#tab_1" data-toggle="tab">Daftar Pengaju Pinjaman</a></li>
                     <li><a href="#tab_2" data-toggle="tab">Tambah Pinjaman</a></li>
+                    <li><a href="#tab_3" data-toggle="tab">Daftar Pinjaman</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1">
-                        <div class="box">
+                        <div class="box box-primary">
                             <div class="box-header">
-                                <h3 class="box-title">Daftar Pengajuan Proposal Mitra</h3>
+                                <h3 class="box-title">Daftar Pengajuan Pinjaman Mitra</h3>
                             </div><!-- /.box-header -->
                             <div class="box-body table-responsive">
 
@@ -149,7 +150,127 @@
                         </div><!-- /.box -->
                     </div><!-- /.tab-pane -->
                     <div class="tab-pane" id="tab_2">
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title">Tambah Pinjaman</h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body table-responsive">
+                                <!-- form start -->
+                                <form role="form" action="/admin/kelola/pinjaman/tambah" method="post" enctype="multipart/form-data">
+                                    {{ csrf_field() }}
+                                    <div class="box-body">
 
+                                        <div class="row form-group">
+                                            <label class="control-label col-md-2" for="no_pk">Nomor Mitra</label>
+                                            <div class="col-12 col-md-6">
+                                                <select class="form-control" id="no_pk" name="no_pk" required>
+                                                        <option value="">---Pilih mitra---</option>
+                                                    @foreach ($setuju as $aju)
+                                                        <option value="{{$aju->no_pk}}">{{$aju->no_pk}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <label class="control-label col-md-2" for="nama_pengaju">Nama</label>
+                                            <div class="col-12 col-md-6">
+                                                <input type="text" class="form-control" id="nama_pengaju" name="nama_pengaju" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <label class="control-label col-md-2" for="tgl_pinjaman">Tanggal</label>
+                                            <div class="col-12 col-md-6">
+                                                <input type="text" class="form-control" id="tgl_pinjaman" name="tgl_pinjaman" value="{{$tgl_sekarang}}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <label class="control-label col-md-2" for="bunga">Bunga</label>
+                                            <div class="col-12 col-md-2">
+                                                <input type="number" class="form-control" id="bunga" name="bunga" value="0.5" required>
+                                            </div>
+                                            %
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <label class="control-label col-md-2" for="nominal_pinjaman">Nominal</label>
+                                            <div class="col-12 col-md-6">
+                                                <input type="number" class="form-control" id="nominal_pinjaman" name="nominal_pinjaman" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <label class="control-label col-md-2" for="lama_angsuran">Lama Angsuran</label>
+                                            <div class="col-12 col-md-2">
+                                                <input type="number" class="form-control" id="lama_angsuran" name="lama_angsuran"  required>
+                                            </div>
+                                            bulan
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <label class="control-label col-md-2" for="nominal_angsuran">Nominal Angsuran</label>
+                                            <div class="col-12 col-md-6">
+                                                <input type="number" class="form-control" id="nominal_angsuran" name="nominal_angsuran" required>
+                                            </div>
+                                        </div>
+
+                                    </div><!-- /.box-body -->
+
+                                    <div class="box-footer">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                            </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+                    </div><!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_3">
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title">Daftar Pinjaman</h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body table-responsive">
+                                <table id="example2" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Nama Pengaju</th>
+                                            <th>Tanggal Pinjaman</th>
+                                            <th>Nominal Pinjaman</th>
+                                            <th>Total Pinjaman</th>
+                                            <th>Lama Angsuran</th>
+                                            <th>Nominal Angsuran</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($pinjaman as $key => $pinj)
+                                        <tr>
+                                            <td>{{++$key}}</td>
+                                            <td>{{$pinj->dataMitra->dataProposal->nama_pengaju}}</td>
+                                            <td>{{$pinj->tgl_pinjaman}}</td>
+                                            <td>Rp.{{$pinj->nominal_pinjaman}}</td>
+                                            <td>Rp.{{$pinj->total_pinjaman}}</td>
+                                            <td>{{$pinj->lama_angsuran}}</td>
+                                            <td>Rp.{{$pinj->nominal_angsuran}}</td>
+                                            <td>
+                                                @if ($pinj->status == 0)
+                                                    <button type="button" class="btn btn-primary btn-sm" disabled>
+                                                            On Going
+                                                    </button>
+                                                @else
+                                                    <button type="button" class="btn btn-success btn-sm" disabled>
+                                                            Lunas
+                                                    </button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div><!-- /.box-body -->
+                        </div><!-- /.box -->
                     </div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
             </div><!-- nav-tabs-custom -->
@@ -183,6 +304,7 @@
         <script type="text/javascript">
             $(function() {
                 $("#example1").dataTable();
+                $("#example2").dataTable();
             });
         </script>
 
@@ -210,9 +332,65 @@
             });
         </script>
 
-        {{-- <script>
-            CKEDITOR.replace('isi_berita');
-        </script> --}}
+        <script>
+            $(document).ready(function(){
+                $('#no_pk').on('change', function(){
+                    $.ajax({
+                        url: "/admin/kelola/pinjaman/namaPengaju",
+                        type:"POST",
+                        data : {"_token": "{{ csrf_token() }}",
+                        "id":$(this).val()},
+                        dataType: "json",
+                        success: function(res){
+                            $('#nama_pengaju').val(res.nama_pengaju)
+                            $('#nominal_pinjaman').val(res.nominal_pinjaman)
+                        }
+                    })
+
+                })
+
+                // init
+                $('#no_pk').change();
+            });
+        </script>
+
+        <script>
+
+            $(document).ready(function(){
+                $('#bunga').keyup(function(){
+                    var bunga = parseFloat(document.getElementById("bunga").value);
+                    var nominal_pinjaman = parseFloat(document.getElementById("nominal_pinjaman").value);
+                    var lama_angsuran = parseFloat( document.getElementById("lama_angsuran").value);
+
+                    var total_pinjaman = nominal_pinjaman + (nominal_pinjaman*(bunga/100));
+                    var nominal_angsuran = total_pinjaman/lama_angsuran;
+                    $('#nominal_angsuran').val(nominal_angsuran.toFixed(2))
+                });
+
+                $('#nominal_pinjaman').keyup(function(){
+                    var bunga = parseFloat(document.getElementById("bunga").value);
+                    var nominal_pinjaman = parseFloat(document.getElementById("nominal_pinjaman").value);
+                    var lama_angsuran = parseFloat( document.getElementById("lama_angsuran").value);
+
+                    var total_pinjaman = nominal_pinjaman + (nominal_pinjaman*(bunga/100));
+                    var nominal_angsuran = total_pinjaman/lama_angsuran;
+                    $('#nominal_angsuran').val(nominal_angsuran.toFixed(2))
+                });
+
+                $('#lama_angsuran').keyup(function(){
+                    var bunga = parseFloat(document.getElementById("bunga").value);
+                    var nominal_pinjaman = parseFloat(document.getElementById("nominal_pinjaman").value);
+                    var lama_angsuran = parseFloat( document.getElementById("lama_angsuran").value);
+
+                    var total_pinjaman = nominal_pinjaman + (nominal_pinjaman*(bunga/100));
+                    var nominal_angsuran = total_pinjaman/lama_angsuran;
+                    $('#nominal_angsuran').val(nominal_angsuran.toFixed(2))
+                });
+            });
+
+
+
+        </script>
 
     @endpush
 @endsection

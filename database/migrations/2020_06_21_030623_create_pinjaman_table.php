@@ -17,8 +17,8 @@ class CreatePinjamanTable extends Migration
             $table->string('id_pinjaman')->primary();
             $table->integer('no_pk');
             $table->foreign('no_pk')->references('no_pk')->on('data_mitra');
-            $table->string('tgl_cair');
-            $table->double('jumlah_pinjaman');
+            $table->date('tgl_pinjaman');
+            $table->double('nominal_pinjaman');
             $table->double('bunga');
             $table->double('total_pinjaman');
             $table->integer('lama_angsuran');
