@@ -62,4 +62,36 @@ class AdminController extends Controller
             return view('admin/dashboardAdmin');
         }
     }
+
+    public function gantiPassword(){
+        if(!Session::get('loginAdmin')){
+            return redirect('/admin/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
+        }else{
+            return view('admin/gantiPassword');
+        }
+    }
+
+    public function gantiPasswordProses(Request $request){
+        if(!Session::get('loginAdmin')){
+            return redirect('/admin/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
+        }else{
+            $nama = Session::get('namaAdmin');
+            $admin = Admin::where('nama', $nama)->first();
+            $pass_lama = $request->pass_lama;
+            $pass_baru = $request->pass_baru;
+            $pass_konf = $request->pass_konf;
+
+            if(Hash::check($pass_lama, $admin->password)){
+                if($pass_konf == $pass_baru){
+                    $admin->password = $pass_baru;
+                    $admin->save();
+                    return redirect('/admin/dashboard')->with('alert-success', 'Password admin berhasil diganti!');
+                }else{
+                    return redirect('/admin/gantiPassword')->with('alert-danger', 'Konfirmasi password baru salah!');
+                }
+            }else{
+                return redirect('/admin/gantiPassword')->with('alert-danger', 'Password lama salah!');
+            }
+        }
+    }
 }

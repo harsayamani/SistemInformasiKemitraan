@@ -10,7 +10,7 @@ class Pinjaman extends Model
 
     protected $primaryKey = 'id_pinjaman';
 
-    protected $fillable = ['id_pinjaman', 'no_pk', 'tgl_pinjaman','nominal_pinjaman', 'bunga', 'total_pinjaman', 'lama_angsuran', 'nominal_angsuran', 'status'];
+    protected $fillable = ['id_pinjaman', 'no_pk', 'tgl_pinjaman','nominal_pinjaman', 'bunga', 'total_pinjaman', 'lama_angsuran', 'nominal_angsuran', 'status', 'token'];
 
     public $incrementing = false;
 

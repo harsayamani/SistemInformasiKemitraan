@@ -28,6 +28,10 @@ Route::get('/admin/dashboard', 'AdminController@dashboardAdmin');
 
 Route::get('/admin/logout', 'AdminController@logout');
 
+Route::get('/admin/gantiPassword', 'AdminController@gantiPassword');
+
+Route::post('/admin/gantiPassword/proses', 'AdminController@gantiPasswordProses');
+
 //Route Proposal
 
 Route::get('/admin/kelola/proposal', 'DataProposalController@kelolaProposal');
@@ -67,6 +71,8 @@ Route::post('/admin/kelola/pinjaman/pengajuan/hapus', 'PinjamanController@hapusP
 Route::post('/admin/kelola/pinjaman/namaPengaju', 'PinjamanController@getNamaPengaju');
 
 Route::post('/admin/kelola/pinjaman/tambah', 'PinjamanController@tambahPinjaman');
+
+Route::post('/admin/kelola/pinjaman/transfer', 'PinjamanController@transferPinjaman');
 
 //Route Angsuran
 

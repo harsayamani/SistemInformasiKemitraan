@@ -8,6 +8,8 @@ use App\Pinjaman;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Veritrans_Config;
+use Veritrans_Snap;
 
 class PinjamanController extends Controller
 {
@@ -106,5 +108,47 @@ class PinjamanController extends Controller
                 }
             }
         }
+    }
+
+    public function transferPinjaman(Request $request){
+        // Buat transaksi ke midtrans kemudian save snap tokennya.
+        Veritrans_Config::$serverKey = config('services.midtrans.serverKey');
+        Veritrans_Config::$isProduction = config('services.midtrans.isProduction');
+        Veritrans_Config::$isSanitized = config('services.midtrans.isSanitized');
+        Veritrans_Config::$is3ds = config('services.midtrans.is3ds');
+
+        $id_pinjaman = $request->id_pinjaman;
+        $pinjaman = Pinjaman::findOrFail($id_pinjaman);
+
+        $payload = [
+            'transaction_details' => [
+                'order_id'      => $pinjaman->id_pinjaman,
+                'gross_amount'  => $pinjaman->nominal_pinjaman,
+            ],
+            'customer_details' => [
+                'first_name'    => $pinjaman->dataMitra->dataProposal->nama_pengaju,
+                'email'         => $pinjaman->dataMitra->users->email,
+                // 'phone'         => '08888888888',
+                // 'address'       => '',
+            ],
+            'item_details' => [
+                [
+                    'id'       => $pinjaman->id_pinjaman,
+                    'price'    => $pinjaman->nominal_pinjaman,
+                    'quantity' => 1,
+                    'name'     => ucwords(str_replace('_', ' ', "Transfer Pinjaman"))
+                ]
+            ]
+        ];
+
+        $snap_token = Veritrans_Snap::getSnapToken($payload);
+
+        $pinjaman->token = $snap_token;
+        $pinjaman->status = 1;
+        $pinjaman->save();
+
+        return response()->json([
+            'snap_token' => $snap_token
+        ], 200);
     }
 }

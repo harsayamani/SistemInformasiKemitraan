@@ -19,7 +19,7 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#tab_1" data-toggle="tab">Daftar Pengaju Pinjaman</a></li>
                     <li><a href="#tab_2" data-toggle="tab">Tambah Pinjaman</a></li>
-                    <li><a href="#tab_3" data-toggle="tab">Daftar Pinjaman</a></li>
+                    <li><a href="#tab_3" data-toggle="tab">Transfer Pinjaman</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1">
@@ -228,7 +228,7 @@
                     <div class="tab-pane" id="tab_3">
                         <div class="box box-primary">
                             <div class="box-header">
-                                <h3 class="box-title">Daftar Pinjaman</h3>
+                                <h3 class="box-title">Transfer Pinjaman</h3>
                             </div><!-- /.box-header -->
                             <div class="box-body table-responsive">
                                 <table id="example2" class="table table-bordered table-striped">
@@ -242,6 +242,7 @@
                                             <th>Lama Angsuran</th>
                                             <th>Nominal Angsuran</th>
                                             <th>Status</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -257,12 +258,26 @@
                                             <td>
                                                 @if ($pinj->status == 0)
                                                     <button type="button" class="btn btn-primary btn-sm" disabled>
-                                                            On Going
+                                                        On Proses
+                                                    </button>
+                                                @elseif($pinj->status == 1)
+                                                    <button type="button" class="btn btn-primary btn-sm" disabled>
+                                                        On Payment
                                                     </button>
                                                 @else
                                                     <button type="button" class="btn btn-success btn-sm" disabled>
-                                                            Lunas
+                                                        Lunas
                                                     </button>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($pinj->status == 0)
+                                                <button id="transfer" type="button" class="btn btn-primary btn-sm"
+                                                data-id_pinjaman="{{$pinj->id_pinjaman}}">
+                                                    Transfer
+                                                </button>
+                                                @elseif($pinj->status == 1)
+                                                    <button class="btn btn-success btn-sm" onclick="snap.pay('{{ $pinj->token }}')">Complete Payment</button>
                                                 @endif
                                             </td>
                                         </tr>
@@ -299,6 +314,7 @@
         <script src="/adminlte/js/plugins/timepicker/bootstrap-timepicker.min.js" type="text/javascript"></script>
         <!-- CK Editor -->
         <script src="/adminlte/js/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
+        <script src="{{ !config('services.midtrans.isProduction') ? 'https://app.sandbox.midtrans.com/snap/snap.js' : 'https://app.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('services.midtrans.clientKey') }}"></script>
 
         <!-- page script -->
         <script type="text/javascript">
@@ -388,8 +404,40 @@
                 });
             });
 
+        </script>
 
+        <script>
+            $(document).ready(function(){
+                $('#transfer').click(function(){
+                    var id_pinjaman = $(this).attr('data-id_pinjaman');
 
+                    console.log(id_pinjaman)
+
+                    $.ajax({
+                        url: "/admin/kelola/pinjaman/transfer",
+                        type:"POST",
+                        data : {"_token": "{{ csrf_token() }}",
+                        "id_pinjaman":id_pinjaman},
+                        dataType: "json",
+                        success: function(res){
+                            snap.pay(res.snap_token, {
+                                // Optional
+                                onSuccess: function (result) {
+                                    location.reload();
+                                },
+                                // Optional
+                                onPending: function (result) {
+                                    location.reload();
+                                },
+                                // Optional
+                                onError: function (result) {
+                                    location.reload();
+                                }
+                            });
+                        }
+                    })
+                })
+            });
         </script>
 
     @endpush
