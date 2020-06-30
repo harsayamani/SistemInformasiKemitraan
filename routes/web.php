@@ -78,3 +78,22 @@ Route::post('/admin/kelola/pinjaman/transfer', 'PinjamanController@transferPinja
 
 Route::get('/admin/kelola/angsuran', 'AngsuranController@kelolaAngsuran');
 
+//Route Member
+
+Route::get('/mitra', function () {
+    return redirect('/mitra/login');
+});
+
+Route::get('/mitra/login', 'MitraController@loginIndex');
+
+Route::post('/mitra/login/proses', 'MitraController@loginProses');
+
+Route::get('/mitra/dashboard', 'MitraController@dashboard');
+
+//Route Data Mitra
+
+Route::get('/mitra/dataMitra', 'MitraController@dataMitra');
+
+Route::post('/mitra/dataMitra/ubah', 'MitraController@ubahMitra');
+
+
