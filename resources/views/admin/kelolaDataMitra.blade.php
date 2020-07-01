@@ -87,7 +87,7 @@
                                         <dt>Jumlah Karyawan</dt>
                                         <dd id="jumlah_karyawan"></dd>
                                         <dt>Nomor Rekening</dt>
-                                        <dd id="nomor_rekening"></dd>
+                                        <dd id="no_rek"></dd>
                                         <dt>Jaminan</dt>
                                         <dd id="jaminan"></dd>
                                         <dt>Pemilik Jaminan</dt>

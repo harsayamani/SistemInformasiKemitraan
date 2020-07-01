@@ -62,7 +62,7 @@ Route::post('/admin/kelola/berita/ubah', 'BeritaController@ubahBerita');
 
 Route::get('/admin/kelola/pinjaman', 'PinjamanController@kelolaPinjaman');
 
-Route::get('/admin/kelola/pinjaman/pengajuan/{no_pk}', 'PinjamanController@printDokumenPengajuan');
+Route::get('/admin/kelola/pinjaman/pengajuan/{no_proposal}', 'PinjamanController@printDokumenPengajuan');
 
 Route::post('/admin/kelola/pinjaman/pengajuan/setujui', 'PinjamanController@setujuiPengajuan');
 

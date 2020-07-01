@@ -78,7 +78,7 @@
                                     <label for="number-input" class=" form-control-label">Nomor Mitra</label>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                <input type="number" id="no_pk" name="no_pk"  class="form-control" value="{{$mitra->no_pk}}" readonly>
+                                <input type="text" id="no_pk" name="no_pk"  class="form-control" value="{{$mitra->no_pk}}" readonly>
                                 </div>
                             </div>
 

@@ -171,35 +171,35 @@ class MitraController extends Controller
             $pinjaman = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->first();
             $status_pinjaman = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('status');
 
-            if($pengajuan->count()>0){
-                if($pinjaman->count()>0 && $pengajuan->status==2){
+            if($pengajuan != null){
+                if($pinjaman != null && $pengajuan->status==2){
                     if($status_pinjaman < 3){
                         return redirect('mitra/dashboard')->with('alert-modal-warning', 'Anda sudah mengajukan pinjaman dana!');
                     }else{
                         if($mitra->ktp == null){
-                            return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                            return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                         }elseif($mitra->jenis_kelamin == null){
-                            return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                            return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                         }elseif($mitra->tempat_lahir == null){
-                            return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                            return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                         }elseif($mitra->tgl_lahir == null){
-                            return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                            return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                         }elseif($mitra->no_telp == null){
-                            return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                            return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                         }elseif($mitra->alamat_kantor == null){
-                            return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                            return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                         }elseif($mitra->lokasi_usaha == null){
-                            return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                            return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                         }elseif($mitra->ahli_waris == null){
-                            return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                            return redirect('mitra/dataMitra')->with('mitra/dashboard')->with('alert-modal-warning', 'Data mitra belum lengkap');
                         }elseif($mitra->jumlah_karyawan == null){
-                            return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                            return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                         }elseif($mitra->no_rek == null){
-                            return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                            return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                         }elseif($mitra->jaminan->jaminan == null){
-                            return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                            return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                         }elseif($mitra->jaminan->pemilik_jaminan == null){
-                            return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                            return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                         }else{
                             $pengajuan = PengajuanDana::where('no_pk', $no_pk)->get();
                             return view('mitra/pinjaman', compact('mitra', 'ttl', 'pengajuan'));
@@ -210,29 +210,29 @@ class MitraController extends Controller
                 }
             }else{
                 if($mitra->ktp == null){
-                    return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                    return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                 }elseif($mitra->jenis_kelamin == null){
-                    return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                    return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                 }elseif($mitra->tempat_lahir == null){
-                    return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                    return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                 }elseif($mitra->tgl_lahir == null){
-                    return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                    return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                 }elseif($mitra->no_telp == null){
-                    return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                    return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                 }elseif($mitra->alamat_kantor == null){
-                    return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                    return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                 }elseif($mitra->lokasi_usaha == null){
-                    return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                    return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                 }elseif($mitra->ahli_waris == null){
-                    return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                    return redirect('mitra/dataMitra')->with('mitra/dashboard')->with('alert-modal-warning', 'Data mitra belum lengkap');
                 }elseif($mitra->jumlah_karyawan == null){
-                    return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                    return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                 }elseif($mitra->no_rek == null){
-                    return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                    return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                 }elseif($mitra->jaminan->jaminan == null){
-                    return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                    return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                 }elseif($mitra->jaminan->pemilik_jaminan == null){
-                    return redirect('alert-modal-warning', 'Data mitra belum lengkap');
+                    return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                 }else{
                     $pengajuan = PengajuanDana::where('no_pk', $no_pk)->get();
                     return view('mitra/pinjaman', compact('mitra', 'ttl', 'pengajuan'));

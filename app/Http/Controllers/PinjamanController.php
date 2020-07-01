@@ -27,10 +27,13 @@ class PinjamanController extends Controller
         }
     }
 
-    public function printDokumenPengajuan($no_pk){
+    public function printDokumenPengajuan($no_proposal){
         if(!Session::get('loginAdmin')){
             return redirect('/admin/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
         }else{
+
+            $no_pk = DataMitra::where('no_proposal', $no_proposal)->value('no_pk');
+
             $mitra = DataMitra::findOrFail($no_pk);
             $pengajuan = PengajuanDana::where('no_pk', $no_pk)->first();
 

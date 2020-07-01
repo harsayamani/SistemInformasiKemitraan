@@ -114,7 +114,7 @@
                                             <td>{{$peng->dataMitra->dataProposal->tgl_pengajuan}}</td>
                                             <td>Rp.{{$peng->dataMitra->dataProposal->dana_aju}}</td>
                                             <td>
-                                                <a href="/admin/kelola/pinjaman/pengajuan/{{$peng->no_pk}}" class="btn btn-primary btn-sm">
+                                                <a href="/admin/kelola/pinjaman/pengajuan/{{$peng->dataMitra->no_proposal}}" class="btn btn-primary btn-sm">
                                                     <i class="fa fa-print"></i>&nbsp;
                                                     Print Dokumen
                                                 </a>
