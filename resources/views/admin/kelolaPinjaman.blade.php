@@ -264,7 +264,11 @@
                                                     <button type="button" class="btn btn-primary btn-sm" disabled>
                                                         On Payment
                                                     </button>
-                                                @else
+                                                @elseif($pinj->status == 2)
+                                                    <button type="button" class="btn btn-primary btn-sm" disabled>
+                                                        On Success Payment
+                                                    </button>
+                                                @elseif($pinj->status == 3)
                                                     <button type="button" class="btn btn-success btn-sm" disabled>
                                                         Lunas
                                                     </button>
@@ -400,7 +404,7 @@
 
                     var total_pinjaman = nominal_pinjaman + (nominal_pinjaman*(bunga/100));
                     var nominal_angsuran = total_pinjaman/lama_angsuran;
-                    $('#nominal_angsuran').val(nominal_angsuran.toFixed(2))
+                    $('#nominal_angsuran').val(nominal_angsuran.toFixed(0))
                 });
             });
 

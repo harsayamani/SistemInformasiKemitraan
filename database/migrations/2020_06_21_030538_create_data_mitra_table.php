@@ -14,10 +14,10 @@ class CreateDataMitraTable extends Migration
     public function up()
     {
         Schema::create('data_mitra', function (Blueprint $table) {
-            $table->integer('no_pk')->primary();
+            $table->string('no_pk')->primary();
             $table->bigInteger('ktp')->nullable();
             $table->string('jenis_kelamin', 1)->nullable();
-            $table->string('tempat_lahir')->nullable();
+            $table->integer('tempat_lahir')->nullable();
             $table->string('tgl_lahir')->nullable();
             $table->string('no_telp')->nullable();
             $table->longText('alamat_kantor')->nullable();

@@ -8,7 +8,7 @@
 
 @section('section')
 
-@if($pinjaman != null && $pinjaman->status == 3)
+@if($pinjaman != null && $pinjaman->status == 3 && $pengajuan->status == 2)
 <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -92,7 +92,7 @@
                 <div class="number text-center">Belum Diajukan</div>
               @elseif($pengajuan->status == 0)
                 <div class="number text-center">Sedang Diajukan</div>
-              @elseif($pengajuan->status == 1)
+              @else
                 <div class="number text-center">Pengajuan Telah Disetujui</div>
               @endif
             </div>
@@ -103,10 +103,10 @@
         <div class="col-lg-6">
             <div class="work-amount card">
               <div class="card-body">
-                <center><h3>Status Pinjaman</h3></center>
+                <center><h3>Status Pinjaman Terakhir</h3></center>
                 <div class="chart text-center">
-                    @if ($pinjaman == null || $pinjaman->count()<1)
-                        <div class="text"><b>Pengajuan Belum Disetujui!</b></div>
+                    @if ($pinjaman == null || $pinjaman->count()<1 || $pengajuan->status < 2)
+                        <div class="text"><b>Pinjaman belum diproses!</b></div>
                         <canvas id="pieChart"></canvas>
                     @else
                         @if ($pinjaman->status == 0)
@@ -115,7 +115,10 @@
                         @elseif ($pinjaman->status == 1)
                             <div class="text"><b>On Payment</b></div>
                             <canvas id="pieChart"></canvas>
-                        @elseif ($pinjamn->status == 2)
+                        @elseif ($pinjaman->status == 2)
+                            <div class="text"><b>On Success Payment</b></div>
+                            <canvas id="pieChart"></canvas>
+                        @elseif ($pinjaman->status == 3)
                             <div class="text"><b>Finish</b></div>
                             <canvas id="pieChart"></canvas>
                         @endif

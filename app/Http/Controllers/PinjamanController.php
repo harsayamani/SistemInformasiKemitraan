@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Veritrans_Config;
+use Veritrans_Notification;
 use Veritrans_Snap;
 
 class PinjamanController extends Controller
@@ -85,7 +86,7 @@ class PinjamanController extends Controller
             $this->validate($request, [
                 'bunga' => '|numeric',
                 'nominal_pinjaman' => '|numeric|regex:/^([1-9][0-9]+)/',
-                'lama_angsuran' => '|numeric|regex:/^([1-9][0-9]+)/',
+                'lama_angsuran' => '|numeric',
                 'nominal_angsuran' => '|numeric'
             ]);
 
@@ -150,5 +151,60 @@ class PinjamanController extends Controller
         return response()->json([
             'snap_token' => $snap_token
         ], 200);
+    }
+
+    public function notificationHandler(Request $request)
+    {
+        Veritrans_Config::$serverKey = config('services.midtrans.serverKey');
+        Veritrans_Config::$isProduction = config('services.midtrans.isProduction');
+        Veritrans_Config::$isSanitized = config('services.midtrans.isSanitized');
+        Veritrans_Config::$is3ds = config('services.midtrans.is3ds');
+
+        $notif = new Veritrans_Notification();
+        $transaction = $notif->transaction_status;
+        $type = $notif->payment_type;
+        $orderId = $notif->order_id;
+        $fraud = $notif->fraud_status;
+
+        $pinjaman = Pinjaman::findOrFail($orderId);
+
+        if ($transaction == 'capture') {
+
+            // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+            if ($type == 'credit_card') {
+
+              if($fraud == 'challenge') {
+                $pinjaman->status = 1;
+              } else {
+                $pinjaman->status = 2;
+              }
+
+            }
+
+        } elseif ($transaction == 'settlement') {
+
+            $pinjaman->status = 2;
+
+        } elseif($transaction == 'pending'){
+
+            $pinjaman->status = 1;
+
+        } elseif ($transaction == 'deny') {
+
+            $pinjaman->status = 0;
+
+        } elseif ($transaction == 'expire') {
+
+            $pinjaman->status = 0;
+
+        } elseif ($transaction == 'cancel') {
+
+            $pinjaman->status = 0;
+
+        }
+
+        $pinjaman->save();
+
+        return;
     }
 }

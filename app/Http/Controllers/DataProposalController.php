@@ -30,6 +30,8 @@ class DataProposalController extends Controller
             $proposal = DataProposal::findOrFail($no_proposal);
             $proposal->status = 1;
 
+            $count_mitra = DataMitra::get()->count()+1;
+
             if($proposal->save()){
                 $password = str_random(6);
                 $username = str_random(8);
@@ -49,13 +51,13 @@ class DataProposalController extends Controller
 
                     if($jaminan->save()){
                         $mitra  = new DataMitra();
-                        $mitra->no_pk = random_int(100000000, 999999999);
+                        $mitra->no_pk = "LKP/KEM/T-1/A-".strval($count_mitra);
                         $mitra->no_proposal = $no_proposal;
                         $mitra->no_jaminan = $no_jaminan;
                         $mitra->username = $username;
 
                         if($mitra->save()){
-                            Mail::send('admin/emailPemberitahuanAkun', ['nama_pengaju' => $proposal->nama_pengaju, 'username'=>$username, 'email'=>$email, 'password'=>$password], function ($message) use ($request)
+                            Mail::send('admin/emailPemberitahuanAkun', ['nama_pengaju' => $nama, 'username'=>$username, 'email'=>$email, 'password'=>$password], function ($message) use ($request)
                             {
                                 $message->subject('Informasi Akun Mitra Sistem Kemitraan LEN Industri');
                                 $message->from('harsoftdev@gmail.com', 'Sistem Kemitraan | LEN Industri.');

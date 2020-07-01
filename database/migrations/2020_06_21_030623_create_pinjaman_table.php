@@ -15,7 +15,7 @@ class CreatePinjamanTable extends Migration
     {
         Schema::create('pinjaman', function (Blueprint $table) {
             $table->string('id_pinjaman')->primary();
-            $table->integer('no_pk');
+            $table->string('no_pk');
             $table->foreign('no_pk')->references('no_pk')->on('data_mitra');
             $table->date('tgl_pinjaman');
             $table->double('nominal_pinjaman');

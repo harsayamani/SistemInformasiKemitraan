@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePengajuanDanaTable extends Migration
+class CreateFaqTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreatePengajuanDanaTable extends Migration
      */
     public function up()
     {
-        Schema::create('pengajuan_dana', function (Blueprint $table) {
-            $table->string('id_pengajuan_dana')->primary();
-            $table->string('no_pk');
-            $table->foreign('no_pk')->references('no_pk')->on('data_mitra');
-            $table->string('dokumen')->nullable();
+        Schema::create('faq', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->longText('pertanyaan');
+            $table->longText('jawaban');
+            $table->string('kategori');
             $table->integer('status');
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ class CreatePengajuanDanaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pengajuan_dana');
+        Schema::dropIfExists('faq');
     }
 }

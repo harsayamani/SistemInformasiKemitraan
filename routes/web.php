@@ -74,15 +74,13 @@ Route::post('/admin/kelola/pinjaman/tambah', 'PinjamanController@tambahPinjaman'
 
 Route::post('/admin/kelola/pinjaman/transfer', 'PinjamanController@transferPinjaman');
 
+Route::post('/admin/kelola/pinjaman/notifikasi', 'PinjamanController@notificationHandler');
+
 //Route Angsuran
 
 Route::get('/admin/kelola/angsuran', 'AngsuranController@kelolaAngsuran');
 
-//Route Member
-
-Route::get('/mitra', function () {
-    return redirect('/mitra/login');
-});
+//Route Mitra
 
 Route::get('/mitra/login', 'MitraController@loginIndex');
 
@@ -95,5 +93,11 @@ Route::get('/mitra/dashboard', 'MitraController@dashboard');
 Route::get('/mitra/dataMitra', 'MitraController@dataMitra');
 
 Route::post('/mitra/dataMitra/ubah', 'MitraController@ubahMitra');
+
+//Route pinjaman
+
+Route::get('/mitra/pinjaman', 'MitraController@pinjaman');
+
+Route::post('/mitra/pinjaman/ajukan', 'MitraController@ajukanPinjaman');
 
 

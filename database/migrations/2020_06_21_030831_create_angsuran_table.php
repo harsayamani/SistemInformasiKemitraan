@@ -17,11 +17,12 @@ class CreateAngsuranTable extends Migration
             $table->string('id_angsuran')->primary();
             $table->string('id_pinjaman');
             $table->foreign('id_pinjaman')->references('id_pinjaman')->on('pinjaman');
-            $table->integer('no_pk');
+            $table->string('no_pk');
             $table->foreign('no_pk')->references('no_pk')->on('data_mitra');
             $table->double('jumlah_angsuran');
-            $table->string('tgl_angsuran');
+            $table->string('tgl_angsuran')->nullable();
             $table->double('utang');
+            $table->integer('status');
             $table->timestamps();
         });
     }

@@ -147,6 +147,30 @@
                 </div>
 
                 <div class="row form-group">
+                    <div class="col col-12">
+                        <label><strong>INFORMASI USAHA</strong></label>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="text-input" class=" form-control-label">Unit Usaha</label>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <input type="text" id="unit_usaha" name="unit_usaha" placeholder="Masukkan unit usaha" class="form-control" value="{{$mitra->dataProposal->unit_usaha}}" required>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="text-input" class=" form-control-label">Sektor Usaha</label>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <input type="text" id="kegiatan" name="kegiatan" placeholder="Masukkan sektor usaha" class="form-control" value="{{$mitra->dataProposal->kegiatan}}" required>
+                    </div>
+                </div>
+
+                <div class="row form-group">
                     <div class="col col-md-3">
                         <label for="text-input" class=" form-control-label">Lokasi Usaha</label>
                     </div>
@@ -244,7 +268,7 @@
 
                 <div class="line"></div>
                 <div class="form-group row">
-                    <div class="col-sm-4 offset-sm-3">
+                    <div class="col-sm-4 offset-sm-9">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </div>

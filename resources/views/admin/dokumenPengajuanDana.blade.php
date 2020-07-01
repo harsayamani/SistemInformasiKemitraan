@@ -244,7 +244,7 @@
         <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
         Nomor rekening </span>
         </div>
-        <div class="pos" id="_100:1875" style="top:1875;left:100">
+        <div class="pos" id="_100:1875" style="top:1875;left:300">
         <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
         : {{$mitra->no_rek}}</span>
         </div>
