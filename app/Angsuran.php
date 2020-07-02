@@ -10,7 +10,7 @@ class Angsuran extends Model
 
     protected $primaryKey = 'id_angsuran';
 
-    protected $fillable = ['id_angsuran', 'id_pinjaman', 'no_pk', 'jumlah_angsuran', 'tgl_angsuran', 'utang'];
+    protected $fillable = ['id_angsuran', 'id_pinjaman', 'no_pk', 'jumlah_angsuran', 'tgl_angsuran', 'utang', 'token', 'status'];
 
     public $incrementing = false;
 

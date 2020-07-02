@@ -41,7 +41,7 @@ class DataProposalController extends Controller
                 $user = new Users();
                 $user->username = $username;
                 $user->password = $password;
-                $user->nama =
+                $user->nama = $nama;
                 $user->email = $email;
 
                 if($user->save()){

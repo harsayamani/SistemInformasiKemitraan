@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Angsuran;
 use App\DataMitra;
+use App\HistoriPinjaman;
 use App\PengajuanDana;
 use App\Pinjaman;
 use Carbon\Carbon;
@@ -93,8 +95,10 @@ class PinjamanController extends Controller
                 'nominal_angsuran' => '|numeric'
             ]);
 
+            $id_pinjaman = uniqid('PIJ-', false);
+
             $pinjaman = new Pinjaman();
-            $pinjaman->id_pinjaman = uniqid('PIJ-', false);
+            $pinjaman->id_pinjaman = $id_pinjaman;
             $pinjaman->no_pk = $request->no_pk;
             $pinjaman->tgl_pinjaman = $request->tgl_pinjaman;
             $pinjaman->bunga = $request->bunga;
@@ -108,6 +112,24 @@ class PinjamanController extends Controller
                 $pengajuan = PengajuanDana::where('no_pk', $request->no_pk)->where('status', 1)->first();
                 $pengajuan->status = 2;
                 if($pengajuan->save()){
+
+                    $lama_angsuran = $request->lama_angsuran;
+                    $total_pinjaman = $request->nominal_pinjaman + ($request->nominal_pinjaman*($request->bunga/100));
+                    $nominal_angsuran = $request->nominal_angsuran;
+
+                    for($i=0; $i<$lama_angsuran; $i++){
+                        $total_pinjaman -= $nominal_angsuran;
+
+                        $angsuran = new Angsuran();
+                        $angsuran->id_angsuran = uniqid('ANGS-', false);
+                        $angsuran->id_pinjaman = $id_pinjaman;
+                        $angsuran->jumlah_angsuran = $nominal_angsuran;
+                        $angsuran->no_pk = $request->no_pk;
+                        $angsuran->utang = $total_pinjaman;
+                        $angsuran->status = 0;
+                        $angsuran->save();
+                    }
+
                     return redirect('/admin/kelola/pinjaman')->with('alert-success', 'Pinjaman berhasil ditambah!');
                 }
             }
@@ -149,11 +171,18 @@ class PinjamanController extends Controller
 
         $pinjaman->token = $snap_token;
         $pinjaman->status = 1;
-        $pinjaman->save();
 
-        return response()->json([
-            'snap_token' => $snap_token
-        ], 200);
+        if($pinjaman->save()){
+            $histori_pinjaman = new HistoriPinjaman();
+            $histori_pinjaman->id_transaksi = uniqid('TRPIJ-', false);
+            $histori_pinjaman->id_pinjaman = $id_pinjaman;
+
+            if($histori_pinjaman->save()){
+                return response()->json([
+                    'snap_token' => $snap_token
+                ], 200);
+            }
+        }
     }
 
     public function notificationHandler(Request $request)
@@ -170,43 +199,84 @@ class PinjamanController extends Controller
         $fraud = $notif->fraud_status;
 
         $pinjaman = Pinjaman::findOrFail($orderId);
+        $angsuran = Angsuran::findOrFail($orderId);
 
-        if ($transaction == 'capture') {
+        if($pinjaman!=null){
+            if ($transaction == 'capture') {
 
-            // For credit card transaction, we need to check whether transaction is challenge by FDS or not
-            if ($type == 'credit_card') {
+                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+                if ($type == 'credit_card') {
 
-              if($fraud == 'challenge') {
-                $pinjaman->status = 1;
-              } else {
+                  if($fraud == 'challenge') {
+                    $pinjaman->status = 1;
+                  } else {
+                    $pinjaman->status = 2;
+                  }
+
+                }
+
+            } elseif ($transaction == 'settlement') {
+
                 $pinjaman->status = 2;
-              }
+
+            } elseif($transaction == 'pending'){
+
+                $pinjaman->status = 1;
+
+            } elseif ($transaction == 'deny') {
+
+                $pinjaman->status = 0;
+
+            } elseif ($transaction == 'expire') {
+
+                $pinjaman->status = 0;
+
+            } elseif ($transaction == 'cancel') {
+
+                $pinjaman->status = 0;
 
             }
 
-        } elseif ($transaction == 'settlement') {
+            $pinjaman->save();
 
-            $pinjaman->status = 2;
+        }elseif($angsuran!=null){
+            if ($transaction == 'capture') {
 
-        } elseif($transaction == 'pending'){
+                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+                if ($type == 'credit_card') {
 
-            $pinjaman->status = 1;
+                  if($fraud == 'challenge') {
+                    $angsuran->status = 1;
+                  } else {
+                    $angsuran->status = 2;
+                  }
 
-        } elseif ($transaction == 'deny') {
+                }
 
-            $pinjaman->status = 0;
+            } elseif ($transaction == 'settlement') {
 
-        } elseif ($transaction == 'expire') {
+                $angsuran->status = 2;
 
-            $pinjaman->status = 0;
+            } elseif($transaction == 'pending'){
 
-        } elseif ($transaction == 'cancel') {
+                $angsuran->status = 1;
 
-            $pinjaman->status = 0;
+            } elseif ($transaction == 'deny') {
 
+                $angsuran->status = 0;
+
+            } elseif ($transaction == 'expire') {
+
+                $angsuran->status = 0;
+
+            } elseif ($transaction == 'cancel') {
+
+                $angsuran->status = 0;
+
+            }
+
+            $angsuran->save();
         }
-
-        $pinjaman->save();
 
         return;
     }

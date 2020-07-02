@@ -24,7 +24,7 @@ class CreatePinjamanTable extends Migration
             $table->integer('lama_angsuran');
             $table->double('nominal_angsuran');
             $table->integer('status');
-            $table->string('token');
+            $table->string('token')->nullable();
             $table->timestamps();
         });
     }

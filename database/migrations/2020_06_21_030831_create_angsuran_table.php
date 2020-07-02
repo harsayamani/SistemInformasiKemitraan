@@ -20,7 +20,7 @@ class CreateAngsuranTable extends Migration
             $table->string('no_pk');
             $table->foreign('no_pk')->references('no_pk')->on('data_mitra');
             $table->double('jumlah_angsuran');
-            $table->string('tgl_angsuran')->nullable();
+            $table->date('tgl_angsuran')->nullable();
             $table->double('utang');
             $table->integer('status');
             $table->timestamps();

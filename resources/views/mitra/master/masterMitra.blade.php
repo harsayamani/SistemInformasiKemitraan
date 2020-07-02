@@ -24,13 +24,13 @@
               <div class="navbar-header">
                 <!-- Navbar Brand --><a href="/mitra/dashboard" class="navbar-brand d-none d-sm-inline-block">
                   <div class="brand-text d-none d-lg-inline-block"><img src="/img/logo.png" width="30px" height="40px"> <span>Kemitraan</span> <strong>LEN Industri</strong></div>
-                  <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
+                  </a>
                 <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
               </div>
               <!-- Navbar Menu -->
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Notifications-->
-                <li class="nav-item"><a href="/mitra/gantiPassword/{{Session::get('noPK')}}" class="nav-link logout"><span class="d-none d-sm-inline">Ganti Password</span><i class="fa fa-exchange"></i></a></li>
+                <li class="nav-item"><a href="/mitra/gantiPassword" class="nav-link logout"><span class="d-none d-sm-inline">Ganti Password</span><i class="fa fa-exchange"></i></a></li>
 
                 <!-- Logout    -->
                 <li class="nav-item"><a href="/mitra/logout" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a></li>

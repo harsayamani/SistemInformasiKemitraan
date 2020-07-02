@@ -80,6 +80,8 @@ Route::post('/admin/kelola/pinjaman/notifikasi', 'PinjamanController@notificatio
 
 Route::get('/admin/kelola/angsuran', 'AngsuranController@kelolaAngsuran');
 
+
+
 //Route Mitra
 
 Route::get('/mitra/login', 'MitraController@loginIndex');
@@ -87,6 +89,20 @@ Route::get('/mitra/login', 'MitraController@loginIndex');
 Route::post('/mitra/login/proses', 'MitraController@loginProses');
 
 Route::get('/mitra/dashboard', 'MitraController@dashboard');
+
+Route::get('/mitra/logout', 'MitraController@logout');
+
+Route::get('/mitra/gantiPassword', 'MitraController@gantiPassword');
+
+Route::post('/mitra/gantiPassword/proses', 'MitraController@gantiPasswordProses');
+
+Route::get('/mitra/lupaPassword', 'MitraController@lupaPassword');
+
+Route::post('/mitra/lupaPassword/proses', 'MitraController@lupaPasswordProses');
+
+Route::get('/mitra/gantiPasswordLupa/{username}', 'MitraController@gantiPasswordLupa');
+
+Route::post('/mitra/gantiPasswordLupa/proses', 'MitraController@gantiPasswordLupaProses');
 
 //Route Data Mitra
 
@@ -99,5 +115,11 @@ Route::post('/mitra/dataMitra/ubah', 'MitraController@ubahMitra');
 Route::get('/mitra/pinjaman', 'MitraController@pinjaman');
 
 Route::post('/mitra/pinjaman/ajukan', 'MitraController@ajukanPinjaman');
+
+//Route angsuran
+
+Route::get('/mitra/angsuran', 'MitraController@angsuran');
+
+Route::post('/mitra/angsuran/transfer', 'MitraController@transferAngsuran');
 
 

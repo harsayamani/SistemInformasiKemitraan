@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Angsuran;
 use App\DataMitra;
 use App\DataProposal;
+use App\HistoriAngsuran;
 use App\PengajuanDana;
 use App\Pinjaman;
 use App\Users;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\RajaOngkirController as API;
 use App\Jaminan;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
+use Veritrans_Config;
+use Veritrans_Snap;
 
 class MitraController extends Controller
 {
@@ -42,6 +49,113 @@ class MitraController extends Controller
             }
         }else{
             return redirect('/mitra/login')->with('alert-danger', 'Username salah!');
+        }
+    }
+
+    public function logout(){
+        if(!Session::get('loginMitra')){
+            return redirect('/mitra/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
+        }else{
+            Session::forget('loginMitra');
+            Session::forget('noPK');
+            Session::forget('namaMitra');
+            return redirect('/mitra/login')->with('alert-success', 'Anda berhasil logout!');
+        }
+    }
+
+    public function gantiPassword(){
+        if(!Session::get('loginMitra')){
+            return redirect('/mitra/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
+        }else{
+            return view('mitra/gantiPassword');
+        }
+    }
+
+    public function gantiPasswordProses(Request $request){
+        if(!Session::get('loginMitra')){
+            return redirect('/mitra/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
+        }else{
+
+            $pass_lama = $request->pass_lama;
+            $pass_baru = $request->pass_baru;
+            $pass_konf = $request->konf_pass;
+            $no_pk = Session::get('noPK');
+
+            $mitra = DataMitra::findOrFail($no_pk);
+
+            if(Hash::check($pass_lama, $mitra->users->password)){
+                if($pass_baru == $pass_konf){
+                    $users = Users::findOrFail($mitra->users->username);
+                    $users->password = $pass_baru;
+                    if($users->save()){
+                        return redirect('/mitra/dashboard')->with('alert-modal-success', 'Password berhasil diganti!');
+                    }else{
+                        return redirect('/mitra/gantiPassword')->with('alert-danger', 'Terjadi kesalahan!');
+                    }
+                }else{
+                    return redirect('/mitra/gantiPassword')->with('alert-danger', 'Konfirmasi password tidak sama!');
+                }
+            }else{
+                return redirect('/mitra/gantiPassword')->with('alert-danger', 'Password lama salah!');
+            }
+        }
+    }
+
+    public function lupaPassword(){
+        return view('/mitra/lupaPassword');
+    }
+
+    public function lupaPasswordProses(Request $request){
+        $this->validate($request, [
+            'email' => '|required|email'
+        ]);
+
+        $email = $request->email;
+        $username = Users::where('email', $email)->value('username');
+
+        $nama = DataMitra::where('username', $username)->first()->dataProposal->nama_pengaju;
+
+        $username_crypt = Crypt::encryptString($username);
+
+        $link = env('APP_URL')."/mitra/gantiPasswordLupa/".$username_crypt."";
+
+        Mail::send('mitra/emailGantiPassword', ['nama' => $nama, 'link'=>$link], function ($message) use ($request)
+        {
+            $message->subject('Konfirmasi Pengubahan Password Sistem Kemitraan LEN Industri');
+            $message->from('harsoftdev@gmail.com', 'Sistem Kemitraan | LEN Industri.');
+            $message->to($request->email);
+        });
+
+        return redirect('/mitra/login')->with('alert-success', 'Email pengubahan password telah dikirim!');
+    }
+
+    public function gantiPasswordLupa($username){
+        $username = Crypt::decryptString($username);
+
+        return view('mitra/gantiPasswordLupa', compact('username'));
+    }
+
+    public function gantiPasswordLupaProses(Request $request){
+        $pass_baru = $request->pass_baru;
+        $pass_konf = $request->konf_pass;
+        $username = $request->username;
+
+        $mitra = DataMitra::where('username', $username)->first();
+
+        if($mitra){
+            if($pass_baru == $pass_konf){
+                $users = Users::findOrFail($username);
+                $users->password = $pass_baru;
+                if($users->save()){
+                    return redirect('/mitra/login')->with('alert-success', 'Password berhasil diganti!');
+                }else{
+                    return redirect()->back()->with('alert-danger', 'Terjadi kesalahan!');
+                }
+            }else{
+                return redirect()->back()->with('alert-danger', 'Konfirmasi password tidak sama!');
+            }
+        }else{
+            return redirect()->back()->with('alert-danger', 'Not Found!');
         }
     }
 
@@ -254,6 +368,79 @@ class MitraController extends Controller
 
             if($pengajuan->save()){
                 return redirect('/mitra/dashboard')->with('alert-modal-success', 'Pinjaman berhasil diajukan!');
+            }
+        }
+    }
+
+    public function angsuran(){
+        if(!Session::get('loginMitra')){
+            return redirect('/mitra/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
+        }else{
+            $no_pk = Session::get('noPK');
+            $id_pinjaman = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('id_pinjaman');
+            $lama_angsuran = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('lama_angsuran');
+            $angsuran = Angsuran::where('id_pinjaman', $id_pinjaman)->get();
+
+            $angs_finish_count = Angsuran::where('id_pinjaman', $id_pinjaman)->where('status', 2)->get()->count();
+
+            if($angs_finish_count == $lama_angsuran){
+                $pinjaman = Pinjaman::findOrFail($id_pinjaman);
+                $pinjaman->status == 3;
+                $pinjaman->save();
+            }
+
+            return view('mitra/angsuran', compact('angsuran'));
+        }
+    }
+
+    public function transferAngsuran(Request $request){
+        // Buat transaksi ke midtrans kemudian save snap tokennya.
+        Veritrans_Config::$serverKey = config('services.midtrans.serverKey');
+        Veritrans_Config::$isProduction = config('services.midtrans.isProduction');
+        Veritrans_Config::$isSanitized = config('services.midtrans.isSanitized');
+        Veritrans_Config::$is3ds = config('services.midtrans.is3ds');
+
+        $id_angsuran = $request->id_angsuran;
+        $angsuran = Angsuran::findOrFail($id_angsuran);
+
+        $payload = [
+            'transaction_details' => [
+                'order_id'      => $angsuran->id_angsuran,
+                'gross_amount'  => $angsuran->jumlah_angsuran,
+            ],
+            'customer_details' => [
+                'first_name'    => $angsuran->dataMitra->dataProposal->nama_pengaju,
+                'email'         => $angsuran->dataMitra->users->email,
+                'phone'         => $angsuran->dataMitra->no_telp,
+                'address'       => $angsuran->dataMitra->alamat_kantor,
+            ],
+            'item_details' => [
+                [
+                    'id'       => $angsuran->id_angsuran,
+                    'price'    => $angsuran->jumlah_angsuran,
+                    'quantity' => 1,
+                    'name'     => ucwords(str_replace('_', ' ', "Transfer Angsuran"))
+                ]
+            ]
+        ];
+
+        $snap_token = Veritrans_Snap::getSnapToken($payload);
+
+        $angsuran->token = $snap_token;
+        $angsuran->tgl_angsuran = Carbon::now()->format('Y-m-d');
+        $angsuran->status = 1;
+
+        if($angsuran->save()){
+
+            $histori_angsuran = new HistoriAngsuran();
+            $histori_angsuran->id_bayar = uniqid('HistAngs-', false);
+            $histori_angsuran->id_angsuran = $id_angsuran;
+            $histori_angsuran->bayar_angsuran = $angsuran->jumlah_angsuran;
+
+            if($histori_angsuran->save()){
+                return response()->json([
+                    'snap_token' => $snap_token
+                ], 200);
             }
         }
     }
