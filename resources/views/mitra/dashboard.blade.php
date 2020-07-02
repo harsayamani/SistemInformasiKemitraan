@@ -88,7 +88,7 @@
           <div class="overdue card">
             <div class="card-body">
               <center><h3>Pengajuan Pinjaman</h3></center>
-              @if ($pengajuan == null || $pengajuan->count()<1)
+              @if ($pengajuan == null || $pengajuan->count()<1 || $pinjaman->status == 3 && $pengajuan->status == 2)
                 <div class="number text-center">Belum Diajukan</div>
               @elseif($pengajuan->status == 0)
                 <div class="number text-center">Sedang Diajukan</div>

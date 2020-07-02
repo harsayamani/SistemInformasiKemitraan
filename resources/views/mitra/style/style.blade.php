@@ -11,7 +11,7 @@
 <!-- Custom stylesheet - for your changes-->
 <link rel="stylesheet" href="/mitra/css/custom.css">
 <!-- Favicon-->
-<link rel="shortcut icon" href="/mitra/img/favicon.ico">
+<link rel="shortcut icon" href="/img/logo.ico">
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.4/select2.min.css" rel="stylesheet" />
 <!-- Tweaks for older IEs--><!--[if lt IE 9]>

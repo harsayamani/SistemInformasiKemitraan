@@ -19,5 +19,7 @@
 <!-- Bootstrap time Picker -->
 <link href="/adminlte/css/timepicker/bootstrap-timepicker.min.css" rel="stylesheet"/>
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+<!-- Favicon-->
+<link rel="shortcut icon" href="/img/logo.ico">
 
 @stack('style')

@@ -57,8 +57,9 @@
               <h3 class="h4">Data Mitra</h3>
             </div>
             <div class="card-body">
-              <form class="form-horizontal" method="POST" action="/mitra/dataMitra/ubah">
+              <form class="form-horizontal" method="POST" action="/mitra/dataMitra/ubah" enctype="multipart/form-data">
                 {{ csrf_field() }}
+
                 <div class="row form-group">
                     <div class="col col-md-3">
                         <label for="number-input" class=" form-control-label">Nomor Mitra</label>
@@ -296,11 +297,11 @@
         });
     </script>
 
-<script>
-    $('#tgl_lahir').datepicker({
-        format: 'dd mmm yyyy',
-        uiLibrary: 'bootstrap4'
-    });
-</script>
+    <script>
+        $('#tgl_lahir').datepicker({
+            format: 'dd mmm yyyy',
+            uiLibrary: 'bootstrap4'
+        });
+    </script>
 @endpush
 @endsection

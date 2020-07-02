@@ -9,6 +9,7 @@ use App\PengajuanDana;
 use App\Pinjaman;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Veritrans_Config;
 use Veritrans_Notification;
@@ -54,7 +55,17 @@ class PinjamanController extends Controller
             $pengajuan = PengajuanDana::findOrFail($id_pengajuan_dana);
             $pengajuan->status = 1;
 
+            $nama = $pengajuan->dataMitra->dataProposal->nama_pengaju;
+            $persetujuan = "DISETUJUI";
+
             if($pengajuan->save()){
+                Mail::send('admin/emailPengajuanDana', ['nama' => $nama, 'persetujuan'=>$persetujuan], function ($message) use ($request)
+                {
+                    $message->subject('Konfirmasi Status Pengajuan Dana Sistem Kemitraan LEN Industri');
+                    $message->from('harsoftdev@gmail.com', 'Sistem Kemitraan | LEN Industri.');
+                    $message->to(PengajuanDana::findOrFail($request->id_pengajuan_dana)->dataMitra->users->email);
+                });
+
                 return redirect('/admin/kelola/pinjaman')->with('alert-success', 'Pengajuan pinjaman disetujui!');
             }
         }
