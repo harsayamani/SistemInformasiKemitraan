@@ -83,6 +83,7 @@
                                             <li><a href="/">Home</a></li>
                                             <li><a href="/tentang">Tentang</a></li>
                                             <li><a href="/alur">Alur</a></li>
+                                            <li><a href="/berita">Berita</a></li>
                                             <li><a href="/faq">FAQ</a></li>
                                             <li><a href="/daftar">Registrasi</a></li>
                                         </ul>
@@ -107,7 +108,27 @@
     </header>
 
     <main>
-        @include('sweet::alert')
+        @if ($errors->any())
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if (session()->has('alert-success'))
+              <div class="alert alert-success" role="alert">
+                  {{session()->get('alert-success')}}
+              </div>
+        @endif
+
+        @if (session()->has('alert-danger'))
+              <div class="alert alert-danger" role="alert">
+                  {{session()->get('alert-danger')}}
+              </div>
+        @endif
 
         <!-- slider Area Start-->
         <div class="slider-area ">

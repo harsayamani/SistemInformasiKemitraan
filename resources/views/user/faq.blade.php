@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Selamat Datang di Program Kemitraan LEN Industri</title>
+        <title>FAQ | Program Kemitraan LEN Industri</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -108,6 +108,7 @@
     </header>
 
     <main>
+
         @if ($errors->any())
             <div class="alert alert-danger" role="alert">
                 <ul>
@@ -133,33 +134,12 @@
         <!-- slider Area Start-->
         <div class="slider-area ">
             <!-- Mobile Menu -->
-            <div class="slider-active">
-                <div class="single-slider slider-height d-flex align-items-center" data-background="/user/assets/img/hero/h1_hero.jpg">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-6 col-md-8">
-                                <div class="hero__caption">
-                                    <p data-animation="fadeInLeft" data-delay=".4s">Selamat datang di program kemitraan PT. Len Industri</p>
-                                    <h1 data-animation="fadeInLeft" data-delay=".6s" >Kami Hadir Untuk Mengembangkan Bisinis Anda dan Sebagai Wujud BUMN Untuk Negeri</h1>
-                                    <!-- Hero-btn -->
-                                    <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-slider slider-height d-flex align-items-center" data-background="/user/assets/img/hero/h1_hero.jpg">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-6 col-md-8">
-                                <div class="hero__caption">
-                                    <p data-animation="fadeInLeft" data-delay=".4s">Welcome to patnership information system of PT. Len Industri</p>
-                                    <h1 data-animation="fadeInLeft" data-delay=".6s" >We help you to grow your  business</h1>
-                                    <!-- Hero-btn -->
-                                    <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s">
-                                    </div>
-                                </div>
+            <div class="single-slider slider-height2 d-flex align-items-center" data-background="/user/assets/img/hero/services_hero.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2>FAQ</h2>
                             </div>
                         </div>
                     </div>
@@ -168,152 +148,84 @@
         </div>
         <!-- slider Area End-->
 
-        <!-- Team-profile Start -->
-
-        <!-- Team-profile End-->
-
-        <!-- We Trusted Start-->
-        <div class="we-trusted-area trusted-padding">
-            <div class="container">
-                <div class="row d-flex align-items-end">
-                    <div class="col-xl-7 col-lg-7">
-                        <div class="trusted-img">
-                            <img src="/user/assets/img/team/wetrusted.jpg" alt="">
-                        </div>
-                    </div>
-                    <div class="col-xl-5 col-lg-5">
-                        <div class="trusted-caption">
-                           <h2>Lebih dari 100 mitra telah bergabung bersama kami</h2>
-                           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru  dolor sit amet, consectetur adipn.</p>
-                            {{-- <a href="#" class="btn trusted-btn">Learn More</a> --}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!-- We Trusted End-->
-
         <!-- services Area Start-->
         <div class="services-area section-padding2">
             <div class="container">
                 <!-- section tittle -->
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-tittle text-center">
-                            <h2>ALUR PROGRAM KEMITRAAN</h2>
-                        </div>
+                    <div class="col-3">
+                      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" >
+                        <a class="btn btn-primary active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Administrasi Kemitraan</a>
+                        <br>
+                        <a class="btn btn-primary" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Pengajuan Proposal</a>
+                        <br>
+                        <a  class="btn btn-primary" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Pendanaan</a>
+                      </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="single-services text-center mb-30">
-                            <div class="services-icon">
-                                <span class="flaticon-checklist"></span>
+                    <div class="col-9">
+                      <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                            @foreach($administrasi as $key=>$adm)
+                            <div class="row">
+                                <div class="col-12">
+                                    <a class="genric-btn default radius" data-toggle="collapse" href="#collapse{{$adm->id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <h5>{{++$key}}. {{$adm->pertanyaan}}</h5>
+                                    </a>
+                                    <div class="col-12">
+                                        <div class="collapse" id="collapse{{$adm->id}}">
+                                            <div class="card card-body">
+                                                <p>{{$adm->jawaban}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="services-caption">
-                                <h4>1. Pendaftaran</h4>
-                                <p>Silahkan daftarkan diri anda dengan menyiapkan KTP, No. Rekening, dan SKU (Surat Keterangan Usaha)</p>
-                            </div>
+                            <br>
+                            @endforeach
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="single-services text-center mb-30">
-                            <div class="services-icon">
-                                <span class="flaticon-audit"></span>
+                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                            @foreach($pengajuan as $key=>$adm)
+                            <div class="row">
+                                <div class="col-12">
+                                    <a class="genric-btn default radius" data-toggle="collapse" href="#collapse{{$adm->id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <h5>{{++$key}}. {{$adm->pertanyaan}}</h5>
+                                    </a>
+                                    <div class="col-12">
+                                        <div class="collapse" id="collapse{{$adm->id}}">
+                                            <div class="card card-body">
+                                                <p>{{$adm->jawaban}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="services-caption">
-                                <h4>2. Pengajuan Propsal</h4>
-                                <p>Setelah anda melakukan pendaftaran silahkan anda akses halaman yang berisi form melengkapi data registrasi anda</p>
-                            </div>
+                            <br>
+                            @endforeach
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="single-services text-center mb-30">
-                            <div class="services-icon">
-                                <span class="flaticon-checklist-1"></span>
+                        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                            @foreach($pendanaan as $key=>$adm)
+                            <div class="row">
+                                <div class="col-12">
+                                    <a class="genric-btn default radius" data-toggle="collapse" href="#collapse{{$adm->id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <h5>{{++$key}}. {{$adm->pertanyaan}}</h5>
+                                    </a>
+                                    <div class="col-12">
+                                        <div class="collapse" id="collapse{{$adm->id}}">
+                                            <div class="card card-body">
+                                                <p>{{$adm->jawaban}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="services-caption">
-                                <h4>3. Mendapatkan Notifikasi</h4>
-                                <p>Setelah semua registrasi selesai anda tinggal menunggu notifikasi keputusan proposal anda melalui email, jika anda diterima anda akan mendapatkan username dan password untuk login</p>
-                            </div>
+                            <br>
+                            @endforeach
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="single-services text-center mb-30">
-                            <div class="services-icon">
-                                <span class="flaticon-checklist-1"></span>
-                            </div>
-                            <div class="services-caption">
-                                <h4>4. Peminjaman dan Pembayaran Angsuran</h4>
-                                <p>Anda dapat mengajukan jumlah dana yang ingin dipinjam namun jumlah pencairan dana sepenuhnya adalah hak staf penanggung jawab kemitraan dan tidak dapat diganggu gugat dan pembayaran dilakukan setiap bulan dengan batas waktu maksimal dana telah lunas selama 3 tahun</p>
-                            </div>
-                        </div>
+                      </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Testimonial Start -->
-        <div class="testimonial-area fix">
-            <div class="container">
-               <div class="row justify-content-center">
-                    <div class="col-xl-9 col-lg-9 col-md-9">
-                        <div class="h1-testimonial-active">
-                            <!-- Single Testimonial -->
-                            <div class="single-testimonial pt-65">
-                                <!-- Testimonial tittle -->
-                                <div class="testimonial-icon mb-45">
-                                    <img src="/user/assets/img/logo/testimonial.png" class="ani-btn " alt="">
-                                </div>
-                                 <!-- Testimonial Content -->
-                                <div class="testimonial-caption text-center">
-                                    <p>You can’t succeed if you just do what others do and
-                                        follow the well-worn path. You need to create a new and
-                                        original path for yourself. </p>
-                                    <!-- Rattion -->
-                                    <div class="testimonial-ratting">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                    <div class="rattiong-caption">
-                                        <span>Clifford Frazier<span> - Colorlib Themes</span> </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single Testimonial -->
-                            <div class="single-testimonial pt-65">
-                                <!-- Testimonial tittle -->
-                                <div class="testimonial-icon mb-45">
-                                    <img src="/user/assets/img/logo/testimonial.png"  class="ani-btn" alt="">
-                                </div>
-                                 <!-- Testimonial Content -->
-                                <div class="testimonial-caption text-center">
-                                    <p>You can’t succeed if you just do what others do and
-                                        follow the well-worn path. You need to create a new and
-                                        original path for yourself. </p>
-                                    <!-- Rattion -->
-                                    <div class="testimonial-ratting">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                    <div class="rattiong-caption">
-                                        <span>Clifford Frazier<span> - Colorlib Themes</span> </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-               </div>
-            </div>
-        </div>
-        <!-- Testimonial End -->
 
         <!-- Recent Area Start -->
         <div class="recent-area section-paddingt">
@@ -428,11 +340,11 @@
                            <div class="footer-tittle">
                                <h4>Company</h4>
                                <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Services</a></li>
-                                    <li><a href="#">Cases</a></li>
-                                    <li><a href="#">Contact Us</a></li>
+                                   <li><a href="#">Home</a></li>
+                                   <li><a href="#">About Us</a></li>
+                                   <li><a href="#">Services</a></li>
+                                   <li><a href="#">Cases</a></li>
+                                   <li><a href="#">Contact Us</a></li>
                                </ul>
                            </div>
                        </div>
@@ -523,6 +435,5 @@
         <script src="/user/assets/js/plugins.js"></script>
         <script src="/user/assets/js/main.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-
     </body>
 </html>

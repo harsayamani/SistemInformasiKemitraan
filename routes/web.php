@@ -139,3 +139,5 @@ Route::post('/faq/send', 'PublicController@faqQuestion');
 Route::get('/tentang', 'PublicController@tentang');
 
 Route::get('/alur', 'PublicController@alur');
+
+Route::get('/faq', 'PublicController@faq');

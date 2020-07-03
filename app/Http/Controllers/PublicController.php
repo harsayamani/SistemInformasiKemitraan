@@ -25,8 +25,7 @@ class PublicController extends Controller
         $faq->status = 0;
 
         if($faq->save()){
-            SweetAlert::success('Pertanyaan berhasil dikirim!', 'Alert');
-            return redirect()->back();
+            return redirect()->back()->with('alert-success', 'Pertanyaan telah dikirim!');
         }
     }
 
@@ -40,5 +39,15 @@ class PublicController extends Controller
         $berita = Berita::orderBy('created_at', 'desc')->paginate(3);
 
         return view('user/alur', compact('berita'));
+    }
+
+    public function faq(){
+        $administrasi = FAQ::where('kategori', "Administrasi Kemitraan")->where('status', 1)->get();
+        $pengajuan = FAQ::where('kategori', "Pengajuan Proposal")->where('status', 1)->get();
+        $pendanaan = FAQ::where('kategori', "Pendanaan")->where('status', 1)->get();
+
+        $berita = Berita::orderBy('created_at', 'desc')->paginate(3);
+
+        return view('user/faq', compact('administrasi', 'berita', 'pengajuan', 'pendanaan'));
     }
 }

@@ -83,6 +83,7 @@
                                             <li><a href="/">Home</a></li>
                                             <li><a href="/tentang">Tentang</a></li>
                                             <li><a href="/alur">Alur</a></li>
+                                            <li><a href="/berita">Berita</a></li>
                                             <li><a href="/faq">FAQ</a></li>
                                             <li><a href="/daftar">Registrasi</a></li>
                                         </ul>
@@ -107,7 +108,27 @@
     </header>
 
     <main>
-        @include('sweet::alert')
+        @if ($errors->any())
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if (session()->has('alert-success'))
+              <div class="alert alert-success" role="alert">
+                  {{session()->get('alert-success')}}
+              </div>
+        @endif
+
+        @if (session()->has('alert-danger'))
+              <div class="alert alert-danger" role="alert">
+                  {{session()->get('alert-danger')}}
+              </div>
+        @endif
 
         <!-- slider Area Start-->
         <div class="slider-area ">
@@ -130,13 +151,6 @@
         <div class="services-area section-padding2">
             <div class="container">
                 <!-- section tittle -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-tittle text-center">
-                            <h2>ALUR PROGRAM KEMITRAAN</h2>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="single-services text-center mb-30">
