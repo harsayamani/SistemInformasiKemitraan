@@ -313,6 +313,12 @@
                                 <i class="fa fa-tag"></i> <span>Kelola Berita</span>
                             </a>
                         </li>
+
+                        <li class="@yield('faqActive')">
+                            <a href="/admin/kelola/faq">
+                                <i class="fa fa-tag"></i> <span>Kelola FAQ</span>
+                            </a>
+                        </li>
                     </ul>
                 </section>
                 <!-- /.sidebar -->

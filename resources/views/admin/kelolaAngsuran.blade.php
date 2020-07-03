@@ -33,6 +33,7 @@
                         </thead>
                         <tbody>
                             @foreach ($angsuran as $key => $angs)
+                            @if($angs->tgl_angsuran!=null)
                             <tr>
                                 <td>{{++$key}}</td>
                                 <td>{{$angs->id_pinjaman}}</td>
@@ -41,6 +42,7 @@
                                 <td>{{$angs->tgl_angsuran}}</td>
                                 <td>Rp.{{$angs->utang}}</td>
                             </tr>
+                            @endif
                             @endforeach
                         </tbody>
                     </table>

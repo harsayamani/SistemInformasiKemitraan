@@ -80,6 +80,13 @@ Route::post('/admin/kelola/pinjaman/notifikasi', 'PinjamanController@notificatio
 
 Route::get('/admin/kelola/angsuran', 'AngsuranController@kelolaAngsuran');
 
+//Route FAQ
+
+Route::get('/admin/kelola/faq', 'FAQController@faq');
+
+Route::post('/admin/kelola/faq/jawab', 'FAQController@jawabFAQ');
+
+Route::post('/admin/kelola/faq/hapus', 'FAQController@hapusFAQ');
 
 
 //Route Mitra
@@ -123,3 +130,12 @@ Route::get('/mitra/angsuran', 'MitraController@angsuran');
 Route::post('/mitra/angsuran/transfer', 'MitraController@transferAngsuran');
 
 
+//Route public
+
+Route::get('/', 'PublicController@index');
+
+Route::post('/faq/send', 'PublicController@faqQuestion');
+
+Route::get('/tentang', 'PublicController@tentang');
+
+Route::get('/alur', 'PublicController@alur');
