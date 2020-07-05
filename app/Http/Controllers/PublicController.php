@@ -50,4 +50,41 @@ class PublicController extends Controller
 
         return view('user/faq', compact('administrasi', 'berita', 'pengajuan', 'pendanaan'));
     }
+
+    public function berita(){
+        $berita = Berita::orderBy('created_at', 'desc')->paginate(7);
+        $recent = Berita::orderBy('created_at', 'desc')->paginate(3);
+        $berita_count = Berita::where('keterangan', 'Berita')->get()->count();
+        $pengumuman_count = Berita::where('keterangan', 'Pengumuman')->get()->count();
+
+        return view('user/berita', compact('berita', 'recent', 'berita_count', 'pengumuman_count'));
+    }
+
+    public function beritaKategori($keterangan){
+        $berita = Berita::where('keterangan', $keterangan)->orderBy('created_at', 'desc')->paginate(7);
+        $recent = Berita::orderBy('created_at', 'desc')->paginate(3);
+        $berita_count = Berita::where('keterangan', 'Berita')->get()->count();
+        $pengumuman_count = Berita::where('keterangan', 'Pengumuman')->get()->count();
+
+        return view('user/berita', compact('berita', 'recent', 'berita_count', 'pengumuman_count'));
+    }
+
+    public function searchBerita(Request $request){
+        $keyword = $request->keyword;
+        $berita = Berita::where('judul_berita', "like", "%" . $keyword . "%")->paginate(7);
+        $recent = Berita::orderBy('created_at', 'desc')->paginate(3);
+        $berita_count = Berita::where('keterangan', 'Berita')->get()->count();
+        $pengumuman_count = Berita::where('keterangan', 'Pengumuman')->get()->count();
+
+        return view('user/berita', compact('berita', 'recent', 'berita_count', 'pengumuman_count'));
+    }
+
+    public function detailBerita($judul_berita){
+        $berita = Berita::where('judul_berita', $judul_berita)->first();
+        $recent = Berita::orderBy('created_at', 'desc')->paginate(3);
+        $berita_count = Berita::where('keterangan', 'Berita')->get()->count();
+        $pengumuman_count = Berita::where('keterangan', 'Pengumuman')->get()->count();
+
+        return view('user/detailBerita', compact('berita', 'recent', 'berita_count', 'pengumuman_count'));
+    }
 }

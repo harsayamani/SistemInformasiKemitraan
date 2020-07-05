@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>FAQ | Program Kemitraan LEN Industri</title>
+        <title>Berita | Program Kemitraan LEN Industri</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -108,7 +108,6 @@
     </header>
 
     <main>
-
         @if ($errors->any())
             <div class="alert alert-danger" role="alert">
                 <ul>
@@ -134,12 +133,12 @@
         <!-- slider Area Start-->
         <div class="slider-area ">
             <!-- Mobile Menu -->
-            <div class="single-slider slider-height2 d-flex align-items-center" data-background="/user/assets/img/hero/gallery_hero.jpg">
+            <div class="single-slider slider-height2 d-flex align-items-center" data-background="/user/assets/img/hero/Industries_hero.jpg">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="hero-cap text-center">
-                                <h2>FAQ</h2>
+                                <h2>Berita</h2>
                             </div>
                         </div>
                     </div>
@@ -148,120 +147,127 @@
         </div>
         <!-- slider Area End-->
 
-        <!-- services Area Start-->
-        <div class="services-area section-padding2">
+        <!--================Blog Area =================-->
+        <section class="blog_area section-padding">
             <div class="container">
-                <!-- section tittle -->
                 <div class="row">
-                    <div class="col-3">
-                      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" >
-                        <a class="btn btn-primary active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Administrasi Kemitraan</a>
-                        <br>
-                        <a class="btn btn-primary" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Pengajuan Proposal</a>
-                        <br>
-                        <a  class="btn btn-primary" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Pendanaan</a>
-                      </div>
-                    </div>
-                    <div class="col-9">
-                      <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                            @foreach($administrasi as $key=>$adm)
-                            <div class="row">
-                                <div class="col-12">
-                                    <a class="genric-btn default radius" data-toggle="collapse" href="#collapse{{$adm->id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                        <h5>{{++$key}}. {{$adm->pertanyaan}}</h5>
-                                    </a>
-                                    <div class="col-12">
-                                        <div class="collapse" id="collapse{{$adm->id}}">
-                                            <div class="card card-body">
-                                                <p>{{$adm->jawaban}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                            @endforeach
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                            @foreach($pengajuan as $key=>$adm)
-                            <div class="row">
-                                <div class="col-12">
-                                    <a class="genric-btn default radius" data-toggle="collapse" href="#collapse{{$adm->id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                        <h5>{{++$key}}. {{$adm->pertanyaan}}</h5>
-                                    </a>
-                                    <div class="col-12">
-                                        <div class="collapse" id="collapse{{$adm->id}}">
-                                            <div class="card card-body">
-                                                <p>{{$adm->jawaban}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                            @endforeach
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                            @foreach($pendanaan as $key=>$adm)
-                            <div class="row">
-                                <div class="col-12">
-                                    <a class="genric-btn default radius" data-toggle="collapse" href="#collapse{{$adm->id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                        <h5>{{++$key}}. {{$adm->pertanyaan}}</h5>
-                                    </a>
-                                    <div class="col-12">
-                                        <div class="collapse" id="collapse{{$adm->id}}">
-                                            <div class="card card-body">
-                                                <p>{{$adm->jawaban}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                            @endforeach
-                        </div>
-                      </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    <div class="col-lg-8 mb-5 mb-lg-0">
+                        <div class="blog_left_sidebar">
 
-        <!-- Recent Area Start -->
-        <div class="recent-area section-paddingt">
-            <div class="container">
-                <!-- section tittle -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-tittle text-center">
-                            <h2>Our Recent News</h2>
+                            @if($berita->count()>0)
+                            @foreach ($berita as $brt)
+                            <article class="blog_item">
+                                <div class="blog_item_img">
+                                    <img class="card-img rounded-0" src="
+                                    <?php
+                                        $url = JD\Cloudder\Facades\Cloudder::show($brt->ilustrasi, ['width'=>650, 'height'=>275, "crop"=>"scale"]);
+                                        echo $url;
+                                    ?>
+                                    " alt="">
+                                    <a href="#" class="blog_item_date">
+                                        <p>{{$brt->tgl_rilis}}</p>
+                                    </a>
+                                </div>
+
+                                <div class="blog_details">
+                                    <a class="d-inline-block" href="/berita/{{$brt->judul_berita}}">
+                                        <h2>{{$brt->judul_berita}}</h2>
+                                    </a>
+                                    {{-- <p>{!!substr($brt->isi_berita, 0, 60)!!}...</p> --}}
+                                    <ul class="blog-info-link">
+                                        <li><a href="/berita/kategori/{{$brt->keterangan}}"><i class="fa fa-tag"></i>{{$brt->keterangan}}</a></li>
+                                    </ul>
+                                </div>
+                            </article>
+                            @endforeach
+                            @else
+                                <h3>Berita tidak ditemukan!</h3>
+                            @endif
+                            <nav class="blog-pagination justify-content-center d-flex">
+                                {{ $berita->links() }}
+                                {{-- <ul class="pagination">
+                                    <li class="page-item">
+                                        <a href="#" class="page-link" aria-label="Previous">
+                                            <i class="ti-angle-left"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">1</a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a href="#" class="page-link">2</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link" aria-label="Next">
+                                            <i class="ti-angle-right"></i>
+                                        </a>
+                                    </li>
+                                </ul> --}}
+                            </nav>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    @foreach ($berita as $brt)
-                    <div class="col-xl-4 col-lg-4 col-md-6">
-                        <div class="single-recent-cap mb-30">
-                            <div class="recent-img">
-                                <img src=
-                                "<?php
-                                    $url = JD\Cloudder\Facades\Cloudder::show($brt->ilustrasi, ['width'=>600, 'height'=>500, "crop"=>"scale"]);
-                                    echo $url;
-                                ?>
-                                " alt="">
-                            </div>
-                            <div class="recent-cap">
-                                <span>{{$brt->keterangan}}</span>
-                                <h4><a href="/berita/{{$brt->judul_berita}}">{{$brt->judul_berita}}</a></h4>
-                                <p>{{$brt->tgl_rilis}}</p>
-                            </div>
+                    <div class="col-lg-4">
+                        <div class="blog_right_sidebar">
+                            <aside class="single_sidebar_widget search_widget">
+                                <form method="POST" action="/berita/search">
+                                    {{ csrf_field() }}
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <input type="text" id="keyword" name="keyword" class="form-control" placeholder='Search Keyword'
+                                                onfocus="this.placeholder = ''"
+                                                onblur="this.placeholder = 'Search Keyword'">
+                                            <div class="input-group-append">
+                                                <button class="btns" type="submit"><i class="ti-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Search</button>
+                                </form>
+                            </aside>
+
+                            <aside class="single_sidebar_widget post_category_widget">
+                                <h4 class="widget_title">Kategori</h4>
+                                <ul class="list cat-list">
+                                    <li>
+                                        <a href="/berita/kategori/Berita" class="d-flex">
+                                            <p>Berita</p>
+                                            <p>({{$berita_count}})</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/berita/kategori/Pengumuman" class="d-flex">
+                                            <p>Pengumuman</p>
+                                            <p>({{$pengumuman_count}})</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </aside>
+
+                            <aside class="single_sidebar_widget popular_post_widget">
+                                <h3 class="widget_title">Terbaru</h3>
+
+                                @foreach($recent as $rcnt)
+                                <div class="media post_item">
+                                    <img src="
+                                    <?php
+                                        $url = JD\Cloudder\Facades\Cloudder::show($rcnt->ilustrasi, ['width'=>100, 'height'=>80, "crop"=>"scale"]);
+                                        echo $url;
+                                    ?>" alt="post">
+                                    <div class="media-body">
+                                        <a href="/berita/{{$rcnt->judul_berita}}">
+                                            <h3>{{$rcnt->judul_berita}}</h3>
+                                        </a>
+                                        <p>{{$rcnt->tgl_rilis}}</p>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </aside>
                         </div>
                     </div>
-                    @endforeach
                 </div>
             </div>
-        </div>
-        <!-- Recent Area End-->
+        </section>
+        <!--================Blog Area =================-->
 
         <!-- Request Back Start -->
         <div class="request-back-area section-padding30">

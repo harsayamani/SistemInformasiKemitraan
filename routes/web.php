@@ -141,3 +141,11 @@ Route::get('/tentang', 'PublicController@tentang');
 Route::get('/alur', 'PublicController@alur');
 
 Route::get('/faq', 'PublicController@faq');
+
+Route::get('/berita', 'PublicController@berita');
+
+Route::get('/berita/kategori/{keterangan}', 'PublicController@beritaKategori');
+
+Route::post('/berita/search', 'PublicController@searchBerita');
+
+Route::get('/berita/{judul_berita}', 'PublicController@detailBerita');
