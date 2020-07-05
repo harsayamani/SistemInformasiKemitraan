@@ -6,6 +6,7 @@ use App\DataMitra;
 use App\DataProposal;
 use App\Jaminan;
 use App\Users;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -57,14 +58,19 @@ class DataProposalController extends Controller
                         $mitra->username = $username;
 
                         if($mitra->save()){
-                            Mail::send('admin/emailPemberitahuanAkun', ['nama_pengaju' => $nama, 'username'=>$username, 'email'=>$email, 'password'=>$password], function ($message) use ($request)
-                            {
-                                $message->subject('Informasi Akun Mitra Sistem Kemitraan LEN Industri');
-                                $message->from('harsoftdev@gmail.com', 'Sistem Kemitraan | LEN Industri.');
-                                $message->to(DataProposal::findOrFail($request->no_proposal)->email);
-                            });
 
-                            return redirect('/admin/kelola/proposal')->with('alert-success', 'Proposal '.$proposal->nama_pengaju.' sudah disetujui!');
+                            try{
+                                Mail::send('admin/emailPemberitahuanAkun', ['nama_pengaju' => $nama, 'username'=>$username, 'email'=>$email, 'password'=>$password], function ($message) use ($request)
+                                {
+                                    $message->subject('Informasi Akun Mitra Sistem Kemitraan LEN Industri');
+                                    $message->from('harsoftdev@gmail.com', 'Sistem Kemitraan | LEN Industri.');
+                                    $message->to(DataProposal::findOrFail($request->no_proposal)->email);
+                                });
+
+                                return redirect('/admin/kelola/proposal')->with('alert-success', 'Proposal '.$proposal->nama_pengaju.' sudah disetujui!');
+                            }catch(Exception $e){
+                                return redirect()->back()->with('Terjadi kesalahan : '.$e.'');
+                            }
                         }
                     }
                 }

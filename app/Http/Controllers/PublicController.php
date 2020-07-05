@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Berita;
+use App\DataProposal;
 use App\FAQ;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use UxWeb\SweetAlert\SweetAlert;
 
@@ -25,7 +27,9 @@ class PublicController extends Controller
         $faq->status = 0;
 
         if($faq->save()){
-            return redirect()->back()->with('alert-success', 'Pertanyaan telah dikirim!');
+            return redirect()->back()->with('alert-modal-success', 'Pertanyaan telah dikirim!');
+        }else{
+            return redirect()->back()->with('alert-danger', 'Terjadi kesalahan!');
         }
     }
 
@@ -86,5 +90,40 @@ class PublicController extends Controller
         $pengumuman_count = Berita::where('keterangan', 'Pengumuman')->get()->count();
 
         return view('user/detailBerita', compact('berita', 'recent', 'berita_count', 'pengumuman_count'));
+    }
+
+    public function registrasi(){
+        return view('user/registrasi');
+    }
+
+    public function registrasiProses(Request $request){
+        $this->validate($request, [
+            'nama_pengaju' => '|required|max:50',
+            'email' => '|required|email|unique:data_proposal',
+            'unit_usaha' => '|required|max:50',
+            'dana_aju' => '|required|max:12'
+        ]);
+
+        $nama_pengaju = $request->nama_pengaju;
+        $email = $request->email;
+        $unit_usaha = $request->unit_usaha;
+        $dana_aju = $request->dana_aju;
+        $kegiatan = $request->kegiatan;
+
+        $proposal = new DataProposal();
+        $proposal->no_proposal = random_int(100000000, 999999999);
+        $proposal->nama_pengaju = $nama_pengaju;
+        $proposal->email = $email;
+        $proposal->tgl_pengajuan = Carbon::now()->format('Y-m-d');
+        $proposal->unit_usaha = $unit_usaha;
+        $proposal->kegiatan = $kegiatan;
+        $proposal->dana_aju = $dana_aju;
+        $proposal->status = 0;
+
+        if($proposal->save()){
+            return redirect()->back()->with('alert-modal-success', 'Registrasi berhasil dilakukan. Mohin menunggu untuk mendapat konfirmasi selanjutnya lewat email!');
+        }else{
+            return redirect()->back()->with('alert-danger', 'Terjadi kesalahan!');
+        }
     }
 }

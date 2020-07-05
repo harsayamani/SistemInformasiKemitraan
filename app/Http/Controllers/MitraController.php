@@ -380,6 +380,8 @@ class MitraController extends Controller
             $id_pinjaman = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('id_pinjaman');
             $lama_angsuran = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('lama_angsuran');
             $angsuran = Angsuran::where('id_pinjaman', $id_pinjaman)->get();
+            $pengajuan = PengajuanDana::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->first();
+            $pinjaman = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->first();
 
             $angs_finish_count = Angsuran::where('id_pinjaman', $id_pinjaman)->where('status', 2)->get()->count();
 
@@ -389,7 +391,7 @@ class MitraController extends Controller
                 $pinjaman->save();
             }
 
-            return view('mitra/angsuran', compact('angsuran'));
+            return view('mitra/angsuran', compact('angsuran', 'pengajuan', 'pinjaman'));
         }
     }
 

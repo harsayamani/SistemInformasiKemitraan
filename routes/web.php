@@ -149,3 +149,7 @@ Route::get('/berita/kategori/{keterangan}', 'PublicController@beritaKategori');
 Route::post('/berita/search', 'PublicController@searchBerita');
 
 Route::get('/berita/{judul_berita}', 'PublicController@detailBerita');
+
+Route::get('/daftar', 'PublicController@registrasi');
+
+Route::post('/daftar/proses', 'PublicController@registrasiProses');

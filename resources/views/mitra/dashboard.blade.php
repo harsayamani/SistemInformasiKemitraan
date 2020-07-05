@@ -88,7 +88,7 @@
           <div class="overdue card">
             <div class="card-body">
               <center><h3>Pengajuan Pinjaman</h3></center>
-              @if ($pengajuan == null || $pengajuan->count()<1 || $pinjaman->status == 3 && $pengajuan->status == 2)
+              @if ($pengajuan == null || $pengajuan->count()<1 || $pengajuan != null && $pinjaman != null && $pinjaman->status == 3 && $pengajuan->status == 2)
                 <div class="number text-center">Belum Diajukan</div>
               @elseif($pengajuan->status == 0)
                 <div class="number text-center">Sedang Diajukan</div>
@@ -105,7 +105,7 @@
               <div class="card-body">
                 <center><h3>Status Pinjaman Terakhir</h3></center>
                 <div class="chart text-center">
-                    @if ($pinjaman == null || $pinjaman->count()<1 || $pengajuan->status < 2)
+                    @if ($pinjaman == null || $pinjaman->count()<1 || $pengajuan != null && $pengajuan->status < 2)
                         <div class="text"><b>Pinjaman belum diproses!</b></div>
                         <canvas id="pieChart"></canvas>
                     @else
