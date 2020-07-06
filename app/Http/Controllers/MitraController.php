@@ -6,6 +6,7 @@ use App\Angsuran;
 use App\DataMitra;
 use App\DataProposal;
 use App\HistoriAngsuran;
+use App\HistoriPinjaman;
 use App\PengajuanDana;
 use App\Pinjaman;
 use App\Users;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
+use JD\Cloudder\Facades\Cloudder;
 use Veritrans_Config;
 use Veritrans_Snap;
 
@@ -176,7 +178,10 @@ class MitraController extends Controller
                 $pinjaman = [];
             }
 
-            return view('mitra/dashboard', compact('mitra', 'pengajuan', 'pinjaman'));
+            $pinjaman_count = Pinjaman::where('no_pk', $no_pk)->get()->count();
+            $angsuran_count = Angsuran::where('no_pk', $no_pk)->where('status', 0)->get()->count();
+
+            return view('mitra/dashboard', compact('mitra', 'pengajuan', 'pinjaman', 'pinjaman_count', 'angsuran_count'));
         }
     }
 
@@ -199,6 +204,22 @@ class MitraController extends Controller
         if(!Session::get('loginMitra')){
             return redirect('/mitra/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
         }else{
+            $this->validate($request, [
+                'ktp' => '|required|min:16|max:16',
+                'nama_pengaju' => '|required|max:50',
+                'jenis_kelamin' => '|required',
+                'tempat_lahir' => '|required',
+                'tgl_lahir' => '|required',
+                'no_telp' => '|required|min:11!numeric',
+                'alamat_kantor' => '|required|max:255',
+                'lokasi_usaha' => '|required|max:255',
+                'ahli_waris' => '|required|max:50',
+                'jumlah_karyawan' => '|required|numeric|regex:/^([1-9][0-9]+)/',
+                'no_rek' => '|required|numeric',
+                'unit_usaha' => '|required|max:50',
+
+            ]);
+
             $no_pk = $request->no_pk;
             $ktp = $request->ktp;
             $nama_pengaju = $request->nama_pengaju;
@@ -218,45 +239,94 @@ class MitraController extends Controller
             $no_jaminan = $request->no_jaminan;
             $kegiatan = $request->kegiatan;
             $unit_usaha = $request->unit_usaha;
+            $pas_foto = $request->pas_foto;
 
-            $mitra = DataMitra::findOrFail($no_pk);
+            if($pas_foto == null){
+                $mitra = DataMitra::findOrFail($no_pk);
 
-            $users = Users::findOrFail($username);
-            $users->email = $email;
+                $users = Users::findOrFail($username);
+                $users->email = $email;
 
-            if($users->save()){
-                $jamin = Jaminan::findOrFail($no_jaminan);
-                $jamin->jaminan = $jaminan;
-                $jamin->pemilik_jaminan = $pemilik_jaminan;
+                if($users->save()){
+                    $jamin = Jaminan::findOrFail($no_jaminan);
+                    $jamin->jaminan = $jaminan;
+                    $jamin->pemilik_jaminan = $pemilik_jaminan;
 
-                if($jamin->save()){
-                    $proposal = DataProposal::findOrFail($mitra->no_proposal);
-                    $proposal->nama_pengaju = $nama_pengaju;
-                    $proposal->kegiatan = $kegiatan;
-                    $proposal->unit_usaha = $unit_usaha;
+                    if($jamin->save()){
+                        $proposal = DataProposal::findOrFail($mitra->no_proposal);
+                        $proposal->nama_pengaju = $nama_pengaju;
+                        $proposal->kegiatan = $kegiatan;
+                        $proposal->unit_usaha = $unit_usaha;
 
-                    if($proposal->save()){
-                        $mitra->ktp = $ktp;
-                        $mitra->jenis_kelamin = $jenis_kelamin;
-                        $mitra->tempat_lahir = $tempat_lahir;
-                        $mitra->tgl_lahir = $tgl_lahir;
-                        $mitra->no_telp = $no_telp;
-                        $mitra->alamat_kantor =  $alamat_kantor;
-                        $mitra->lokasi_usaha = $lokasi_usaha;
-                        $mitra->ahli_waris = $ahli_waris;
-                        $mitra->jumlah_karyawan = $jumlah_karyawan;
-                        $mitra->no_rek = $no_rek;
+                        if($proposal->save()){
+                            $mitra->ktp = $ktp;
+                            $mitra->jenis_kelamin = $jenis_kelamin;
+                            $mitra->tempat_lahir = $tempat_lahir;
+                            $mitra->tgl_lahir = $tgl_lahir;
+                            $mitra->no_telp = $no_telp;
+                            $mitra->alamat_kantor =  $alamat_kantor;
+                            $mitra->lokasi_usaha = $lokasi_usaha;
+                            $mitra->ahli_waris = $ahli_waris;
+                            $mitra->jumlah_karyawan = $jumlah_karyawan;
+                            $mitra->no_rek = $no_rek;
 
-                        if($mitra->save()){
-                            return redirect('/mitra/dataMitra')->with('alert-modal-success', 'Data mitra berhasil disimpan!');
+                            if($mitra->save()){
+                                return redirect('/mitra/dataMitra')->with('alert-modal-success', 'Data mitra berhasil disimpan!');
+                            }else{
+                                return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
+                            }
                         }else{
                             return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
                         }
                     }else{
                         return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
                     }
-                }else{
-                    return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
+                }
+            }else{
+                $mitra = DataMitra::findOrFail($no_pk);
+
+                $users = Users::findOrFail($username);
+                $users->email = $email;
+
+                if($users->save()){
+                    $jamin = Jaminan::findOrFail($no_jaminan);
+                    $jamin->jaminan = $jaminan;
+                    $jamin->pemilik_jaminan = $pemilik_jaminan;
+
+                    if($jamin->save()){
+                        $proposal = DataProposal::findOrFail($mitra->no_proposal);
+                        $proposal->nama_pengaju = $nama_pengaju;
+                        $proposal->kegiatan = $kegiatan;
+                        $proposal->unit_usaha = $unit_usaha;
+
+                        if($proposal->save()){
+
+                            Cloudder::upload($pas_foto);
+                            $url_foto = Cloudder::getPublicId();
+
+                            $mitra->ktp = $ktp;
+                            $mitra->pas_foto = $url_foto;
+                            $mitra->jenis_kelamin = $jenis_kelamin;
+                            $mitra->tempat_lahir = $tempat_lahir;
+                            $mitra->tgl_lahir = $tgl_lahir;
+                            $mitra->no_telp = $no_telp;
+                            $mitra->alamat_kantor =  $alamat_kantor;
+                            $mitra->lokasi_usaha = $lokasi_usaha;
+                            $mitra->ahli_waris = $ahli_waris;
+                            $mitra->jumlah_karyawan = $jumlah_karyawan;
+                            $mitra->no_rek = $no_rek;
+
+                            if($mitra->save()){
+                                return redirect('/mitra/dataMitra')->with('alert-modal-success', 'Data mitra berhasil disimpan!');
+                            }else{
+                                return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
+                            }
+                        }else{
+                            return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
+                        }
+                    }else{
+                        return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
+                    }
                 }
             }
         }
@@ -291,6 +361,9 @@ class MitraController extends Controller
                         return redirect('mitra/dashboard')->with('alert-modal-warning', 'Anda sudah mengajukan pinjaman dana!');
                     }else{
                         if($mitra->ktp == null){
+                            return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
+
+                        }elseif($mitra->pas_foto== null){
                             return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                         }elseif($mitra->jenis_kelamin == null){
                             return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
@@ -378,17 +451,24 @@ class MitraController extends Controller
         }else{
             $no_pk = Session::get('noPK');
             $id_pinjaman = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('id_pinjaman');
-            $lama_angsuran = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('lama_angsuran');
-            $angsuran = Angsuran::where('id_pinjaman', $id_pinjaman)->get();
-            $pengajuan = PengajuanDana::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->first();
-            $pinjaman = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->first();
 
-            $angs_finish_count = Angsuran::where('id_pinjaman', $id_pinjaman)->where('status', 2)->get()->count();
+            if(!empty($id_pinjaman)){
+                $lama_angsuran = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('lama_angsuran');
+                $angsuran = Angsuran::where('id_pinjaman', $id_pinjaman)->get();
+                $pengajuan = PengajuanDana::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->first();
+                $pinjaman = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->first();
 
-            if($angs_finish_count == $lama_angsuran){
-                $pinjaman = Pinjaman::findOrFail($id_pinjaman);
-                $pinjaman->status == 3;
-                $pinjaman->save();
+                $angs_finish_count = Angsuran::where('id_pinjaman', $id_pinjaman)->where('status', 2)->get()->count();
+
+                if($angs_finish_count == $lama_angsuran){
+                    $pinjaman = Pinjaman::findOrFail($id_pinjaman);
+                    $pinjaman->status == 3;
+                    $pinjaman->save();
+                }
+            }else{
+                $angsuran = [];
+                $pengajuan = null;
+                $pinjaman = null;
             }
 
             return view('mitra/angsuran', compact('angsuran', 'pengajuan', 'pinjaman'));
@@ -444,6 +524,17 @@ class MitraController extends Controller
                     'snap_token' => $snap_token
                 ], 200);
             }
+        }
+    }
+
+    public function riwayatTransaksi(){
+        if(!Session::get('loginMitra')){
+            return redirect('/mitra/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
+        }else{
+            $pinjaman = HistoriPinjaman::orderBy('id_pinjaman', 'desc')->get();
+            $angsuran = HistoriAngsuran::orderBy('id_angsuran', 'desc')->get();
+
+            return view('mitra/riwayat', compact('angsuran', 'pinjaman'));
         }
     }
 }

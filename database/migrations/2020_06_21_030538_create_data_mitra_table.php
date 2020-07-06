@@ -16,6 +16,7 @@ class CreateDataMitraTable extends Migration
         Schema::create('data_mitra', function (Blueprint $table) {
             $table->string('no_pk')->primary();
             $table->bigInteger('ktp')->nullable();
+            $table->string('pas_foto')->nullable();
             $table->string('jenis_kelamin', 1)->nullable();
             $table->integer('tempat_lahir')->nullable();
             $table->string('tgl_lahir')->nullable();

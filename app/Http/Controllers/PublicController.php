@@ -101,7 +101,7 @@ class PublicController extends Controller
             'nama_pengaju' => '|required|max:50',
             'email' => '|required|email|unique:data_proposal',
             'unit_usaha' => '|required|max:50',
-            'dana_aju' => '|required|max:12'
+            'dana_aju' => '|required|min:6|max:12|regex:/^([1-9][0-9]+)/'
         ]);
 
         $nama_pengaju = $request->nama_pengaju;
@@ -114,14 +114,14 @@ class PublicController extends Controller
         $proposal->no_proposal = random_int(100000000, 999999999);
         $proposal->nama_pengaju = $nama_pengaju;
         $proposal->email = $email;
-        $proposal->tgl_pengajuan = Carbon::now()->format('Y-m-d');
+        $proposal->tgl_pengajuan = Carbon::now()->format('d, M Y');
         $proposal->unit_usaha = $unit_usaha;
         $proposal->kegiatan = $kegiatan;
         $proposal->dana_aju = $dana_aju;
         $proposal->status = 0;
 
         if($proposal->save()){
-            return redirect()->back()->with('alert-modal-success', 'Registrasi berhasil dilakukan. Mohin menunggu untuk mendapat konfirmasi selanjutnya lewat email!');
+            return redirect()->back()->with('alert-modal-success', 'Registrasi berhasil dilakukan. Mohon menunggu untuk mendapat konfirmasi selanjutnya lewat email!');
         }else{
             return redirect()->back()->with('alert-danger', 'Terjadi kesalahan!');
         }

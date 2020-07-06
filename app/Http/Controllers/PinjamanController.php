@@ -24,7 +24,7 @@ class PinjamanController extends Controller
         }else{
             $pengajuan = PengajuanDana::orderBy('status', 'asc')->get();
             $setuju = PengajuanDana::where('status', 1)->get();
-            $tgl_sekarang = Carbon::now();
+            $tgl_sekarang = Carbon::now()->format('Y-m-d');
             $pinjaman = Pinjaman::orderBy('status', 'asc')->get();
 
             return view('admin/kelolaPinjaman', compact('pengajuan', 'setuju', 'tgl_sekarang', 'pinjaman'));
@@ -86,21 +86,19 @@ class PinjamanController extends Controller
             $nama = $pengajuan->dataMitra->dataProposal->nama_pengaju;
             $persetujuan = "TIDAK DISETUJUI";
 
-            if($pengajuan->delete($pengajuan)){
-                try{
-                    Mail::send('admin/emailPengajuanDana', ['nama' => $nama, 'persetujuan'=>$persetujuan], function ($message) use ($request)
-                    {
-                        $message->subject('Konfirmasi Status Pengajuan Dana Sistem Kemitraan LEN Industri');
-                        $message->from('harsoftdev@gmail.com', 'Sistem Kemitraan | LEN Industri.');
-                        $message->to(PengajuanDana::findOrFail($request->id_pengajuan_dana)->dataMitra->users->email);
-                    });
+            $pengajuan->delete($pengajuan);
 
-                    return redirect('/admin/kelola/pinjaman')->with('alert-success', 'Pengajuan pinjaman dihapus!');
-                }catch(Exception $e){
-                    return redirect('/admin/kelola/pinjaman')->with('alert-denger', 'Terjadi kesalahan : '.$e.'');
-                }
-            }else{
-                return redirect('/admin/kelola/pinjaman')->with('alert-danger', 'Terjadi kesalahan!');
+            try{
+                Mail::send('admin/emailPengajuanDana', ['nama' => $nama, 'persetujuan'=>$persetujuan], function ($message) use ($request)
+                {
+                    $message->subject('Konfirmasi Status Pengajuan Dana Sistem Kemitraan LEN Industri');
+                    $message->from('harsoftdev@gmail.com', 'Sistem Kemitraan | LEN Industri.');
+                    $message->to(PengajuanDana::findOrFail($request->id_pengajuan_dana)->dataMitra->users->email);
+                });
+
+                return redirect('/admin/kelola/pinjaman')->with('alert-success', 'Pengajuan pinjaman dihapus!');
+            }catch(Exception $e){
+                return redirect('/admin/kelola/pinjaman')->with('alert-denger', 'Terjadi kesalahan : '.$e.'');
             }
         }
     }

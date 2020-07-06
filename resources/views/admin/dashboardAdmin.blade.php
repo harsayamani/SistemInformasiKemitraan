@@ -2,7 +2,7 @@
 
 @section('titleAdmin', 'Dashboard')
 
-@section('dasboardActive', 'active')
+@section('active1', 'active')
 
 @section('bigTitle', 'Dashboard')
 

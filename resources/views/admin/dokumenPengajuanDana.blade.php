@@ -153,13 +153,18 @@
         <span id="_14.7" style="font-weight:bold; font-family:Times New Roman; font-size:14.7px; color:#000000">
         PROPOSAL PERMOHONAN BANTUAN PKBL PT. LEN INDUSTRI (PERSERO)</span>
         </div>
-        {{-- <div class="pos" id="_553:1388" style="top:1250;left:603">
-        <img src="/foto.jpg" style="width: 2cm; height:3cm">
+        <div class="pos" id="_553:1388" style="top:1250;left:603">
+        <img src="
+        <?php
+            $url = JD\Cloudder\Facades\Cloudder::show($mitra->pas_foto, ['width'=>200, 'height'=>300, "crop"=>"scale"]);
+            echo $url;
+        ?>
+        " style="width: 2cm; height:3cm">
         </div>
         <div class="pos" id="_553:1388" style="top:1388;left:553">
         <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
         Foto yang mengajukan proposal</span>
-        </div> --}}
+        </div>
         <div class="pos" id="_100:1426" style="top:1426;left:100">
         <span id="_14.7" style="font-weight:bold; font-family:Times New Roman; font-size:14.7px; color:#000000">
         PEMOHON/ PEMILIK USAHA </span>

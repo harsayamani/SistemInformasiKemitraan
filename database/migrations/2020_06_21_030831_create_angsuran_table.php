@@ -22,6 +22,7 @@ class CreateAngsuranTable extends Migration
             $table->double('jumlah_angsuran');
             $table->date('tgl_angsuran')->nullable();
             $table->double('utang');
+            $table->string('token')->nullable();
             $table->integer('status');
             $table->timestamps();
         });

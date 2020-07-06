@@ -53,6 +53,7 @@
               <li class="@yield('active2')"><a href="/mitra/dataMitra"> <i class="fa fa-user"></i>Data Mitra</a></li>
               <li class="@yield('active3')"><a href="/mitra/pinjaman"> <i class="fa fa-list"></i>Pinjaman</a></li>
               <li class="@yield('active4')"><a href="/mitra/angsuran"> <i class="fa fa-list"></i>Angsuran</a></li>
+              <li class="@yield('active5')"><a href="/mitra/riwayat"> <i class="fa fa-clock-o"></i>Riwayat</a></li>
             </ul>
         </nav>
 

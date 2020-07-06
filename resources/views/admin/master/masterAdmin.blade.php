@@ -233,7 +233,7 @@
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <img src="/adminlte/img/avatar3.png" class="img-circle" alt="User Image" />
+                                    <img src="/adminlte/img/avatar5.png" class="img-circle" alt="User Image" />
                                     <p>
                                         {{Session::get('namaAdmin')}}
                                     </p>
@@ -262,7 +262,7 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left info">
-                            <p>Admininstrator Sistem Kemitraan</p>
+                            <p>Admininstrator</p>
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
@@ -278,7 +278,7 @@
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li class="@yield('dashboardActive')">
+                        <li class="@yield('active1')">
                             <a href="/admin/dashboard">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
@@ -316,7 +316,7 @@
 
                         <li class="@yield('faqActive')">
                             <a href="/admin/kelola/faq">
-                                <i class="fa fa-tag"></i> <span>Kelola FAQ</span>
+                                <i class="fa fa-question"></i> <span>Kelola FAQ</span>
                             </a>
                         </li>
                     </ul>

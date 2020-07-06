@@ -111,6 +111,8 @@ Route::get('/mitra/gantiPasswordLupa/{username}', 'MitraController@gantiPassword
 
 Route::post('/mitra/gantiPasswordLupa/proses', 'MitraController@gantiPasswordLupaProses');
 
+Route::get('/mitra/riwayat', 'MitraController@riwayatTransaksi');
+
 //Route Data Mitra
 
 Route::get('/mitra/dataMitra', 'MitraController@dataMitra');

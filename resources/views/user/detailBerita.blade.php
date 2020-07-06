@@ -28,10 +28,10 @@
             <div class="single-post">
                 <div class="feature-img">
                 <img class="img-fluid" src="
-                <?php
+                        <?php
                             $url = JD\Cloudder\Facades\Cloudder::show($berita->ilustrasi, ['width'=>750, 'height'=>375, "crop"=>"scale"]);
                             echo $url;
-                            ?>
+                        ?>
                 " alt="">
                 </div>
                 <div class="blog_details">

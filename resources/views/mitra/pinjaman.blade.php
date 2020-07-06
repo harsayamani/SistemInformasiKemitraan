@@ -14,6 +14,10 @@
         <div class="alert alert-warning" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
         </div>
+        @elseif ($mitra->pas_foto == null)
+        <div class="alert alert-warning" role="alert">
+            Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+        </div>
         @elseif ($mitra->jenis_kelamin == null)
         <div class="alert alert-warning" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
@@ -39,6 +43,14 @@
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
         </div>
         @elseif ($mitra->no_rek == null)
+        <div class="alert alert-warning" role="alert">
+            Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+        </div>
+        @elseif ($mitra->jaminan->jaminan == null)
+        <div class="alert alert-warning" role="alert">
+            Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+        </div>
+        @elseif ($mitra->jaminan->pemilik_jaminan == null)
         <div class="alert alert-warning" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
         </div>

@@ -14,6 +14,10 @@
         <div class="alert alert-warning" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
         </div>
+        @elseif ($mitra->pas_foto == null)
+        <div class="alert alert-warning" role="alert">
+            Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+        </div>
         @elseif ($mitra->jenis_kelamin == null)
         <div class="alert alert-warning" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
@@ -39,6 +43,14 @@
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
         </div>
         @elseif ($mitra->no_rek == null)
+        <div class="alert alert-warning" role="alert">
+            Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+        </div>
+        @elseif ($mitra->jaminan->jaminan == null)
+        <div class="alert alert-warning" role="alert">
+            Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+        </div>
+        @elseif ($mitra->jaminan->pemilik_jaminan == null)
         <div class="alert alert-warning" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
         </div>
@@ -77,10 +89,34 @@
 
                 <div class="row form-group">
                     <div class="col col-md-3">
+                        @if($mitra->pas_foto != null)
+                        <img src="
+                        <?php
+                            $url = JD\Cloudder\Facades\Cloudder::show($mitra->pas_foto, ['width'=>100, 'height'=>150, "crop"=>"scale"]);
+                            echo $url;
+                        ?>
+                        " alt="..." class="img-fluid">
+                        @else
+                            <img src="/adminlte/img/avatar5.png" alt="..." width="100px" height="150px" class="img-fluid">
+                        @endif
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <hr>
+                        <input type="file" id="pas_foto" name="pas_foto" placeholder="Masukkan pas foto" class="form-control-file">
+                        <small class="form-text text-muted">Maks 2MB!</small>
+                        <hr>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
                         <label for="text-input" class=" form-control-label">Nomor KTP</label>
                     </div>
                     <div class="col-12 col-md-6">
-                        <input type="text" id="ktp" name="ktp" placeholder="Masukkan nomor KTP" class="form-control" value="{{$mitra->ktp}}" required>
+                        <input type="number" id="ktp" name="ktp" placeholder="Masukkan nomor KTP" class="form-control" value="{{$mitra->ktp}}" required>
                         <small class="form-text text-muted">Tuliskan nomor KTP!</small>
                     </div>
                 </div>
