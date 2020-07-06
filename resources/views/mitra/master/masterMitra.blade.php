@@ -66,31 +66,43 @@
           </header>
 
           @if ($errors->any())
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{$error}}</li>
                     @endforeach
                 </ul>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
             </div>
           @endif
 
           @if (session()->has('alert-success'))
-              <div class="alert alert-success" role="alert">
-                  {{session()->get('alert-success')}}
-              </div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{session()->get('alert-success')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
           @endif
 
           @if (session()->has('alert-danger'))
-              <div class="alert alert-danger" role="alert">
-                  {{session()->get('alert-danger')}}
-              </div>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{session()->get('alert-danger')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
           @endif
 
           @if (session()->has('alert-warning'))
-              <div class="alert alert-warning" role="alert">
-                  {{session()->get('alert-warning')}}
-              </div>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{session()->get('alert-warning')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
           @endif
 
           @if (Session()->has('alert-modal-success'))

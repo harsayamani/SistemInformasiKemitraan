@@ -43,22 +43,12 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input class="form-control" name="unit_usaha" id="unit_usaha" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Unit Usahan'" placeholder="Unit Usaha">
+                                <input class="form-control" name="unit_usaha" id="unit_usaha" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Unit Usaha'" placeholder="Unit Usaha">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <select class="form-control" name="kegiatan" id="kegiatan"  required>
-                                    <option value="">---Pilih Sektor Usaha---</option>
-                                    <option value="Perdagangan">Perdagangan</option>
-                                    <option value="Pariwisata">Pariwisata</option>
-                                    <option value="Kelautan">Kelautan</option>
-                                    <option value="Kehutanan">Kehutanan</option>
-                                    <option value="Industri Textil">Industri Textil</option>
-                                    <option value="Industri Pangan">Industri Pangan</option>
-                                    <option value="Kontruksi">Konstruksi</option>
-                                    <option value="UMKM">UMKM</option>
-                                </select>
+                                <input class="form-control" name="kegiatan" id="kegiatan" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Sektor Usaha'" placeholder="Sektor Usaha">
                             </div>
                         </div>
                         <div class="col-12">
@@ -83,7 +73,7 @@
                 <div class="media contact-info">
                     <span class="contact-info__icon"><i class="ti-tablet"></i></span>
                     <div class="media-body">
-                        <h3>+1 253 565 2365</h3>
+                        <h3>+62-22-5202682</h3>
                         <p>Mon to Fri 9am to 6pm</p>
                     </div>
                 </div>

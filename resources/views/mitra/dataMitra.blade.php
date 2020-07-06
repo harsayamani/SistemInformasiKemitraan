@@ -11,52 +11,88 @@
 <section class="forms">
     <div class="container-fluid">
         @if ($mitra->ktp == null)
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         @elseif ($mitra->pas_foto == null)
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         @elseif ($mitra->jenis_kelamin == null)
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         @elseif ($mitra->tempat_lahir == null)
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         @elseif ($mitra->tgl_lahir == null)
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         @elseif ($mitra->no_telp == null)
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         @elseif ($mitra->ahli_waris == null)
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         @elseif ($mitra->jumlah_karyawan == null)
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         @elseif ($mitra->no_rek == null)
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         @elseif ($mitra->jaminan->jaminan == null)
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         @elseif ($mitra->jaminan->pemilik_jaminan == null)
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         @else
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
             Data mitra sudah lengkap
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         @endif
     </div>
@@ -168,7 +204,7 @@
                         <label for="text-input" class=" form-control-label">Nomor Telepon</label>
                     </div>
                     <div class="col-12 col-md-6">
-                    <input type="text" id="no_telp" name="no_telp" placeholder="Masukkan nomor telepon" class="form-control" required value="{{$mitra->no_telp}}">
+                    <input type="number" id="no_telp" name="no_telp" placeholder="Masukkan nomor telepon" class="form-control" required value="{{$mitra->no_telp}}">
                         <small class="form-text text-muted">Tuliskan nomor telepon!</small>
                     </div>
                 </div>

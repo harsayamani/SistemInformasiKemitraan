@@ -53,7 +53,7 @@
             <div class="col-xl-5 col-lg-5">
                 <div class="trusted-caption">
                    <h2>Lebih dari 100 mitra telah bergabung bersama kami</h2>
-                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru  dolor sit amet, consectetur adipn.</p>
+                   <p>Kembangakan usaha anda bersama program kemitraan PT. Len Industri, dapatkan kesempatan yg besar untuk mengelola usaha anda, mendapatkan pelatihan usaha dan kelebihan lainnya dengan bergabung di program kemitraan kami.</p>
                     {{-- <a href="#" class="btn trusted-btn">Learn More</a> --}}
                 </div>
             </div>

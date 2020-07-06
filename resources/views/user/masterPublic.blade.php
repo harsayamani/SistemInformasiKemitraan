@@ -230,32 +230,19 @@
                         </div>
                       </div>
                    </div>
-                   <div class="col-xl-2 col-lg-2 col-md-4 col-sm-5">
-                       <div class="single-footer-caption mb-50">
-                           <div class="footer-tittle">
-                               <h4>Company</h4>
-                               <ul>
-                                   <li><a href="#">Home</a></li>
-                                   <li><a href="#">About Us</a></li>
-                                   <li><a href="#">Services</a></li>
-                                   <li><a href="#">Cases</a></li>
-                                   <li><a href="#">Contact Us</a></li>
-                               </ul>
-                           </div>
-                       </div>
-                   </div>
+
                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
                        <div class="single-footer-caption mb-50">
-                           <div class="footer-tittle">
-                               <h4>Services</h4>
-                               <ul>
-                                   <li><a href="#">Commercial Cleaning</a></li>
-                                   <li><a href="#">Office Cleaning</a></li>
-                                   <li><a href="#">Building Cleaning</a></li>
-                                   <li><a href="#">Floor Cleaning</a></li>
-                                   <li><a href="#">Apartment Cleaning</a></li>
-                               </ul>
-                           </div>
+                            <div class="footer-tittle">
+                                <h4>Program Kemitraan</h4>
+                                <ul>
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="/tentang">Tentang</a></li>
+                                    <li><a href="/alur">Alur</a></li>
+                                    <li><a href="/berita">Berita</a></li>
+                                    <li><a href="/faq">FAQ</a></li>
+                                </ul>
+                            </div>
                        </div>
                    </div>
                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
@@ -263,7 +250,8 @@
                            <div class="footer-tittle">
                                <h4>Get in Touch</h4>
                                <ul>
-                                <li><a href="#">152-515-6565</a></li>
+                                <li><a href="#">Telp: +62-22-5202682</a></li>
+                                <li><a href="#">Fax : +62-22-5202695 </a></li>
                                 <li><a href="#">marketing@len.co.id</a></li>
                                 <li><a href="#">Soekarno-Hatta St No.442, Pasirluyu, Regol, Bandung City, West Java 40254</a></li>
                             </ul>
