@@ -197,7 +197,7 @@
                                         <div class="row form-group">
                                             <label class="control-label col-md-2" for="nominal_pinjaman">Nominal</label>
                                             <div class="col-12 col-md-6">
-                                                <input type="number" class="form-control" id="nominal_pinjaman" name="nominal_pinjaman" readonly>
+                                                <input type="number" class="form-control" id="nominal_pinjaman" name="nominal_pinjaman" required>
                                             </div>
                                         </div>
 
@@ -384,7 +384,7 @@
 
                     var total_pinjaman = nominal_pinjaman + (nominal_pinjaman*(bunga/100));
                     var nominal_angsuran = total_pinjaman/lama_angsuran;
-                    $('#nominal_angsuran').val(nominal_angsuran.toFixed(2))
+                    $('#nominal_angsuran').val(nominal_angsuran.toFixed(0))
                 });
 
                 $('#nominal_pinjaman').keyup(function(){
@@ -394,7 +394,7 @@
 
                     var total_pinjaman = nominal_pinjaman + (nominal_pinjaman*(bunga/100));
                     var nominal_angsuran = total_pinjaman/lama_angsuran;
-                    $('#nominal_angsuran').val(nominal_angsuran.toFixed(2))
+                    $('#nominal_angsuran').val(nominal_angsuran.toFixed(0))
                 });
 
                 $('#lama_angsuran').keyup(function(){
