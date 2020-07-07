@@ -213,7 +213,7 @@ class PinjamanController extends Controller
         }
     }
 
-    public function notificationHandler()
+    public function notificationHandler(Request $request)
     {
         Veritrans_Config::$serverKey = config('services.midtrans.serverKey');
         Veritrans_Config::$isProduction = config('services.midtrans.isProduction');
@@ -226,72 +226,72 @@ class PinjamanController extends Controller
         $orderId = $notif->order_id;
         $fraud = $notif->fraud_status;
 
-        // $pinjaman = Pinjaman::where('id_pinjaman', $orderId)->first();
-        // $angsuran = Angsuran::fwhere('id_angsuran', $orderId)->first();
+        $pinjaman = Pinjaman::where('id_pinjaman', $orderId)->firstOrFail();
+        $angsuran = Angsuran::fwhere('id_angsuran', $orderId)->firstOrFail();
 
-        // if(!empty($pinjaman) && empty($angsuran)){
-        //     if ($transaction == 'capture') {
+        if($pinjaman!=null && $angsuran==null){
+            if ($transaction == 'capture') {
 
-        //         // For credit card transaction, we need to check whether transaction is challenge by FDS or not
-        //         if ($type == 'credit_card') {
+                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+                if ($type == 'credit_card') {
 
-        //           if($fraud == 'challenge') {
-        //             $pinjaman->status = 1;
-        //             $pinjaman->save();
-        //           } else {
-        //             $pinjaman->status = 2;
-        //             $pinjaman->save();
-        //           }
+                  if($fraud == 'challenge') {
+                    $pinjaman->status = 1;
+                    $pinjaman->save();
+                  } else {
+                    $pinjaman->status = 2;
+                    $pinjaman->save();
+                  }
 
-        //         }
+                }
 
-        //     } elseif ($transaction == 'settlement') {
-        //         $pinjaman->status = 2;
-        //         $pinjaman->save();
-        //     } elseif($transaction == 'pending'){
-        //         $pinjaman->status = 1;
-        //         $pinjaman->save();
-        //     } elseif ($transaction == 'deny') {
-        //         $pinjaman->status = 0;
-        //         $pinjaman->save();
-        //     } elseif ($transaction == 'expire') {
-        //         $pinjaman->status = 0;
-        //         $pinjaman->save();
+            } elseif ($transaction == 'settlement') {
+                $pinjaman->status = 2;
+                $pinjaman->save();
+            } elseif($transaction == 'pending'){
+                $pinjaman->status = 1;
+                $pinjaman->save();
+            } elseif ($transaction == 'deny') {
+                $pinjaman->status = 0;
+                $pinjaman->save();
+            } elseif ($transaction == 'expire') {
+                $pinjaman->status = 0;
+                $pinjaman->save();
 
-        //     } elseif ($transaction == 'cancel') {
-        //         $pinjaman->status = 0;
-        //         $pinjaman->save();
-        //     }
-        //     return;
-        // }elseif(!empty($angsuran) && empty($pinjaman)){
-        //     if ($transaction == 'capture') {
-        //         // For credit card transaction, we need to check whether transaction is challenge by FDS or not
-        //         if ($type == 'credit_card') {
+            } elseif ($transaction == 'cancel') {
+                $pinjaman->status = 0;
+                $pinjaman->save();
+            }
+            return;
+        }elseif($angsuran!=null && $pinjaman==null){
+            if ($transaction == 'capture') {
+                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+                if ($type == 'credit_card') {
 
-        //           if($fraud == 'challenge') {
-        //             $angsuran->status = 1;
-        //           } else {
-        //             $angsuran->status = 2;
-        //           }
+                  if($fraud == 'challenge') {
+                    $angsuran->status = 1;
+                  } else {
+                    $angsuran->status = 2;
+                  }
 
-        //         }
-        //     } elseif ($transaction == 'settlement') {
-        //         $angsuran->status = 2;
-        //         $angsuran->save();
-        //     } elseif($transaction == 'pending'){
-        //         $angsuran->status = 1;
-        //         $angsuran->save();
-        //     } elseif ($transaction == 'deny') {
-        //         $angsuran->status = 0;
-        //         $angsuran->save();
-        //     } elseif ($transaction == 'expire') {
-        //         $angsuran->status = 0;
-        //         $angsuran->save();
-        //     } elseif ($transaction == 'cancel') {
-        //         $angsuran->status = 0;
-        //         $angsuran->save();
-        //     }
-        //     return;
-        // }
+                }
+            } elseif ($transaction == 'settlement') {
+                $angsuran->status = 2;
+                $angsuran->save();
+            } elseif($transaction == 'pending'){
+                $angsuran->status = 1;
+                $angsuran->save();
+            } elseif ($transaction == 'deny') {
+                $angsuran->status = 0;
+                $angsuran->save();
+            } elseif ($transaction == 'expire') {
+                $angsuran->status = 0;
+                $angsuran->save();
+            } elseif ($transaction == 'cancel') {
+                $angsuran->status = 0;
+                $angsuran->save();
+            }
+            return;
+        }
     }
 }
