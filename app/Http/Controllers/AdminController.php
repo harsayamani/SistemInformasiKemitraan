@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Admin;
+use App\DataMitra;
+use App\Pinjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -59,7 +61,9 @@ class AdminController extends Controller
         if(!Session::get('loginAdmin')){
             return redirect('/admin/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
         }else{
-            return view('admin/dashboardAdmin');
+            $pinjaman_count = Pinjaman::get()->count();
+            $data_mitra_count = DataMitra::get()->count();
+            return view('admin/dashboardAdmin', compact('pinjaman_count', 'data_mitra_count'));
         }
     }
 

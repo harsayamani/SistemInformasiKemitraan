@@ -48,7 +48,7 @@
                                   <tr>
                                       <td>{{++$key}}</td>
                                       <td>{{$pij->id_pinjaman}}</td>
-                                      <td>{{$pij->pinjaman->update_at}}</td>
+                                      <td>{{$pij->created_at}}</td>
                                       <td>Rp.{{$pij->pinjaman->nominal_pinjaman}}</td>
                                       <td>Rp.{{$pij->pinjaman->nominal_angsuran}}</td>
                                       <td>{{$pij->pinjaman->lama_angsuran}}</td>

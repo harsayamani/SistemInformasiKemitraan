@@ -86,8 +86,6 @@ class PinjamanController extends Controller
             $nama = $pengajuan->dataMitra->dataProposal->nama_pengaju;
             $persetujuan = "TIDAK DISETUJUI";
 
-            $pengajuan->delete($pengajuan);
-
             try{
                 Mail::send('admin/emailPengajuanDana', ['nama' => $nama, 'persetujuan'=>$persetujuan], function ($message) use ($request)
                 {
@@ -95,7 +93,7 @@ class PinjamanController extends Controller
                     $message->from('harsoftdev@gmail.com', 'Sistem Kemitraan | LEN Industri.');
                     $message->to(PengajuanDana::findOrFail($request->id_pengajuan_dana)->dataMitra->users->email);
                 });
-
+                $pengajuan->delete($pengajuan);
                 return redirect('/admin/kelola/pinjaman')->with('alert-success', 'Pengajuan pinjaman dihapus!');
             }catch(Exception $e){
                 return redirect('/admin/kelola/pinjaman')->with('alert-denger', 'Terjadi kesalahan : '.$e.'');

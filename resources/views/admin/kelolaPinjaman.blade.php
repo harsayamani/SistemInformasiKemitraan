@@ -189,7 +189,7 @@
                                         <div class="row form-group">
                                             <label class="control-label col-md-2" for="bunga">Bunga</label>
                                             <div class="col-12 col-md-2">
-                                                <input type="number" class="form-control" id="bunga" name="bunga" value="0.5" required>
+                                                <input type="number" class="form-control" id="bunga" name="bunga" value="3" required>
                                             </div>
                                             %
                                         </div>

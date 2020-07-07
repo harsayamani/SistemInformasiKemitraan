@@ -86,8 +86,21 @@ class DataProposalController extends Controller
         }else{
             $no_proposal = $request->no_proposal;
             $proposal = DataProposal::findOrFail($no_proposal);
-            $proposal->delete($proposal);
-            return redirect('/admin/kelola/proposal')->with('alert-success', 'Proposal berhasil dihapus!');
+            $nama = $proposal->nama_pengaju;
+            $persetujuan = "DITOLAK";
+
+            try{
+                Mail::send('admin/emailPersetujuanMitra', ['nama' => $nama, 'persetujuan'=>$persetujuan], function ($message) use ($request)
+                {
+                    $message->subject('Konfirmasi Status Pengajuan Mitra Sistem Kemitraan LEN Industri');
+                    $message->from('harsoftdev@gmail.com', 'Sistem Kemitraan | LEN Industri.');
+                    $message->to(DataProposal::findOrFail($request->no_proposal)->email);
+                });
+                $proposal->delete($proposal);
+                return redirect('/admin/kelola/proposal')->with('alert-success', 'Proposal berhasil dihapus!');
+            }catch(Exception $e){
+                return redirect('/admin/kelola/proposal')->with('alert-denger', 'Terjadi kesalahan : '.$e.'');
+            }
         }
     }
 }
