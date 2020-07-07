@@ -309,9 +309,7 @@ class PinjamanController extends Controller
 
             return;
         }catch(Exception $e){
-            return response()->json([
-                'error' => $e
-            ], 200);
+            var_dump($e);
         }
     }
 }
