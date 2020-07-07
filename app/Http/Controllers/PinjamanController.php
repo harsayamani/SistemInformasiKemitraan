@@ -213,7 +213,7 @@ class PinjamanController extends Controller
         }
     }
 
-    public function notificationHandler(Request $request)
+    public function notificationHandler()
     {
         Veritrans_Config::$serverKey = config('services.midtrans.serverKey');
         Veritrans_Config::$isProduction = config('services.midtrans.isProduction');
