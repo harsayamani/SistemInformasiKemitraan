@@ -156,7 +156,7 @@ Route::post('/daftar/proses', 'PublicController@registrasiProses');
 
 //Route Midtrans
 
-Route::get('/midtrans/notification', 'PinjamanController@notificationHandler');
+Route::post('/midtrans/notification', 'PinjamanController@notificationHandler')->name('notification.handler');
 
 Route::get('/midtrans/finish', function () {
     return redirect()->back()->with('alert-success', 'Pembayaran berhasil!');
