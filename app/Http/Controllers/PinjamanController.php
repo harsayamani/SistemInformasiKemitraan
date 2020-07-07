@@ -215,101 +215,84 @@ class PinjamanController extends Controller
 
     public function notificationHandler()
     {
-        try{
-            Veritrans_Config::$serverKey = config('services.midtrans.serverKey');
-            Veritrans_Config::$isProduction = config('services.midtrans.isProduction');
-            Veritrans_Config::$isSanitized = config('services.midtrans.isSanitized');
-            Veritrans_Config::$is3ds = config('services.midtrans.is3ds');
+        Veritrans_Config::$serverKey = config('services.midtrans.serverKey');
+        Veritrans_Config::$isProduction = config('services.midtrans.isProduction');
+        Veritrans_Config::$isSanitized = config('services.midtrans.isSanitized');
+        Veritrans_Config::$is3ds = config('services.midtrans.is3ds');
 
-            $notif = new Veritrans_Notification();
-            $transaction = $notif->transaction_status;
-            $type = $notif->payment_type;
-            $orderId = $notif->order_id;
-            $fraud = $notif->fraud_status;
+        $notif = new Veritrans_Notification();
+        $transaction = $notif->transaction_status;
+        $type = $notif->payment_type;
+        $orderId = $notif->order_id;
+        $fraud = $notif->fraud_status;
 
-            $pinjaman = Pinjaman::findOrFail($orderId);
-            $angsuran = Angsuran::findOrFail($orderId);
+        $pinjaman = Pinjaman::where('id_pinjaman', $orderId)->first();
+        $angsuran = Angsuran::fwhere('id_angsuran', $orderId)->first();
 
-            if(!empty($pinjaman)){
-                if ($transaction == 'capture') {
+        if(!empty($pinjaman) && empty($angsuran)){
+            if ($transaction == 'capture') {
 
-                    // For credit card transaction, we need to check whether transaction is challenge by FDS or not
-                    if ($type == 'credit_card') {
+                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+                if ($type == 'credit_card') {
 
-                    if($fraud == 'challenge') {
-                        $pinjaman->status = 1;
-                    } else {
-                        $pinjaman->status = 2;
-                    }
-
-                    }
-
-                } elseif ($transaction == 'settlement') {
-
-                    $pinjaman->status = 2;
-
-                } elseif($transaction == 'pending'){
-
+                  if($fraud == 'challenge') {
                     $pinjaman->status = 1;
-
-                } elseif ($transaction == 'deny') {
-
-                    $pinjaman->status = 0;
-
-                } elseif ($transaction == 'expire') {
-
-                    $pinjaman->status = 0;
-
-                } elseif ($transaction == 'cancel') {
-
-                    $pinjaman->status = 0;
+                    $pinjaman->save();
+                  } else {
+                    $pinjaman->status = 2;
+                    $pinjaman->save();
+                  }
 
                 }
 
+            } elseif ($transaction == 'settlement') {
+                $pinjaman->status = 2;
+                $pinjaman->save();
+            } elseif($transaction == 'pending'){
+                $pinjaman->status = 1;
+                $pinjaman->save();
+            } elseif ($transaction == 'deny') {
+                $pinjaman->status = 0;
+                $pinjaman->save();
+            } elseif ($transaction == 'expire') {
+                $pinjaman->status = 0;
                 $pinjaman->save();
 
-            }elseif(!empty($angsuran)){
-                if ($transaction == 'capture') {
+            } elseif ($transaction == 'cancel') {
+                $pinjaman->status = 0;
+                $pinjaman->save();
+            }
+            return;
 
-                    // For credit card transaction, we need to check whether transaction is challenge by FDS or not
-                    if ($type == 'credit_card') {
+        }elseif(!empty($angsuran)){
+            if ($transaction == 'capture') {
+                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+                if ($type == 'credit_card') {
 
-                    if($fraud == 'challenge') {
-                        $angsuran->status = 1;
-                    } else {
-                        $angsuran->status = 2;
-                    }
-
-                    }
-
-                } elseif ($transaction == 'settlement') {
-
-                    $angsuran->status = 2;
-
-                } elseif($transaction == 'pending'){
-
+                  if($fraud == 'challenge') {
                     $angsuran->status = 1;
-
-                } elseif ($transaction == 'deny') {
-
-                    $angsuran->status = 0;
-
-                } elseif ($transaction == 'expire') {
-
-                    $angsuran->status = 0;
-
-                } elseif ($transaction == 'cancel') {
-
-                    $angsuran->status = 0;
+                  } else {
+                    $angsuran->status = 2;
+                  }
 
                 }
-
+            } elseif ($transaction == 'settlement') {
+                $angsuran->status = 2;
+                $angsuran->save();
+            } elseif($transaction == 'pending'){
+                $angsuran->status = 1;
+                $angsuran->save();
+            } elseif ($transaction == 'deny') {
+                $angsuran->status = 0;
+                $angsuran->save();
+            } elseif ($transaction == 'expire') {
+                $angsuran->status = 0;
+                $angsuran->save();
+            } elseif ($transaction == 'cancel') {
+                $angsuran->status = 0;
                 $angsuran->save();
             }
-
             return;
-        }catch(Exception $e){
-            var_dump($e);
         }
     }
 }
