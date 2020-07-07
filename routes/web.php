@@ -74,8 +74,6 @@ Route::post('/admin/kelola/pinjaman/tambah', 'PinjamanController@tambahPinjaman'
 
 Route::post('/admin/kelola/pinjaman/transfer', 'PinjamanController@transferPinjaman');
 
-Route::post('/admin/kelola/pinjaman/notifikasi', 'PinjamanController@notificationHandler');
-
 //Route Angsuran
 
 Route::get('/admin/kelola/angsuran', 'AngsuranController@kelolaAngsuran');
@@ -155,3 +153,20 @@ Route::get('/berita/{judul_berita}', 'PublicController@detailBerita');
 Route::get('/daftar', 'PublicController@registrasi');
 
 Route::post('/daftar/proses', 'PublicController@registrasiProses');
+
+//Route Midtrans
+
+Route::post('/midtrans/notification', 'PinjamanController@notificationHandler');
+
+Route::get('/midtrans/finish', function () {
+    return redirect()->back()->with('alert-success', 'Pembayaran berhasil!');
+});
+
+Route::get('/midtrans/unfinish', function () {
+    return redirect()->back()->with('alert-warning', 'Pembayaran belum selesai, segera lakukan pembayaran sebelum batas waktu!');
+});
+
+Route::get('/midtrans/error', function () {
+    return redirect()->back()->with('alert-danger', 'Pembayaran gagal, silahkan ulang pembayaran anda!');
+});
+

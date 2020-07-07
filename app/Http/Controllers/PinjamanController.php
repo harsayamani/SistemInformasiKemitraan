@@ -231,7 +231,7 @@ class PinjamanController extends Controller
         $pinjaman = Pinjaman::findOrFail($orderId);
         $angsuran = Angsuran::findOrFail($orderId);
 
-        if($pinjaman!=null){
+        if(!empty($pinjaman)){
             if ($transaction == 'capture') {
 
                 // For credit card transaction, we need to check whether transaction is challenge by FDS or not
@@ -269,7 +269,7 @@ class PinjamanController extends Controller
 
             $pinjaman->save();
 
-        }elseif($angsuran!=null){
+        }elseif(!empty($angsuran)){
             if ($transaction == 'capture') {
 
                 // For credit card transaction, we need to check whether transaction is challenge by FDS or not
