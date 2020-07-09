@@ -19,6 +19,7 @@
 <script src="/adminlte/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
 <!-- iCheck -->
 <script src="/adminlte/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 
 <!-- AdminLTE App -->
 <script src="/adminlte/js/AdminLTE/app.js" type="text/javascript"></script>

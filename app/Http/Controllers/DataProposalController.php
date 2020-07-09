@@ -45,6 +45,18 @@ class DataProposalController extends Controller
                 $user->nama = $nama;
                 $user->email = $email;
 
+                try{
+                    Mail::send('admin/emailPemberitahuanAkun', ['nama_pengaju' => $nama, 'username'=>$username, 'email'=>$email, 'password'=>$password], function ($message) use ($request)
+                    {
+                        $message->subject('Informasi Akun Mitra Sistem Kemitraan LEN Industri');
+                        $message->from('harsoftdev@gmail.com', 'Sistem Kemitraan | LEN Industri.');
+                        $message->to(DataProposal::findOrFail($request->no_proposal)->email);
+                    });
+
+                }catch(Exception $e){
+                    return redirect()->back()->with('alert-danger', 'Terjadi kesalahan : '.$e.'');
+                }
+
                 if($user->save()){
                     $no_jaminan = random_int(100000000, 999999999);
                     $jaminan = new Jaminan();
@@ -58,21 +70,15 @@ class DataProposalController extends Controller
                         $mitra->username = $username;
 
                         if($mitra->save()){
-
-                            try{
-                                Mail::send('admin/emailPemberitahuanAkun', ['nama_pengaju' => $nama, 'username'=>$username, 'email'=>$email, 'password'=>$password], function ($message) use ($request)
-                                {
-                                    $message->subject('Informasi Akun Mitra Sistem Kemitraan LEN Industri');
-                                    $message->from('harsoftdev@gmail.com', 'Sistem Kemitraan | LEN Industri.');
-                                    $message->to(DataProposal::findOrFail($request->no_proposal)->email);
-                                });
-
-                                return redirect('/admin/kelola/proposal')->with('alert-success', 'Proposal '.$proposal->nama_pengaju.' sudah disetujui!');
-                            }catch(Exception $e){
-                                return redirect()->back()->with('Terjadi kesalahan : '.$e.'');
-                            }
+                            return redirect('/admin/kelola/proposal')->with('alert-success', 'Proposal '.$proposal->nama_pengaju.' sudah disetujui!');
+                        }else{
+                            return redirect()->back()->with('alert-danger', 'Terjadi kesalahan!');
                         }
+                    }else{
+                        return redirect()->back()->with('alert-danger', 'Terjadi kesalahan!');
                     }
+                }else{
+                    return redirect()->back()->with('alert-danger', 'Terjadi kesalahan!');
                 }
             }else{
                 return redirect('/admin/kelola/proposal')->with('alert-danger', 'Terjadi Kesalahan!');

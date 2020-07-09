@@ -64,9 +64,9 @@
                                     <dl class="dl-horizontal">
                                         <dt>Nomor PK</dt>
                                         <dd id="nomor_pk"></dd>
-                                        <dt>Nama PK</dt>
+                                        <dt>Unit Usaha</dt>
                                         <dd id="nama_pk"></dd>
-                                        <dt>Usaha</dt>
+                                        <dt>Sektor Usaha</dt>
                                         <dd id="usaha"></dd>
                                         <dt>Pemilik</dt>
                                         <dd id="pemilik"></dd>
@@ -105,8 +105,8 @@
                         <thead>
                             <tr>
                                 <th>Nomor PK</th>
-                                <th>Nama PK</th>
-                                <th>Usaha</th>
+                                <th>Unit Usaha</th>
+                                <th>Sektor Usaha</th>
                                 <th>Pemilik</th>
                                 <th>Aksi</th>
                             </tr>
@@ -116,7 +116,7 @@
                             <tr>
                                 <td>{{$mit->no_pk}}</td>
                                 <td>{{$mit->dataProposal->unit_usaha}}</td>
-                                <td>{{$mit->dataProposal->kegiatan}}</td>
+                                <td>{{$mit->dataProposal->sektor_usaha}}</td>
                                 <td>{{$mit->dataProposal->nama_pengaju}}</td>
                                 <td>
                                     <button type="button" class="btn btn-info btn-sm"
@@ -124,7 +124,7 @@
                                         data-toggle="modal"
                                         data-no_pk ="{{$mit->no_pk}}"
                                         data-nama_pk ="{{$mit->dataProposal->unit_usaha}}"
-                                        data-usaha ="{{$mit->dataProposal->kegiatan}}"
+                                        data-usaha ="{{$mit->dataProposal->sektor_usaha}}"
                                         data-pemilik ="{{$mit->dataProposal->nama_pengaju}}"
                                         data-jenis_kelamin ="{{$mit->jenis_kelamin}}"
                                         data-tgl_lahir = "{{$mit->tgl_lahir}}"

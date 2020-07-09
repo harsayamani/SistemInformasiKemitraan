@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use JD\Cloudder\Facades\Cloudder;
 use Veritrans_Config;
 use Veritrans_Snap;
@@ -217,7 +218,7 @@ class MitraController extends Controller
                 'jumlah_karyawan' => '|required|numeric|regex:/^([1-9][0-9]+)/',
                 'no_rek' => '|required|numeric',
                 'unit_usaha' => '|required|max:50',
-
+                'sertifikat_jaminan' => '|required|file|max:7000'
             ]);
 
             $no_pk = $request->no_pk;
@@ -237,9 +238,10 @@ class MitraController extends Controller
             $jaminan = $request->jaminan;
             $pemilik_jaminan = $request->pemilik_jaminan;
             $no_jaminan = $request->no_jaminan;
-            $kegiatan = $request->kegiatan;
+            $sektor_usaha = $request->sektor_usaha;
             $unit_usaha = $request->unit_usaha;
             $pas_foto = $request->pas_foto;
+            $sertifikat_jaminan = Storage::putFile('public/files/sertifikat_jaminan', $request->file('sertifikat_jaminan'));
 
             if($pas_foto == null){
                 $mitra = DataMitra::findOrFail($no_pk);
@@ -251,11 +253,12 @@ class MitraController extends Controller
                     $jamin = Jaminan::findOrFail($no_jaminan);
                     $jamin->jaminan = $jaminan;
                     $jamin->pemilik_jaminan = $pemilik_jaminan;
+                    $jamin->sertifikat_jaminan = $sertifikat_jaminan;
 
                     if($jamin->save()){
                         $proposal = DataProposal::findOrFail($mitra->no_proposal);
                         $proposal->nama_pengaju = $nama_pengaju;
-                        $proposal->kegiatan = $kegiatan;
+                        $proposal->sektor_usaha = $sektor_usaha;
                         $proposal->unit_usaha = $unit_usaha;
 
                         if($proposal->save()){
@@ -292,11 +295,12 @@ class MitraController extends Controller
                     $jamin = Jaminan::findOrFail($no_jaminan);
                     $jamin->jaminan = $jaminan;
                     $jamin->pemilik_jaminan = $pemilik_jaminan;
+                    $jamin->sertifikat_jaminan = $sertifikat_jaminan;
 
                     if($jamin->save()){
                         $proposal = DataProposal::findOrFail($mitra->no_proposal);
                         $proposal->nama_pengaju = $nama_pengaju;
-                        $proposal->kegiatan = $kegiatan;
+                        $proposal->sektor_usaha = $sektor_usaha;
                         $proposal->unit_usaha = $unit_usaha;
 
                         if($proposal->save()){
@@ -356,14 +360,14 @@ class MitraController extends Controller
             $status_pinjaman = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('status');
 
             if($pengajuan != null){
-                if($pinjaman != null && $pengajuan->status==2){
+                if($pinjaman != null && $pengajuan->status==3){
                     if($status_pinjaman < 3){
                         return redirect('mitra/dashboard')->with('alert-modal-warning', 'Anda sudah mengajukan pinjaman dana!');
                     }else{
                         if($mitra->ktp == null){
                             return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
 
-                        }elseif($mitra->pas_foto== null){
+                        }elseif($mitra->pas_foto == null){
                             return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                         }elseif($mitra->jenis_kelamin == null){
                             return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
@@ -397,6 +401,8 @@ class MitraController extends Controller
                 }
             }else{
                 if($mitra->ktp == null){
+                    return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
+                }elseif($mitra->pas_foto == null){
                     return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
                 }elseif($mitra->jenis_kelamin == null){
                     return redirect('mitra/dataMitra')->with('alert-modal-warning', 'Data mitra belum lengkap');
@@ -433,10 +439,11 @@ class MitraController extends Controller
             return redirect('/mitra/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
         }else{
             $no_pk = $request->no_pk;
+            $dana_aju = $request->dana_aju;
             $pengajuan = new PengajuanDana();
             $pengajuan->id_pengajuan_dana = uniqid("AJU-", false);
             $pengajuan->no_pk = $no_pk;
-            $pengajuan->dokumen = "Lengkap";
+            $pengajuan->dana_aju = $dana_aju;
             $pengajuan->status = 0;
 
             if($pengajuan->save()){

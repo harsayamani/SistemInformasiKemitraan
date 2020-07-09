@@ -148,7 +148,7 @@
 
     <div class="page-breaker">
         <div class="pos" id="_0:0" style="top:1100">
-        <img name="_1100:850" src="page_001.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
+        <img name="_1100:850" src="/page_001.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
         <div class="pos" id="_100:1201" style="top:1201;left:100">
         <span id="_14.7" style="font-weight:bold; font-family:Times New Roman; font-size:14.7px; color:#000000">
         PROPOSAL PERMOHONAN BANTUAN PKBL PT. LEN INDUSTRI (PERSERO)</span>

@@ -1,12 +1,12 @@
 @extends('admin/master/masterAdmin')
 
-@section('titleAdmin', 'Kelola Proposal')
+@section('titleAdmin', 'Kelola Registrasi Mitra')
 
 @section('proposalActive', 'active')
 
-@section('bigTitle', 'Kelola Proposal')
+@section('bigTitle', 'Kelola Registrasi Mitra')
 
-@section('breadcrumbTitle', 'Kelola Proposal')
+@section('breadcrumbTitle', 'Kelola Registrasi Mitra')
 
 @section('content')
 
@@ -14,9 +14,9 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">Daftar Pengajuan Proposal Mitra</h3>
+                    <h3 class="box-title">Daftar Registrasi Mitra</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive">
 
@@ -26,7 +26,7 @@
                         <div class="modal-dialog modal-md" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h3 class="modal-title" id="mediumModalLabel"><strong>Hapus Proposal</strong></h3>
+                                    <h3 class="modal-title" id="mediumModalLabel"><strong>Hapus Registrasi Mitra</strong></h3>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -88,13 +88,13 @@
                         <div class="modal-dialog modal-md" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h3 class="modal-title" id="mediumModalLabel"><strong>Setujui Proposal</strong></h3>
+                                    <h3 class="modal-title" id="mediumModalLabel"><strong>Setujui Registrasi Mitra</strong></h3>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <h5>Apakah anda sudah selesai mengkaji proposal yang diajukan?</h5>
+                                    <h5>Apakah anda sudah selesai mengkaji permohonan registrasi mitra?</h5>
                                     <form action="/admin/kelola/proposal/setujui" method="post" enctype="multipart/form-data" class="form-horizontal">
                                         {{ csrf_field()}}
                                         <div class="row form-group" hidden>
@@ -113,15 +113,18 @@
                         </div>
                     </div>
 
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="example1" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Kegiatan Pengajuan</th>
                                 <th>Nama Pengaju</th>
                                 <th>Tanggal Pengajuan</th>
                                 <th>Unit Usaha</th>
-                                <th>Dana Aju</th>
+                                <th>Sektor Usaha</th>
+                                <th>NPWP</th>
+                                <th>Laporan Keuangan</th>
+                                <th>SKU</th>
+                                <th>KTP</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -129,11 +132,41 @@
                             @foreach ($proposal as $prop)
                             <tr>
                                 <td>{{$prop->no_proposal}}</td>
-                                <td>{{$prop->kegiatan}}</td>
                                 <td>{{$prop->nama_pengaju}}</td>
                                 <td>{{$prop->tgl_pengajuan}}</td>
                                 <td>{{$prop->unit_usaha}}</td>
-                                <td>Rp.{{$prop->dana_aju}}</td>
+                                <td>{{$prop->sektor_usaha}}</td>
+                                <td>{{$prop->npwp}}</td>
+                                <td>
+                                    <a href="
+                                    <?php $path = Storage::url($prop->laporan_keuangan);
+                                        echo url($path);
+                                    ?>
+                                    " class="btn btn-primary btn-sm">
+                                    <i class="fa fa-download"></i>&nbsp;
+                                        Unduh
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="
+                                    <?php $path = Storage::url($prop->sku);
+                                        echo url($path);
+                                    ?>
+                                    " class="btn btn-primary btn-sm">
+                                    <i class="fa fa-download"></i>&nbsp;
+                                        Unduh
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="
+                                    <?php $path = Storage::url($prop->ktp_pengaju);
+                                        echo url($path);
+                                    ?>
+                                    " class="btn btn-primary btn-sm">
+                                    <i class="fa fa-download"></i>&nbsp;
+                                        Unduh
+                                    </a>
+                                </td>
                                 <td>
                                     @if ($prop->status == 0)
                                         <button type="button" class="btn btn-success btn-sm"

@@ -8,7 +8,7 @@
 
 @section('section')
 
-@if($pinjaman != null && $pinjaman->status == 3 && $pengajuan->status == 2)
+@if($pinjaman != null && $pinjaman->status == 3 && $pengajuan->status == 3)
 <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -108,6 +108,13 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
+        @elseif ($mitra->jaminan->sertifikat_jaminan == null)
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         @else
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             Data mitra sudah lengkap
@@ -160,7 +167,7 @@
               <div class="card-body">
                 <center><h3>Status Pinjaman Terakhir</h3></center>
                 <div class="text-center">
-                    @if ($pinjaman == null || $pinjaman->count()<1 || $pengajuan != null && $pengajuan->status < 2)
+                    @if ($pinjaman == null || $pinjaman->count()<1 || $pengajuan != null && $pengajuan->status < 3)
                         <div class="text alert alert-warning"><b>Pinjaman belum diproses!</b></div>
                     @else
                         @if ($pinjaman->status == 0)
@@ -168,9 +175,9 @@
                         @elseif ($pinjaman->status == 1)
                             <div class="text alert alert-primary"><b>Sedang Ditransfer</b></div>
                         @elseif ($pinjaman->status == 2)
-                            <div class="text alert alert-success"><b>Tranfer Sukses</b></div>
+                            <div class="text alert alert-success"><b>Transfer Sukses</b></div>
                         @elseif ($pinjaman->status == 3)
-                            <div class="text alert alert-success"><b>Lunas</b></div>
+                            <div class="text alert alert-success"><b>Pinjaman Lunas</b></div>
                         @endif
                     @endif
                 </div>
@@ -179,10 +186,12 @@
             <div class="work-amount card">
                 <div class="card-body">
                     <center><h3>Pengajuan Pinjaman</h3></center>
-                    @if ($pengajuan == null || $pengajuan->count()<1 || $pengajuan != null && $pinjaman != null && $pinjaman->status == 3 && $pengajuan->status == 2)
+                    @if ($pengajuan == null || $pengajuan->count()<1 || $pengajuan != null && $pinjaman != null && $pinjaman->status == 3 && $pengajuan->status == 3)
                       <div class="text-center alert alert-warning"><b>Belum Diajukan</b></div>
                     @elseif($pengajuan->status == 0)
                       <div class="text-center alert alert-primary"><b>Sedang Diajukan</b></div>
+                    @elseif($pengajuan->status == 1)
+                      <div class="text-center alert alert-primary"><b>Survei Selesai Dilakukan</b></div>
                     @else
                       <div class="text-center alert alert-success"><b>Pengajuan Telah Disetujui</b></div>
                     @endif

@@ -23,7 +23,7 @@ class PinjamanController extends Controller
             return redirect('/admin/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
         }else{
             $pengajuan = PengajuanDana::orderBy('status', 'asc')->get();
-            $setuju = PengajuanDana::where('status', 1)->get();
+            $setuju = PengajuanDana::where('status', 2)->get();
             $tgl_sekarang = Carbon::now()->format('Y-m-d');
             $pinjaman = Pinjaman::orderBy('status', 'asc')->get();
 
@@ -39,7 +39,7 @@ class PinjamanController extends Controller
             $no_pk = DataMitra::where('no_proposal', $no_proposal)->value('no_pk');
 
             $mitra = DataMitra::findOrFail($no_pk);
-            $pengajuan = PengajuanDana::where('no_pk', $no_pk)->first();
+            $pengajuan = PengajuanDana::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->first();
 
             if($mitra){
                 return view('admin/dokumenPengajuanDana', compact('mitra', 'pengajuan'));
@@ -54,7 +54,7 @@ class PinjamanController extends Controller
             $id_pengajuan_dana = $request->id_pengajuan_dana;
 
             $pengajuan = PengajuanDana::findOrFail($id_pengajuan_dana);
-            $pengajuan->status = 1;
+            $pengajuan->status = 2;
 
             $nama = $pengajuan->dataMitra->dataProposal->nama_pengaju;
             $persetujuan = "DISETUJUI";
@@ -101,10 +101,33 @@ class PinjamanController extends Controller
         }
     }
 
+    public function kirimJadwalSurvei(Request $request){
+        if(!Session::get('loginAdmin')){
+            return redirect('/admin/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
+        }else{
+            $id_pengajuan_dana = $request->id_pengajuan_dana;
+            $jadwal = $request->jadwal;
+
+            $nama_pengaju = PengajuanDana::findOrFail($id_pengajuan_dana)->dataMitra->dataProposal->namaPengaju;
+
+            try{
+                Mail::send('admin/emailJadwalSurvei', ['nama_pengaju' => $nama_pengaju, 'jadwal'=>$jadwal], function ($message) use ($request)
+                {
+                    $message->subject('Informasi Jadwal Survei Lapangan Sistem Kemitraan LEN Industri');
+                    $message->from('harsoftdev@gmail.com', 'Sistem Kemitraan | LEN Industri.');
+                    $message->to($request->email);
+                });
+                return redirect()->back()->with('alert-success', 'Email berhasil dikirim!');
+            }catch(Exception $e){
+                return redirect()->back()->with('alert-danger', 'Terjadi kesalahan : '.$e.'');
+            }
+        }
+    }
+
     public function getNamaPengaju(Request $request){
         $no_pk = $request->id;
         $nama_pengaju = DataMitra::findOrFail($no_pk)->dataProposal->nama_pengaju;
-        $nominal_peminjaman = DataMitra::findOrFail($no_pk)->dataProposal->dana_aju;
+        $nominal_peminjaman = PengajuanDana::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('dana_aju');
 
         return response()->json([
             'nama_pengaju' => $nama_pengaju,
@@ -137,8 +160,8 @@ class PinjamanController extends Controller
             $pinjaman->status = 0;
 
             if($pinjaman->save()){
-                $pengajuan = PengajuanDana::where('no_pk', $request->no_pk)->where('status', 1)->first();
-                $pengajuan->status = 2;
+                $pengajuan = PengajuanDana::where('no_pk', $request->no_pk)->where('status', 2)->first();
+                $pengajuan->status = 3;
                 if($pengajuan->save()){
 
                     $lama_angsuran = $request->lama_angsuran;

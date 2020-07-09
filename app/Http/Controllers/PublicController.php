@@ -7,6 +7,7 @@ use App\DataProposal;
 use App\FAQ;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use UxWeb\SweetAlert\SweetAlert;
 
 class PublicController extends Controller
@@ -101,14 +102,21 @@ class PublicController extends Controller
             'nama_pengaju' => '|required|max:50',
             'email' => '|required|email|unique:data_proposal',
             'unit_usaha' => '|required|max:50',
-            'dana_aju' => '|required|min:6|max:12|regex:/^([1-9][0-9]+)/'
+            'sektor_usaha' => '|required|max:50',
+            'ktp_pengaju' => '|required|file|max:7000',
+            'laporan_keuangan' => '|required|file|max:7000',
+            'sku' => '|required|file|max:7000',
+            'npwp' => '|required'
         ]);
 
         $nama_pengaju = $request->nama_pengaju;
         $email = $request->email;
         $unit_usaha = $request->unit_usaha;
-        $dana_aju = $request->dana_aju;
-        $kegiatan = $request->kegiatan;
+        $npwp = $request->npwp;
+        $sektor_usaha = $request->sektor_usaha;
+        $ktp_pengaju = Storage::putFile('public/files/ktp', $request->file('ktp_pengaju'));
+        $laporan_keuangan = Storage::putFile('public/files/laporan_keuangan', $request->file('laporan_keuangan'));
+        $sku = Storage::putFile('public/files/sku', $request->file('sku'));
 
         $proposal = new DataProposal();
         $proposal->no_proposal = random_int(100000000, 999999999);
@@ -116,8 +124,11 @@ class PublicController extends Controller
         $proposal->email = $email;
         $proposal->tgl_pengajuan = Carbon::now()->format('d, M Y');
         $proposal->unit_usaha = $unit_usaha;
-        $proposal->kegiatan = $kegiatan;
-        $proposal->dana_aju = $dana_aju;
+        $proposal->sektor_usaha = $sektor_usaha;
+        $proposal->laporan_keuangan = $laporan_keuangan;
+        $proposal->ktp_pengaju = $ktp_pengaju;
+        $proposal->npwp = $npwp;
+        $proposal->sku = $sku;
         $proposal->status = 0;
 
         if($proposal->save()){

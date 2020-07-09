@@ -17,7 +17,7 @@ class CreatePengajuanDanaTable extends Migration
             $table->string('id_pengajuan_dana')->primary();
             $table->string('no_pk');
             $table->foreign('no_pk')->references('no_pk')->on('data_mitra');
-            $table->string('dokumen')->nullable();
+            $table->double('dana_aju');
             $table->integer('status');
             $table->timestamps();
         });

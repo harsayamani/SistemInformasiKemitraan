@@ -17,6 +17,7 @@ class CreateJaminanTable extends Migration
             $table->integer('no_jaminan')->primary();
             $table->string('jaminan')->nullable();
             $table->string('pemilik_jaminan')->nullable();
+            $table->string('sertifikat_jaminan')->nullable();
             $table->timestamps();
         });
     }

@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Email Persetujuan Mitra</title>
+    <title>Email Informasi Jadwal Survei Mitra Sistem Kemitraan LEN Industri</title>
     <style>
         /* -------------------------------------
             GLOBAL RESETS
@@ -282,7 +282,7 @@
             <div class="content">
 
                 <!-- START CENTERED WHITE CONTAINER -->
-                <span class="preheader">Konfirmasi Persetujuan Mitra</span>
+                <span class="preheader">Informasi Jadwal Survei</span>
                 <table class="main">
 
                     <!-- START MAIN CONTENT AREA -->
@@ -291,33 +291,19 @@
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>Hai <b>{{$nama}}</b></p>
-                                        <p>Berikut kami informasikan status pengajuan mitra:</p>
-
-                                        <table border="0" cellpadding="0" cellspacing="0">
-                                            <tbody>
+                                        <p>Hai <b>{{ $nama_pengaju }}</b></p>
+                                        <p>Sebagai salah satu syarat untuk mengajukan pinjaman dana di Sistem Kemitraan LEN Industri. Maka, kami akan melakukan surevei lapangan sebagai bahan pertimbangan persetujuan pinjaman</p>
+                                        <hr>
+                                        <p>Berikut kami beritahukan jadwal survei lapangan :</p>
+                                        <table>
                                             <tr>
-                                                <td align="left">
-                                                    <table border="0" cellpadding="0" cellspacing="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="container">
-                                                                    <center><p>Mohon maaf, dengan ini kami nyatakan pengajuan mitra anda</p></center>
-                                                                    <hr>
-                                                                    <center><b>{{$persetujuan}}</b></center>
-                                                                    <hr>
-                                                                    <center><p>Kami harap anda menjaga sebaik-baiknya informasi ini dari yang bukan otoritasnya
-                                                                    <br> Terimakasih</p></center>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
+                                                <td>Tanggal</td>
+                                                <td>: {{$jadwal}}</td>
                                             </tr>
-                                            </tbody>
                                         </table>
+                                        <hr>
+                                        <p>Kami harap anda menjaga sebaik-baiknya informasi ini dari yang bukan otoritasnya
+                                        <br>Terimakasih</p>
                                     </td>
                                 </tr>
                             </table>

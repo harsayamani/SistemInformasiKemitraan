@@ -291,7 +291,7 @@
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>Hai {{$nama}}</p>
+                                        <p>Hai <b>{{$nama}}</b></p>
                                         <p>Berikut kami informasikan status proposal pengajuan dana yang anda ajukan:</p>
 
                                         <table border="0" cellpadding="0" cellspacing="0">

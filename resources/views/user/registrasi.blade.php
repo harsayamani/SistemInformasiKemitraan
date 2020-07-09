@@ -28,7 +28,7 @@
                 <h2 class="contact-title">Isi form registrasi di bawah ini!</h2>
             </div>
             <div class="col-lg-8">
-                <form class="form-contact contact_form" action="/daftar/proses" method="post">
+                <form class="form-contact contact_form" action="/daftar/proses" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-sm-6">
@@ -48,12 +48,33 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input class="form-control" name="kegiatan" id="kegiatan" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Sektor Usaha'" placeholder="Sektor Usaha">
+                                <input class="form-control" name="sektor_usaha" id="sektor_usaha" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Sektor Usaha'" placeholder="Sektor Usaha">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <input class="form-control" name="npwp" id="npwp" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'NPWP'" placeholder="NPWP">
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <input class="form-control" name="dana_aju" id="dana_aju" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Dana'" placeholder="Dana">
+                                <label for="ktp_pengaju">Unggah KTP</label>
+                                <input class="form-control-file" name="ktp_pengaju" id="ktp_pengaju" type="file" onfocus="this.placeholder = ''" onblur="this.placeholder = 'KTP'" placeholder="KTP" accept="application/pdf">
+                                <p class="help-block">Format PDF, maks. 7MB!</p>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="laporan_keuangan">Unggah Laporan Keuangan</label>
+                                <input class="form-control-file" name="laporan_keuangan" id="laporan_keuangan" type="file" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Laporan Keuangan'" placeholder="Laporan Keuangan" accept="application/vnd.ms-excel">
+                                <p class="help-block">Format Excel, maks. 7MB!</p>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="sku">Unggah SKU</label>
+                                <input class="form-control-file" name="sku" id="sku" type="file" onfocus="this.placeholder = ''" onblur="this.placeholder = 'SKU'" placeholder="SKU" accept="application/pdf">
+                                <p class="help-block">Format PDF, maks. 7MB!</p>
                             </div>
                         </div>
                     </div>

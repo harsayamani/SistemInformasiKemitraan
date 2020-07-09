@@ -130,6 +130,15 @@
                                 </div>
                             </div>
 
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="number-input" class=" form-control-label">Dana Aju</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                <input type="number" id="dana_aju" name="dana_aju"  class="form-control" required>
+                                </div>
+                            </div>
+
                             <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">
                                 Submit
@@ -184,7 +193,7 @@
                     <dd class="col-sm-9">: {{$mitra->dataProposal->unit_usaha}}</dd>
 
                     <dt class="col-sm-3">Sektor usaha</dt>
-                    <dd class="col-sm-9">: {{$mitra->dataProposal->kegiatan}}</dd>
+                    <dd class="col-sm-9">: {{$mitra->dataProposal->sektor_usaha}}</dd>
 
                     <dt class="col-sm-3">Lokasi usaha</dt>
                     <dd class="col-sm-9">: {{$mitra->lokasi_usaha}}</dd>

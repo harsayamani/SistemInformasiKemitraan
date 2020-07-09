@@ -91,6 +91,49 @@
                                     </div>
                                 </div>
 
+                                <!-- Kirim Notifikasi Jadwal Survei -->
+
+                                <div class="modal fade" id="kirimJadwalSurvei" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-md" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="mediumModalLabel"><strong>Kirim Jadwal Survei</strong></h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5>Sistem akan segera mengirim jadwal survei lewat email!</h5>
+                                                <form action="/admin/kelola/pinjaman/pengajuan/survei/kirimJadwal" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                                    {{ csrf_field()}}
+                                                    <div class="row form-group" hidden>
+                                                        <div class="col-12 col-md-9">
+                                                            <input type="text" id="id_pengajuan_dana" name="id_pengajuan_dana" class="form-control" readonly required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row form-group" hidden>
+                                                        <div class="col-12 col-md-9">
+                                                            <input type="text" id="email" name="email" class="form-control" readonly required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row form-group" hidden>
+                                                        <div class="col-12 col-md-9">
+                                                            <input type="text" id="jadwal" name="jadwal" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                        <button type="submit" class="btn btn-success">Kirim</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -101,6 +144,7 @@
                                             <th>Tanggal Pengajuan</th>
                                             <th>Dana Aju</th>
                                             <th>Dokumen</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -110,9 +154,9 @@
                                             <td>{{++$key}}</td>
                                             <td>{{$peng->dataMitra->dataProposal->nama_pengaju}}</td>
                                             <td>{{$peng->dataMitra->dataProposal->unit_usaha}}</td>
-                                            <td>{{$peng->dataMitra->dataProposal->kegiatan}}</td>
+                                            <td>{{$peng->dataMitra->dataProposal->sektor_usaha}}</td>
                                             <td>{{$peng->dataMitra->dataProposal->tgl_pengajuan}}</td>
-                                            <td>Rp.{{$peng->dataMitra->dataProposal->dana_aju}}</td>
+                                            <td>Rp.{{$peng->dana_aju}}</td>
                                             <td>
                                                 <a href="/admin/kelola/pinjaman/pengajuan/{{$peng->dataMitra->no_proposal}}" class="btn btn-primary btn-sm">
                                                     <i class="fa fa-print"></i>&nbsp;
@@ -120,7 +164,36 @@
                                                 </a>
                                             </td>
                                             <td>
+                                                @if($peng->status == 0)
+                                                    <button type="button" class="btn btn-warning btn-sm" disabled>
+                                                        Survei belum dilakukan
+                                                    </button>
+                                                @elseif($peng->status == 1)
+                                                    <button type="button" class="btn btn-primary btn-sm" disabled>
+                                                        Survei selesai dilakukan, menunggu persetujuan
+                                                    </button>
+                                                @elseif($peng->status == 2)
+                                                    <button type="button" class="btn btn-primary btn-sm" disabled>
+                                                        Pengajuan disetujui, menunggu tambah pinjaman
+                                                    </button>
+                                                @elseif($peng->status == 3)
+                                                    <button type="button" class="btn btn-primary btn-sm" disabled>
+                                                        Pijaman telah ditambahkan
+                                                    </button>
+                                                @endif
+                                            </td>
+                                            <td>
                                                 @if ($peng->status == 0)
+                                                    <button type="button" class="btn btn-success btn-sm"
+                                                        data-target="#kirimJadwalSurvei"
+                                                        data-toggle="modal"
+                                                        data-id_pengajuan_dana="{{$peng->id_pengajuan_dana}}"
+                                                        data-email="{{$peng->dataMitra->users->email}}"
+                                                        >
+                                                        <i class="fa fa-check"></i>&nbsp;
+                                                            Kirim Jadwal Survei
+                                                    </button>
+                                                @elseif ($peng->status == 1)
                                                     <button type="button" class="btn btn-success btn-sm"
                                                         data-target="#setujuiPengajuan"
                                                         data-toggle="modal"
@@ -135,10 +208,6 @@
                                                         data-id_pengajuan_dana="{{$peng->id_pengajuan_dana}}">
                                                         <i class="fa fa-trash-o"></i>&nbsp;
                                                             Hapus
-                                                    </button>
-                                                @else
-                                                    <button type="button" class="btn btn-primary btn-sm" disabled>
-                                                            Pengajuan telah disetujui!
                                                     </button>
                                                 @endif
                                             </td>
@@ -258,19 +327,19 @@
                                             <td>
                                                 @if ($pinj->status == 0)
                                                     <button type="button" class="btn btn-primary btn-sm" disabled>
-                                                        On Proses
+                                                        Sedang Diproses
                                                     </button>
                                                 @elseif($pinj->status == 1)
                                                     <button type="button" class="btn btn-primary btn-sm" disabled>
-                                                        On Payment
+                                                        Sedang Ditransfer
                                                     </button>
                                                 @elseif($pinj->status == 2)
                                                     <button type="button" class="btn btn-primary btn-sm" disabled>
-                                                        On Success Payment
+                                                        Transfer Sukses
                                                     </button>
                                                 @elseif($pinj->status == 3)
                                                     <button type="button" class="btn btn-success btn-sm" disabled>
-                                                        Lunas
+                                                        Pinjaman Lunas
                                                     </button>
                                                 @endif
                                             </td>
@@ -320,6 +389,10 @@
         <script src="/adminlte/js/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
         <script src="{{ !config('services.midtrans.isProduction') ? 'https://app.sandbox.midtrans.com/snap/snap.js' : 'https://app.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('services.midtrans.clientKey') }}"></script>
 
+        <script>
+            $('#jadwal').datepicker();
+        </script>
+
         <!-- page script -->
         <script type="text/javascript">
             $(function() {
@@ -348,6 +421,20 @@
                     var modal = $(this);
                     console.log(id_pengajuan_dana)
                     modal.find('.modal-body #id_pengajuan_dana').val(id_pengajuan_dana);
+                });
+            });
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#kirimJadwalSurvei').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget);
+                    var id_pengajuan_dana = button.data('id_pengajuan_dana');
+                    var email = button.data('email');
+                    var modal = $(this);
+                    console.log(id_pengajuan_dana)
+                    modal.find('.modal-body #id_pengajuan_dana').val(id_pengajuan_dana);
+                    modal.find('.modal-body #email').val(email);
                 });
             });
         </script>

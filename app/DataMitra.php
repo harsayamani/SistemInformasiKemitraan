@@ -43,4 +43,10 @@ class DataMitra extends Model
     {
         return $this->hasMany('App\PengajuanDana', 'no_pk');
     }
+
+    public function survei()
+    {
+        return $this->hasMany('App\Survei', 'no_pk');
+    }
+
 }

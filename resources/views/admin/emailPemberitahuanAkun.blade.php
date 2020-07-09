@@ -293,32 +293,27 @@
                                     <td>
                                         <p>Hai <b>{{ $nama_pengaju }}</b></p>
                                         <p>Proposal yang anda ajukan sudah disetujui</p>
-
-                                        <table border="0" cellpadding="0" cellspacing="0">
-                                            <tbody>
+                                        <hr>
+                                        <p>Berikut Kami mengirimkan sejumlah data penting yaitu :</p>
+                                        <p>Informasi akun mitra anda</p>
+                                        <table>
                                             <tr>
-                                                <td align="left">
-                                                    <table border="0" cellpadding="0" cellspacing="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td> <div class="container">
-                                                                    <p>Berikut Kami mengirimkan sejumlah data penting yaitu :</p>
-                                                                    <hr>
-                                                                    <p>Informasi akun mitra anda</p>
-                                                                    <hr>
-                                                                    <p>Email    : {{$email}}<br>Username   : {{$username}}<br>Password  : {{$password}}</p>
-                                                                    <hr>
-                                                                    <p>Kami harap anda menjaga sebaik-baiknya informasi ini dari yang bukan otoritasnya
-                                                                    <br> Terimakasih</p>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
+                                                <td>Email</td>
+                                                <td>: {{$email}}</td>
                                             </tr>
-                                            </tbody>
+                                            <tr>
+                                                <td>Username</td>
+                                                <td>: {{$username}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Password </td>
+                                                <td>: {{$password}}</td>
+                                            </tr>
                                         </table>
+                                        <hr>
+                                        <p>Kami harap anda menjaga sebaik-baiknya informasi ini dari yang bukan otoritasnya
+                                        <br>Terimakasih</p>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>

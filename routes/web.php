@@ -74,6 +74,8 @@ Route::post('/admin/kelola/pinjaman/tambah', 'PinjamanController@tambahPinjaman'
 
 Route::post('/admin/kelola/pinjaman/transfer', 'PinjamanController@transferPinjaman');
 
+Route::post('/admin/kelola/pinjaman/pengajuan/survei/kirimJadwal', 'PinjamanController@kirimJadwalSurvei');
+
 //Route Angsuran
 
 Route::get('/admin/kelola/angsuran', 'AngsuranController@kelolaAngsuran');

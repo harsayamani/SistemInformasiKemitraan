@@ -292,7 +292,7 @@
 
                         <li class="@yield('proposalActive')">
                             <a href="/admin/kelola/proposal">
-                                <i class="fa fa-file-text-o"></i> <span>Kelola Proposal</span>
+                                <i class="fa fa-file-text-o"></i> <span>Kelola Registrasi Mitra</span>
                             </a>
                         </li>
 

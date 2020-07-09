@@ -87,6 +87,13 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
+        @elseif ($mitra->jaminan->sertifikat_jaminan == null)
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         @else
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             Data mitra sudah lengkap
@@ -239,7 +246,7 @@
                         <label for="text-input" class=" form-control-label">Sektor Usaha</label>
                     </div>
                     <div class="col-12 col-md-6">
-                        <input type="text" id="kegiatan" name="kegiatan" placeholder="Masukkan sektor usaha" class="form-control" value="{{$mitra->dataProposal->kegiatan}}" required>
+                        <input type="text" id="sektor_usaha" name="sektor_usaha" placeholder="Masukkan sektor usaha" class="form-control" value="{{$mitra->dataProposal->sektor_usaha}}" required>
                     </div>
                 </div>
 
@@ -313,6 +320,28 @@
                     <div class="col-12 col-md-6">
                         <input type="text" id="pemilik_jaminan" name="pemilik_jaminan" class="form-control"  placeholder="Masukkan pemilik jaminan" value="{{$mitra->jaminan->pemilik_jaminan}}" required>
                     </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="text-input" class=" form-control-label">Sertifikat Jaminan</label>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <input type="file" id="sertifikat_jaminan" name="sertifikat_jaminan" class="form-control-file" accept="application/pdf">
+                        <p class="help-block">Format PDF, maks. 7MB!</p>
+                    </div>
+                    @if($mitra->jaminan->sertifikat_jaminan!=null)
+                    <div class="col-12 col-md-3">
+                        <a href="
+                            <?php $path = Storage::url($mitra->jaminan->sertifikat_jaminan);
+                                echo url($path);
+                            ?>
+                            " class="btn btn-primary btn-sm">
+                            <i class="fa fa-download"></i>&nbsp;
+                            Unduh
+                        </a>
+                    </div>
+                    @endif
                 </div>
 
                 <div class="row form-group">
