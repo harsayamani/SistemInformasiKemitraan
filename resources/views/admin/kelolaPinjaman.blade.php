@@ -104,6 +104,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <h5>Sistem akan segera mengirim jadwal survei lewat email!</h5>
+                                                <br>
                                                 <form action="/admin/kelola/pinjaman/pengajuan/survei/kirimJadwal" method="post" enctype="multipart/form-data" class="form-horizontal">
                                                     {{ csrf_field()}}
                                                     <div class="row form-group" hidden>
@@ -118,9 +119,10 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="row form-group" hidden>
+                                                    <div class="row form-group">
                                                         <div class="col-12 col-md-9">
-                                                            <input type="text" id="jadwal" name="jadwal" class="form-control" readonly>
+                                                            <label>Pilih Tanggal Survei</label>
+                                                            <input type="text" id="jadwal" name="jadwal" class="form-control" readonly required>
                                                         </div>
                                                     </div>
 
@@ -134,7 +136,83 @@
                                     </div>
                                 </div>
 
-                                <table id="example1" class="table table-bordered table-striped">
+                                <div class="modal fade" id="hasilSurvei" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-md" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="mediumModalLabel"><strong>Hasil Survei</strong></h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <dl class="dl-horizontal">
+                                                            <dt>Nomor PK</dt>
+                                                            <dd id="nomor_pk"></dd>
+                                                            <dt>Nama Usaha</dt>
+                                                            <dd id="unit_usaha"></dd>
+                                                            <dt>Pemilik</dt>
+                                                            <dd id="pemilik"></dd>
+                                                            <dt>Alamat Kantor</dt>
+                                                            <dd id="alamat_kantor"></dd>
+                                                            <dt>Bidang Usaha</dt>
+                                                            <dd id="sektor_usaha"></dd>
+                                                            <dt>Nomor Telp.</dt>
+                                                            <dd id="no_telp"></dd>
+                                                            <dt>Kepemilikan Rumah</dt>
+                                                            <dd id="kepemilikan_rumah"></dd>
+                                                            <dt>Lama Menempati Rumah</dt>
+                                                            <dd id="lama_tempati_rumah"></dd>
+                                                            <dt>Lama Menjalankan Usaha</dt>
+                                                            <dd id="lama_jalani_usaha"></dd>
+                                                            <dt>Modal Saat Ini</dt>
+                                                            <dd id="modal_saat_ini"></dd>
+                                                            <dt>Tempat Usaha </dt>
+                                                            <dd id="tempat_usaha"></dd>
+                                                            <dt>Lokasi Usaha</dt>
+                                                            <dd id="lokasi_usaha"></dd>
+                                                            <dt>Pinjaman Lain</dt>
+                                                            <dd id="pinjaman_lain"></dd>
+                                                            <dt>Ijin Usaha</dt>
+                                                            <dd id="ijin_usaha"></dd>
+                                                            <dt>Kepemilikan Usaha</dt>
+                                                            <dd id="kepemilikan_usaha"></dd>
+                                                            <dt>Rekening Bank</dt>
+                                                            <dd id="rekening_bank"></dd>
+                                                            <dt>Penghasilan Diluar Usaha</dt>
+                                                            <dd id="penghasilan_diluar_usaha"></dd>
+                                                        </dl>
+                                                        <hr>
+                                                        <dl class="dl-horizontal">
+                                                            <dt>Dokumen Hasil Survei</dt>
+                                                            <dd id="dokumen_hasil_survei"></dd>
+                                                            <br>
+                                                            <dt>Surat Berita Acara</dt>
+                                                            <dd id="surat_berita_acara"></dd>
+                                                            <br>
+                                                            <dt>Surat Ijin Usaha</dt>
+                                                            <dd id="surat_ijin_usaha"></dd>
+                                                        </dl>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>Foto bersama pemilik</p>
+                                                        <div id="foto_pemilik"></div>
+                                                        <br>
+                                                        <p>Foto tempat usaha</p>
+                                                        <div id="foto_tempat_usaha"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <table id="example1" class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
@@ -170,7 +248,7 @@
                                                     </button>
                                                 @elseif($peng->status == 1)
                                                     <button type="button" class="btn btn-primary btn-sm" disabled>
-                                                        Survei selesai dilakukan, menunggu persetujuan
+                                                        Survei selesai dilakukan, <br>menunggu persetujuan
                                                     </button>
                                                 @elseif($peng->status == 2)
                                                     <button type="button" class="btn btn-primary btn-sm" disabled>
@@ -184,16 +262,26 @@
                                             </td>
                                             <td>
                                                 @if ($peng->status == 0)
-                                                    <button type="button" class="btn btn-success btn-sm"
+                                                    <button type="button" class="btn btn-primary btn-sm"
                                                         data-target="#kirimJadwalSurvei"
                                                         data-toggle="modal"
                                                         data-id_pengajuan_dana="{{$peng->id_pengajuan_dana}}"
                                                         data-email="{{$peng->dataMitra->users->email}}"
                                                         >
-                                                        <i class="fa fa-check"></i>&nbsp;
+                                                        <i class="fa fa-envelope"></i>&nbsp;
                                                             Kirim Jadwal Survei
                                                     </button>
                                                 @elseif ($peng->status == 1)
+                                                <button type="button" class="btn btn-info btn-sm"
+                                                        data-target="#hasilSurvei"
+                                                        data-toggle="modal"
+                                                        data-id_pengajuan_dana ="{{$peng->id_pengajuan_dana}}"
+                                                        >
+                                                        <i class="fa fa-file"></i>&nbsp;
+                                                            Hasil Survei
+                                                    </button>
+                                                    <br>
+                                                    <br>
                                                     <button type="button" class="btn btn-success btn-sm"
                                                         data-target="#setujuiPengajuan"
                                                         data-toggle="modal"
@@ -201,7 +289,8 @@
                                                         <i class="fa fa-check"></i>&nbsp;
                                                             Setujui
                                                     </button>
-
+                                                    <br>
+                                                    <br>
                                                     <button type="button" class="btn btn-danger btn-sm"
                                                         data-target="#hapusPengajuan"
                                                         data-toggle="modal"
@@ -233,7 +322,7 @@
                                             <label class="control-label col-md-2" for="no_pk">Nomor Mitra</label>
                                             <div class="col-12 col-md-6">
                                                 <select class="form-control" id="no_pk" name="no_pk" required>
-                                                        <option value="">---Pilih mitra---</option>
+                                                    <option value="">---Pilih mitra---</option>
                                                     @foreach ($setuju as $aju)
                                                         <option value="{{$aju->no_pk}}">{{$aju->no_pk}}</option>
                                                     @endforeach
@@ -449,11 +538,11 @@
                         "id":$(this).val()},
                         dataType: "json",
                         success: function(res){
+                            console.log(res.nama_pengaju)
                             $('#nama_pengaju').val(res.nama_pengaju)
                             $('#nominal_pinjaman').val(res.nominal_pinjaman)
                         }
                     })
-
                 })
 
                 // init
@@ -528,6 +617,81 @@
                         }
                     })
                 })
+            });
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#hasilSurvei').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget);
+                    var id_pengajuan_dana = button.data('id_pengajuan_dana');
+                    var modal = $(this);
+
+                    $.ajax({
+                        url: "/admin/kelola/pinjaman/pengajuan/survei/hasilSurvei",
+                        type:"POST",
+                        data : {"_token": "{{ csrf_token() }}",
+                        "id_pengajuan_dana":id_pengajuan_dana},
+                        dataType: "json",
+                        success: function(res){
+                            var no_pk = res.no_pk;
+                            var unit_usaha = res.unit_usaha;
+                            var sektor_usaha = res.sektor_usaha;
+                            var pemilik = res.pemilik;
+                            var alamat_kantor = res.alamat_kantor;
+                            var no_telp = res.no_telp;
+                            var kepemilikan_rumah = res.kepemilikan_rumah;
+                            var lama_tempati_rumah = res.lama_tempati_rumah;
+                            var lama_jalani_usaha = res.lama_jalani_usaha;
+                            var modal_saat_ini = res.modal_saat_ini;
+                            var tempat_usaha = res.tempat_usaha;
+                            var lokasi_usaha = res.lokasi_usaha;
+                            var pinjaman_lain = res.pinjaman_lain;
+                            var ijin_usaha = res.ijin_usaha;
+                            var kepemilikan_usaha = res.kepemilikan_usaha;
+                            var rekening_bank = res.rekening_bank;
+                            var penghasilan_diluar_usaha = res.penghasilan_diluar_usaha;
+                            var surat_ijin_usaha = res.surat_ijin_usaha;
+                            var dokumen_hasil_survei = res.dokumen_hasil_survei;
+                            var surat_berita_acara = res.surat_berita_acara;
+                            var foto_pemilik = res.foto_pemilik;
+                            var foto_tempat_usaha = res.foto_tempat_usaha;
+
+                            modal.find('.modal-body #nomor_pk').html(no_pk);
+                            modal.find('.modal-body #unit_usaha').html(unit_usaha);
+                            modal.find('.modal-body #sektor_usaha').html(sektor_usaha);
+                            modal.find('.modal-body #pemilik').html(pemilik);
+                            modal.find('.modal-body #alamat_kantor').html(alamat_kantor);
+                            modal.find('.modal-body #no_telp').html(no_telp);
+                            modal.find('.modal-body #kepemilikan_rumah').html(kepemilikan_rumah);
+                            modal.find('.modal-body #lama_tempati_rumah').html(lama_tempati_rumah);
+                            modal.find('.modal-body #lama_jalani_usaha').html(lama_jalani_usaha);
+                            modal.find('.modal-body #modal_saat_ini').html("Rp."+modal_saat_ini);
+                            modal.find('.modal-body #tempat_usaha').html(tempat_usaha);
+                            modal.find('.modal-body #lokasi_usaha').html(lokasi_usaha);
+                            modal.find('.modal-body #pinjaman_lain').html(pinjaman_lain);
+                            modal.find('.modal-body #ijin_usaha').html(ijin_usaha);
+                            modal.find('.modal-body #kepemilikan_usaha').html(kepemilikan_usaha);
+                            modal.find('.modal-body #rekening_bank').html(rekening_bank);
+                            modal.find('.modal-body #penghasilan_diluar_usaha').html(penghasilan_diluar_usaha);
+
+                            modal.find('.modal-body #surat_ijin_usaha').html(`<a href="`+surat_ijin_usaha+`" target="_blank" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-download"></i>&nbsp;
+                                        Unduh
+                                    </a>`);
+                            modal.find('.modal-body #dokumen_hasil_survei').html(`<a href="`+dokumen_hasil_survei+`" target="_blank" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-download"></i>&nbsp;
+                                        Unduh
+                                    </a>`);
+                            modal.find('.modal-body #surat_berita_acara').html(`<a href="`+surat_berita_acara+`" target="_blank" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-download"></i>&nbsp;
+                                        Unduh
+                                    </a>`);
+                            modal.find('.modal-body #foto_pemilik').html(`<img src="`+foto_pemilik+`" alt="..." target="_blank" width="150px" height="150px" class="img-fluid">`);
+                            modal.find('.modal-body #foto_tempat_usaha').html(`<img src="`+foto_tempat_usaha+`" alt="..." target="_blank" width="150px" height="150px" class="img-fluid">`);
+                        }
+                    })
+                });
             });
         </script>
 

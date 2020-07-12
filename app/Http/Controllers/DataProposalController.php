@@ -93,10 +93,9 @@ class DataProposalController extends Controller
             $no_proposal = $request->no_proposal;
             $proposal = DataProposal::findOrFail($no_proposal);
             $nama = $proposal->nama_pengaju;
-            $persetujuan = "DITOLAK";
 
             try{
-                Mail::send('admin/emailPersetujuanMitra', ['nama' => $nama, 'persetujuan'=>$persetujuan], function ($message) use ($request)
+                Mail::send('admin/emailPersetujuanMitra', ['nama' => $nama], function ($message) use ($request)
                 {
                     $message->subject('Konfirmasi Status Pengajuan Mitra Sistem Kemitraan LEN Industri');
                     $message->from('harsoftdev@gmail.com', 'Sistem Kemitraan | LEN Industri.');

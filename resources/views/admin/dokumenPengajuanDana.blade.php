@@ -67,7 +67,7 @@
    <nobr><nowrap>
     <div class="page-breaker">
         <div class="pos" id="_0:0" style="top:0">
-            <img name="_1100:850" src="/page_001.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
+            <img name="_1100:850" src="/img/page_001.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
             <div class="pos" id="_100:101" style="top:101;left:100">
             <span id="_15.0" style="font-weight:bold; font-family:Times New Roman; font-size:15.0px; color:#000000">
             Kepada </span>
@@ -148,7 +148,7 @@
 
     <div class="page-breaker">
         <div class="pos" id="_0:0" style="top:1100">
-        <img name="_1100:850" src="/page_001.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
+        <img name="_1100:850" src="/img/page_001.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
         <div class="pos" id="_100:1201" style="top:1201;left:100">
         <span id="_14.7" style="font-weight:bold; font-family:Times New Roman; font-size:14.7px; color:#000000">
         PROPOSAL PERMOHONAN BANTUAN PKBL PT. LEN INDUSTRI (PERSERO)</span>
@@ -227,7 +227,7 @@
         </div>
         <div class="pos" id="_300:1763" style="top:1763;left:300">
         <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->dataProposal->kegiatan}}</span>
+        : {{$mitra->dataProposal->sektor_usaha}}</span>
         </div>
         <div class="pos" id="_100:1801" style="top:1801;left:100">
         <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
@@ -262,7 +262,7 @@
         : {{$mitra->dataProposal->nama_pengaju}}</span>
         </div>
         <div class="pos" id="_0:0" style="top:2200">
-        <img name="_1100:850" src="/page_003.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
+        <img name="_1100:850" src="/img/page_003.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
         <div class="pos" id="_100:2301" style="top:2301;left:100">
         <span id="_14.8" style="font-weight:bold; font-family:Times New Roman; font-size:14.8px; color:#000000">
         AHLI WARIS USAHA </span>
@@ -315,7 +315,7 @@
 
     <div class="page_breaker">
         <div class="pos" id="_0:0" style="top:3300">
-        <img name="_1100:850" src="/page_004.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
+        <img name="_1100:850" src="/img/page_004.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
         <div class="pos" id="_100:3401" style="top:3401;left:100">
         <span id="_14.8" style="font-weight:bold; font-family:Times New Roman; font-size:14.8px; color:#000000">
         SURAT PERNYATAAN BUKAN MITRA BINAAN BUMN LAIN </span>
@@ -396,7 +396,7 @@
 
     <div>
         <div class="pos" id="_0:0" style="top:4400">
-        <img name="_1100:850" src="/page_005.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
+        <img name="_1100:850" src="/img/page_005.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
         <div class="pos" id="_100:4501" style="top:4501;left:100">
         <span id="_14.7" style="font-weight:bold; font-family:Times New Roman; font-size:14.7px; color:#000000">
         SURAT PERNYATAAN KEPEMILIKAN BARANG TITIPAN </span>
@@ -470,7 +470,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
-			window.print();
+            window.print();
 		});
 	</script>
 </body>

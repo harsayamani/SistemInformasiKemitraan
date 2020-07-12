@@ -11,6 +11,7 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -46,6 +47,8 @@ Route::get('/admin/kelola/dataMitra', 'DataMitraController@kelolaDataMitra');
 
 Route::post('/admin/kelola/dataMitra/hapus', 'DataMitraController@hapusDataMitra');
 
+Route::post('/admin/kelola/dataMitra/lampiran', 'DataMitraController@lampiran');
+
 //Route Berita
 
 Route::get('/admin/kelola/berita', 'BeritaController@kelolaBerita');
@@ -75,6 +78,8 @@ Route::post('/admin/kelola/pinjaman/tambah', 'PinjamanController@tambahPinjaman'
 Route::post('/admin/kelola/pinjaman/transfer', 'PinjamanController@transferPinjaman');
 
 Route::post('/admin/kelola/pinjaman/pengajuan/survei/kirimJadwal', 'PinjamanController@kirimJadwalSurvei');
+
+Route::post('/admin/kelola/pinjaman/pengajuan/survei/hasilSurvei', 'PinjamanController@hasilSurvei');
 
 //Route Angsuran
 
@@ -172,3 +177,21 @@ Route::get('/midtrans/error', function () {
     return redirect()->back()->with('alert-danger', 'Pembayaran gagal, silahkan ulang pembayaran anda!');
 });
 
+
+//Route Tim Survei
+
+Route::get('/surveitim', function () {
+    return redirect('/survei/login');
+});
+
+Route::get('/survei/login', 'SurveiController@loginIndex');
+
+Route::post('/survei/login/proses', 'SurveiController@loginProses');
+
+Route::get('/survei/logout', 'SurveiController@logout');
+
+Route::get('/survei/form', 'SurveiController@formSurvei');
+
+Route::post('/survei/form/deskripsiUsaha', 'SurveiController@deskripsiUsaha');
+
+Route::post('/survei/form/proses', 'SurveiController@surveiProses');

@@ -292,10 +292,10 @@
                                 <tr>
                                     <td>
                                         <p>Hai <b>{{ $nama_pengaju }}</b></p>
-                                        <p>Proposal yang anda ajukan sudah disetujui</p>
-                                        <hr>
-                                        <p>Berikut Kami mengirimkan sejumlah data penting yaitu :</p>
-                                        <p>Informasi akun mitra anda</p>
+                                        <p>Terimakasih telah melakukan registrasi di sistem informasi kemitraan.
+                                            Kami ucapkan selamat sebelumnya karna registrasi anda <b>DITERIMA</b>
+                                            dan anda telah resmi menjadi <b>MITRA PROGRAM KEMITRAAN PT. LEN INDUSTRI</b>.
+                                            Berikut adalah informasi akun mitra anda :</p>
                                         <table>
                                             <tr>
                                                 <td>Email</td>
@@ -310,9 +310,15 @@
                                                 <td>: {{$password}}</td>
                                             </tr>
                                         </table>
-                                        <hr>
-                                        <p>Kami harap anda menjaga sebaik-baiknya informasi ini dari yang bukan otoritasnya
-                                        <br>Terimakasih</p>
+                                        <p>Untuk langkah selanjutnya anda bisa melakukan login kedalam sistem dan menyelesaikan pengisian
+                                            data pribadi anda untuk kemudian melakukan peminjaman dana
+                                        </p>
+                                        <p>
+                                            Kami  harap anda menjaga sebaik-baiknya informasi dari yang bukan otoritasnya.
+                                        </p>
+                                        <p>
+                                            Terima Kasih
+                                        </p>
                                         </div>
                                     </td>
                                 </tr>

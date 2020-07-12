@@ -292,32 +292,15 @@
                                 <tr>
                                     <td>
                                         <p>Hai <b>{{$nama}}</b></p>
-                                        <p>Berikut kami informasikan status pengajuan mitra:</p>
-
-                                        <table border="0" cellpadding="0" cellspacing="0">
-                                            <tbody>
-                                            <tr>
-                                                <td align="left">
-                                                    <table border="0" cellpadding="0" cellspacing="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="container">
-                                                                    <center><p>Mohon maaf, dengan ini kami nyatakan pengajuan mitra anda</p></center>
-                                                                    <hr>
-                                                                    <center><b>{{$persetujuan}}</b></center>
-                                                                    <hr>
-                                                                    <center><p>Kami harap anda menjaga sebaik-baiknya informasi ini dari yang bukan otoritasnya
-                                                                    <br> Terimakasih</p></center>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                        <p>Terima kasih sebelumnya anda telah melakukan registrasi di sistem informasi kemitraan,
+                                            setelah mempertimbangkan dengan matang mengenai sejumlah data yang dicantumkan dalam sistem terkait usaha anda.
+                                            Dengan berat hati dan kami memohon maaf yang sebesar–besarnya bahwa untuk saat ini anda
+                                            <b>BELUM BISA MENJADI MITRA DI PT, LEN INDUSTRI</b>. Anda bisa mencobanya lagi
+                                            bulan depan atau mencoba mengajukan kerjasama dengan BUMN lain.
+                                        </p>
+                                        <p>
+                                            Terima Kasih
+                                        </p>
                                     </td>
                                 </tr>
                             </table>

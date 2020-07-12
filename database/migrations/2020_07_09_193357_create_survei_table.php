@@ -20,12 +20,24 @@ class CreateSurveiTable extends Migration
             $table->string('id_pengajuan_dana');
             $table->foreign('id_pengajuan_dana')->references('id_pengajuan_dana')->on('pengajuan_dana');
             $table->string('kepemilikan_rumah');
-            $table->integer('lama_tempati_rumah');
-            $table->integer('lama_jalani_usaha');
+            $table->string('lama_tempati_rumah');
+            $table->string('lama_jalani_usaha');
             $table->double('modal');
             $table->string('tempat_usaha');
             $table->string('lokasi_usaha');
             $table->string('pinjaman_lain');
+            $table->string('ijin_usaha');
+            $table->string('kepemilikan_usaha');
+            $table->string('rekening_bank');
+            $table->string('penghasilan_diluar_usaha');
+            $table->string('surat_ijin_usaha');
+            $table->string('dokumen_hasil_survei');
+            $table->string('surat_berita_acara');
+            $table->string('foto_pemilik');
+            $table->string('foto_tempat_usaha');
+            $table->string('anggota_tim1');
+            $table->string('anggota_tim2')->nullable();
+            $table->string('anggota_tim3')->nullable();
             $table->timestamps();
         });
     }

@@ -292,38 +292,33 @@
                                 <tr>
                                     <td>
                                         <p>Hai <b>{{$nama}}</b></p>
-                                        <p>Berikut kami informasikan status proposal pengajuan dana yang anda ajukan:</p>
-
-                                        <table border="0" cellpadding="0" cellspacing="0">
-                                            <tbody>
-                                            <tr>
-                                                <td align="left">
-                                                    <table border="0" cellpadding="0" cellspacing="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="container">
-                                                                    <center><p>Dengan ini kami nyatakan proposal pengajuan dana anda</p></center>
-                                                                    <hr>
-                                                                    <center><b>{{$persetujuan}}</b></center>
-                                                                    <hr>
-                                                                    <center><p>Kami harap anda menjaga sebaik-baiknya informasi ini dari yang bukan otoritasnya
-                                                                    <br> Terimakasih</p></center>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                        <p>Setelah melakukan serangkaian kegiatan survey,
+                                            Kami mengucapkan selamat kepada anda  bahwa, proposal pengajuan dana anda saat ini
+                                        </p>
+                                        <p><center><b>{{$persetujuan}}</b></center></p>
+                                        <p>Untuk langkah selanjutnya anda dipersilahkan datang ke PT. LEN INDUSTRI untuk penandatangan kontrak dan pengumpulan sejumlah berkas sebagai berikut :</p>
+                                        <ol>
+                                            <li>Foto copy KTP/li>
+                                            <li>Foto copy surat nikah</li>
+                                            <li>Foto copy KK</li>
+                                            <li>Pas foto 3x4 berwarna (suami dan istri) masing-masing 1 lembar</li>
+                                            <li>Fotocopy buku rekening bank</li>
+                                            <li>Surat jaminan asli </li>
+                                            <li>Surat Keterangan Usaha (SKU) asli ditunjukan untuk PKBL PT. Len Industri (Persero)</li>
+                                            <li>Foto copy NPWP</li>
+                                            <li>Laporan Keuangan</li>
+                                        </ol>
+                                        <p>
+                                            Jumlah pencairan dana yang dipinjamkan ditentukan oleh pihak PKBL/CSR. Anda wajib datang ke perusahaan dan tidak dapat diwakilkan seminggu setelah anda menerima email ini apabila anda tidak datang maka pengajuan pinjaman anda dinyatakan gugur.
+                                        </p>
+                                        <p>
+                                            Terima Kasih
+                                        </p>
                                     </td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
-
                     <!-- END MAIN CONTENT AREA -->
                 </table>
 

@@ -225,8 +225,7 @@
                         <button type="button" class="btn btn-primary"
                         data-target="#ajukanPinjaman"
                         data-toggle="modal"
-                        data-no_pk ="{{$mitra->no_pk}}"
-                        >
+                        data-no_pk ="{{$mitra->no_pk}}">
                             Ajukan Pinjaman
                         </button>
                     </div>

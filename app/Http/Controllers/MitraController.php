@@ -13,6 +13,7 @@ use App\Users;
 use App\Http\Controllers\RajaOngkirController as API;
 use App\Jaminan;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -218,7 +219,7 @@ class MitraController extends Controller
                 'jumlah_karyawan' => '|required|numeric|regex:/^([1-9][0-9]+)/',
                 'no_rek' => '|required|numeric',
                 'unit_usaha' => '|required|max:50',
-                'sertifikat_jaminan' => '|required|file|max:7000'
+                'sertifikat_jaminan' => '|file|max:7000'
             ]);
 
             $no_pk = $request->no_pk;
@@ -240,97 +241,62 @@ class MitraController extends Controller
             $no_jaminan = $request->no_jaminan;
             $sektor_usaha = $request->sektor_usaha;
             $unit_usaha = $request->unit_usaha;
-            $pas_foto = $request->pas_foto;
-            $sertifikat_jaminan = Storage::putFile('public/files/sertifikat_jaminan', $request->file('sertifikat_jaminan'));
+            $pas_foto = null;
+            $sertifikat_jaminan = null;
 
-            if($pas_foto == null){
-                $mitra = DataMitra::findOrFail($no_pk);
+            if($request->sertifikat_jaminan != null){
+                $sertifikat_jaminan = Storage::putFile('public/files/sertifikat_jaminan', $request->file('sertifikat_jaminan'));
+            }
 
-                $users = Users::findOrFail($username);
-                $users->email = $email;
-
-                if($users->save()){
-                    $jamin = Jaminan::findOrFail($no_jaminan);
-                    $jamin->jaminan = $jaminan;
-                    $jamin->pemilik_jaminan = $pemilik_jaminan;
-                    $jamin->sertifikat_jaminan = $sertifikat_jaminan;
-
-                    if($jamin->save()){
-                        $proposal = DataProposal::findOrFail($mitra->no_proposal);
-                        $proposal->nama_pengaju = $nama_pengaju;
-                        $proposal->sektor_usaha = $sektor_usaha;
-                        $proposal->unit_usaha = $unit_usaha;
-
-                        if($proposal->save()){
-                            $mitra->ktp = $ktp;
-                            $mitra->jenis_kelamin = $jenis_kelamin;
-                            $mitra->tempat_lahir = $tempat_lahir;
-                            $mitra->tgl_lahir = $tgl_lahir;
-                            $mitra->no_telp = $no_telp;
-                            $mitra->alamat_kantor =  $alamat_kantor;
-                            $mitra->lokasi_usaha = $lokasi_usaha;
-                            $mitra->ahli_waris = $ahli_waris;
-                            $mitra->jumlah_karyawan = $jumlah_karyawan;
-                            $mitra->no_rek = $no_rek;
-
-                            if($mitra->save()){
-                                return redirect('/mitra/dataMitra')->with('alert-modal-success', 'Data mitra berhasil disimpan!');
-                            }else{
-                                return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
-                            }
-                        }else{
-                            return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
-                        }
-                    }else{
-                        return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
-                    }
+            if($request->pas_foto != null){
+                try{
+                    Cloudder::upload($request->pas_foto);
+                    $pas_foto = Cloudder::getPublicId();
+                }catch(Exception $e){
+                    return redirect()->back()->with('alert-danger', $e->getMessage());
                 }
-            }else{
-                $mitra = DataMitra::findOrFail($no_pk);
+            }
 
-                $users = Users::findOrFail($username);
-                $users->email = $email;
+            $mitra = DataMitra::findOrFail($no_pk);
 
-                if($users->save()){
-                    $jamin = Jaminan::findOrFail($no_jaminan);
-                    $jamin->jaminan = $jaminan;
-                    $jamin->pemilik_jaminan = $pemilik_jaminan;
-                    $jamin->sertifikat_jaminan = $sertifikat_jaminan;
+            $users = Users::findOrFail($username);
+            $users->email = $email;
 
-                    if($jamin->save()){
-                        $proposal = DataProposal::findOrFail($mitra->no_proposal);
-                        $proposal->nama_pengaju = $nama_pengaju;
-                        $proposal->sektor_usaha = $sektor_usaha;
-                        $proposal->unit_usaha = $unit_usaha;
+            if($users->save()){
+                $jamin = Jaminan::findOrFail($no_jaminan);
+                $jamin->jaminan = $jaminan;
+                $jamin->pemilik_jaminan = $pemilik_jaminan;
+                $jamin->sertifikat_jaminan = $sertifikat_jaminan;
 
-                        if($proposal->save()){
+                if($jamin->save()){
+                    $proposal = DataProposal::findOrFail($mitra->no_proposal);
+                    $proposal->nama_pengaju = $nama_pengaju;
+                    $proposal->sektor_usaha = $sektor_usaha;
+                    $proposal->unit_usaha = $unit_usaha;
 
-                            Cloudder::upload($pas_foto);
-                            $url_foto = Cloudder::getPublicId();
+                    if($proposal->save()){
+                        $mitra->ktp = $ktp;
+                        $mitra->pas_foto = $pas_foto;
+                        $mitra->jenis_kelamin = $jenis_kelamin;
+                        $mitra->tempat_lahir = $tempat_lahir;
+                        $mitra->tgl_lahir = $tgl_lahir;
+                        $mitra->no_telp = $no_telp;
+                        $mitra->alamat_kantor =  $alamat_kantor;
+                        $mitra->lokasi_usaha = $lokasi_usaha;
+                        $mitra->ahli_waris = $ahli_waris;
+                        $mitra->jumlah_karyawan = $jumlah_karyawan;
+                        $mitra->no_rek = $no_rek;
 
-                            $mitra->ktp = $ktp;
-                            $mitra->pas_foto = $url_foto;
-                            $mitra->jenis_kelamin = $jenis_kelamin;
-                            $mitra->tempat_lahir = $tempat_lahir;
-                            $mitra->tgl_lahir = $tgl_lahir;
-                            $mitra->no_telp = $no_telp;
-                            $mitra->alamat_kantor =  $alamat_kantor;
-                            $mitra->lokasi_usaha = $lokasi_usaha;
-                            $mitra->ahli_waris = $ahli_waris;
-                            $mitra->jumlah_karyawan = $jumlah_karyawan;
-                            $mitra->no_rek = $no_rek;
-
-                            if($mitra->save()){
-                                return redirect('/mitra/dataMitra')->with('alert-modal-success', 'Data mitra berhasil disimpan!');
-                            }else{
-                                return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
-                            }
+                        if($mitra->save()){
+                            return redirect('/mitra/dataMitra')->with('alert-modal-success', 'Data mitra berhasil disimpan!');
                         }else{
                             return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
                         }
                     }else{
                         return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
                     }
+                }else{
+                    return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
                 }
             }
         }

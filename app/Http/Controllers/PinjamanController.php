@@ -7,11 +7,14 @@ use App\DataMitra;
 use App\HistoriPinjaman;
 use App\PengajuanDana;
 use App\Pinjaman;
+use App\Survei;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Veritrans_Config;
 use Veritrans_Notification;
 use Veritrans_Snap;
@@ -69,7 +72,7 @@ class PinjamanController extends Controller
                     });
                     return redirect('/admin/kelola/pinjaman')->with('alert-success', 'Pengajuan pinjaman disetujui!');
                 }catch(Exception $e){
-                    return redirect('/admin/kelola/pinjaman')->with('alert-danger', 'Terjadi kesalahan : '.$e.'');
+                    return redirect('/admin/kelola/pinjaman')->with('alert-danger', 'Terjadi kesalahan : '.$e->getMessage().'');
                 }
             }else{
                 return redirect('/admin/kelola/pinjaman')->with('alert-danger', 'Terjadi kesalahan!');
@@ -84,19 +87,23 @@ class PinjamanController extends Controller
             $id_pengajuan_dana = $request->id_pengajuan_dana;
             $pengajuan = PengajuanDana::findOrFail($id_pengajuan_dana);
             $nama = $pengajuan->dataMitra->dataProposal->nama_pengaju;
-            $persetujuan = "TIDAK DISETUJUI";
 
             try{
-                Mail::send('admin/emailPengajuanDana', ['nama' => $nama, 'persetujuan'=>$persetujuan], function ($message) use ($request)
+                Mail::send('admin/emailTolakPengajuanDana', ['nama' => $nama], function ($message) use ($request)
                 {
                     $message->subject('Konfirmasi Status Pengajuan Dana Sistem Kemitraan LEN Industri');
                     $message->from('harsoftdev@gmail.com', 'Sistem Kemitraan | LEN Industri.');
                     $message->to(PengajuanDana::findOrFail($request->id_pengajuan_dana)->dataMitra->users->email);
                 });
-                $pengajuan->delete($pengajuan);
-                return redirect('/admin/kelola/pinjaman')->with('alert-success', 'Pengajuan pinjaman dihapus!');
+                $survei = Survei::where('id_pengajuan_dana', $id_pengajuan_dana)->first();
+                if($survei->delete($survei)){
+                    $pengajuan->delete($pengajuan);
+                    return redirect('/admin/kelola/pinjaman')->with('alert-success', 'Pengajuan pinjaman dihapus!');
+                }else{
+                    return redirect('/admin/kelola/pinjaman')->with('alert-denger', 'Terjadi kesalahan!');
+                }
             }catch(Exception $e){
-                return redirect('/admin/kelola/pinjaman')->with('alert-denger', 'Terjadi kesalahan : '.$e.'');
+                return redirect('/admin/kelola/pinjaman')->with('alert-denger', 'Terjadi kesalahan : '.$e->getMessage().'');
             }
         }
     }
@@ -108,7 +115,7 @@ class PinjamanController extends Controller
             $id_pengajuan_dana = $request->id_pengajuan_dana;
             $jadwal = $request->jadwal;
 
-            $nama_pengaju = PengajuanDana::findOrFail($id_pengajuan_dana)->dataMitra->dataProposal->namaPengaju;
+            $nama_pengaju = PengajuanDana::findOrFail($id_pengajuan_dana)->dataMitra->dataProposal->nama_pengaju;
 
             try{
                 Mail::send('admin/emailJadwalSurvei', ['nama_pengaju' => $nama_pengaju, 'jadwal'=>$jadwal], function ($message) use ($request)
@@ -119,15 +126,15 @@ class PinjamanController extends Controller
                 });
                 return redirect()->back()->with('alert-success', 'Email berhasil dikirim!');
             }catch(Exception $e){
-                return redirect()->back()->with('alert-danger', 'Terjadi kesalahan : '.$e.'');
+                return redirect()->back()->with('alert-danger', 'Terjadi kesalahan : '.$e->getMessage().'');
             }
         }
     }
 
     public function getNamaPengaju(Request $request){
         $no_pk = $request->id;
-        $nama_pengaju = DataMitra::findOrFail($no_pk)->dataProposal->nama_pengaju;
-        $nominal_peminjaman = PengajuanDana::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('dana_aju');
+        $nama_pengaju = DataMitra::where('no_pk', $no_pk)->first()->dataProposal->nama_pengaju;
+        $nominal_peminjaman = PengajuanDana::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->first()->dana_aju;
 
         return response()->json([
             'nama_pengaju' => $nama_pengaju,
@@ -315,6 +322,66 @@ class PinjamanController extends Controller
                 $angsuran->save();
             }
             return;
+        }
+    }
+
+    public function hasilSurvei(Request $request){
+        if(!Session::get('loginAdmin')){
+            return redirect('/admin/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
+        }else{
+            $id_pengajuan_dana = $request->id_pengajuan_dana;
+
+            $pengajuan = PengajuanDana::findOrFail($id_pengajuan_dana);
+
+            $no_pk = $pengajuan->dataMitra->no_pk;
+            $unit_usaha = $pengajuan->dataMitra->dataProposal->unit_usaha;
+            $sektor_usaha = $pengajuan->dataMitra->dataProposal->sektor_usaha;
+            $alamat_kantor = $pengajuan->dataMitra->alamat_kantor;
+            $no_telp = $pengajuan->dataMitra->no_telp;
+            $pemilik = $pengajuan->dataMitra->dataProposal->nama_pengaju;
+
+            $survei = Survei::where('id_pengajuan_dana', $id_pengajuan_dana)->first();
+            $kepemilikan_rumah = $survei->kepemilikan_rumah;
+            $lama_tempati_rumah = $survei->lama_tempati_rumah;
+            $lama_jalani_usaha = $survei->lama_jalani_usaha;
+            $modal_saat_ini = $survei->modal;
+            $tempat_usaha = $survei->tempat_usaha;
+            $lokasi_usaha = $survei->lokasi_usaha;
+            $pinjaman_lain = $survei->pinjaman_lain;
+            $ijin_usaha = $survei->ijin_usaha;
+            $kepemilikan_usaha = $survei->kepemilikan_usaha;
+            $rekening_bank = $survei->rekening_bank;
+            $penghasilan_diluar_usaha = $survei->penghasilan_diluar_usaha;
+            $surat_ijin_usaha = Storage::url($survei->surat_ijin_usaha);
+            $dokumen_hasil_survei = Storage::url($survei->dokumen_hasil_survei);
+            $surat_berita_acara = Storage::url($survei->surat_berita_acara);
+            $foto_pemilik = Storage::url($survei->foto_pemilik);
+            $foto_tempat_usaha = Storage::url($survei->foto_tempat_usaha);
+
+            return response()->json([
+                'no_pk' => $no_pk,
+                'unit_usaha' => $unit_usaha,
+                'sektor_usaha' => $sektor_usaha,
+                'alamat_kantor' => $alamat_kantor,
+                'no_telp' => $no_telp,
+                'pemilik' => $pemilik,
+                'kepemilikan_rumah' => $kepemilikan_rumah,
+                'lama_tempati_rumah' => $lama_tempati_rumah,
+                'lama_jalani_usaha' => $lama_jalani_usaha,
+                'modal_saat_ini' => $modal_saat_ini,
+                'tempat_usaha' => $tempat_usaha,
+                'lokasi_usaha' => $lokasi_usaha,
+                'pinjaman_lain' => $pinjaman_lain,
+                'ijin_usaha' => $ijin_usaha,
+                'kepemilikan_usaha' => $kepemilikan_usaha,
+                'rekening_bank' => $rekening_bank,
+                'penghasilan_diluar_usaha' => $penghasilan_diluar_usaha,
+                'surat_ijin_usaha' => $surat_ijin_usaha,
+                'dokumen_hasil_survei' => $dokumen_hasil_survei,
+                'surat_berita_acara' => $surat_berita_acara,
+                'foto_pemilik' => $foto_pemilik,
+                'foto_tempat_usaha' => $foto_tempat_usaha
+            ], 200);
         }
     }
 }

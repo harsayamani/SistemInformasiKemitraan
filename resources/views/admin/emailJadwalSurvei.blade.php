@@ -292,18 +292,11 @@
                                 <tr>
                                     <td>
                                         <p>Hai <b>{{ $nama_pengaju }}</b></p>
-                                        <p>Sebagai salah satu syarat untuk mengajukan pinjaman dana di Sistem Kemitraan LEN Industri. Maka, kami akan melakukan surevei lapangan sebagai bahan pertimbangan persetujuan pinjaman</p>
+                                        <p>Kami dari tim PKBL/CSR telah menerima proposal pengajuan anda, sebagai salah satu rangkaian dalam program kemitraan diantaranya adalah melakukan survei lapangan untuk memastikan bahwasannya informasi terlampir adalah benar. Kami akan  melakukan survei pada</p>
                                         <hr>
-                                        <p>Berikut kami beritahukan jadwal survei lapangan :</p>
-                                        <table>
-                                            <tr>
-                                                <td>Tanggal</td>
-                                                <td>: {{$jadwal}}</td>
-                                            </tr>
-                                        </table>
+                                        <p>Tanggal : {{$jadwal}}</p>
                                         <hr>
-                                        <p>Kami harap anda menjaga sebaik-baiknya informasi ini dari yang bukan otoritasnya
-                                        <br>Terimakasih</p>
+                                        <p>Terima Kasih</p>
                                     </td>
                                 </tr>
                             </table>

@@ -326,9 +326,9 @@
                     <div class="col col-md-3">
                         <label for="text-input" class=" form-control-label">Sertifikat Jaminan</label>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-4">
                         <input type="file" id="sertifikat_jaminan" name="sertifikat_jaminan" class="form-control-file" accept="application/pdf">
-                        <p class="help-block">Format PDF, maks. 7MB!</p>
+                        <small class="form-text text-muted">Format PDF, maks. 7MB!</small>
                     </div>
                     @if($mitra->jaminan->sertifikat_jaminan!=null)
                     <div class="col-12 col-md-3">
@@ -336,7 +336,7 @@
                             <?php $path = Storage::url($mitra->jaminan->sertifikat_jaminan);
                                 echo url($path);
                             ?>
-                            " class="btn btn-primary btn-sm">
+                            " target="_blank" class="btn btn-primary btn-sm">
                             <i class="fa fa-download"></i>&nbsp;
                             Unduh
                         </a>
