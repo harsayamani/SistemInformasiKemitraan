@@ -90,7 +90,7 @@
                                 @foreach ($angsuran as $keys=>$angs)
                                 @if($angs->angsuran->no_pk == Session::get('noPK'))
                                   <tr>
-                                      <td>{{$no+=1}}</td>
+                                      <td>{{$no2+=1}}</td>
                                       <td>{{$angs->id_angsuran}}</td>
                                       <td>{{$angs->angsuran->tgl_angsuran}}</td>
                                       <td>Rp.{{$angs->bayar_angsuran}}</td>

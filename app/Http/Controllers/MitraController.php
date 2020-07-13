@@ -434,7 +434,7 @@ class MitraController extends Controller
 
             if(!empty($id_pinjaman)){
                 $lama_angsuran = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('lama_angsuran');
-                $angsuran = Angsuran::where('id_pinjaman', $id_pinjaman)->orderBy('update_at', 'desc')->get();
+                $angsuran = Angsuran::where('id_pinjaman', $id_pinjaman)->orderBy('created_at', 'desc')->get();
                 $pengajuan = PengajuanDana::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->first();
                 $pinjaman = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->first();
 
