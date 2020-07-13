@@ -35,7 +35,7 @@
                             @foreach ($angsuran as $key => $angs)
                             @if($angs->tgl_angsuran!=null)
                             <tr>
-                                <td>{{++$key}}</td>
+                                <td>{{$no+=1}}</td>
                                 <td>{{$angs->id_pinjaman}}</td>
                                 <td>{{$angs->dataMitra->dataProposal->nama_pengaju}}</td>
                                 <td>Rp.{{$angs->jumlah_angsuran}}</td>

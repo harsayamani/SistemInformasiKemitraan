@@ -46,7 +46,7 @@
                                 @foreach ($pinjaman as $key=>$pij)
                                 @if($pij->pinjaman->no_pk == Session::get('noPK'))
                                   <tr>
-                                      <td>{{++$key}}</td>
+                                      <td>{{$no+=1}}</td>
                                       <td>{{$pij->id_pinjaman}}</td>
                                       <td>{{$pij->created_at}}</td>
                                       <td>Rp.{{$pij->pinjaman->nominal_pinjaman}}</td>
@@ -90,7 +90,7 @@
                                 @foreach ($angsuran as $keys=>$angs)
                                 @if($angs->angsuran->no_pk == Session::get('noPK'))
                                   <tr>
-                                      <td>{{++$keys}}</td>
+                                      <td>{{$no+=1}}</td>
                                       <td>{{$angs->id_angsuran}}</td>
                                       <td>{{$angs->angsuran->tgl_angsuran}}</td>
                                       <td>Rp.{{$angs->bayar_angsuran}}</td>

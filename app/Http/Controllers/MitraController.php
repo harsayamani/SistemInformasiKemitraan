@@ -430,10 +430,11 @@ class MitraController extends Controller
         }else{
             $no_pk = Session::get('noPK');
             $id_pinjaman = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('id_pinjaman');
+            $no = 0;
 
             if(!empty($id_pinjaman)){
                 $lama_angsuran = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('lama_angsuran');
-                $angsuran = Angsuran::where('id_pinjaman', $id_pinjaman)->get();
+                $angsuran = Angsuran::where('id_pinjaman', $id_pinjaman)->orderBy('update_at', 'desc')->get();
                 $pengajuan = PengajuanDana::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->first();
                 $pinjaman = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->first();
 
@@ -450,7 +451,7 @@ class MitraController extends Controller
                 $pinjaman = null;
             }
 
-            return view('mitra/angsuran', compact('angsuran', 'pengajuan', 'pinjaman'));
+            return view('mitra/angsuran', compact('angsuran', 'pengajuan', 'pinjaman', 'no'));
         }
     }
 
@@ -513,7 +514,10 @@ class MitraController extends Controller
             $pinjaman = HistoriPinjaman::orderBy('id_pinjaman', 'desc')->get();
             $angsuran = HistoriAngsuran::orderBy('id_angsuran', 'desc')->get();
 
-            return view('mitra/riwayat', compact('angsuran', 'pinjaman'));
+            $no = 0;
+            $no2 = 0;
+
+            return view('mitra/riwayat', compact('angsuran', 'pinjaman', 'no', 'no2'));
         }
     }
 }

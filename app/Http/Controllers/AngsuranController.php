@@ -13,8 +13,9 @@ class AngsuranController extends Controller
             return redirect('/admin/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
         }else{
             $angsuran= Angsuran::orderBy('id_pinjaman', 'asc')->get();
+            $no = 0;
 
-            return view('admin/kelolaAngsuran', compact('angsuran'));
+            return view('admin/kelolaAngsuran', compact('angsuran', 'no'));
         }
     }
 }
