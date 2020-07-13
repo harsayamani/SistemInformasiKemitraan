@@ -35,7 +35,7 @@
                     </thead>
                     <tbody>
                       @foreach ($angsuran as $key=>$angs)
-                      @if($pengajuan != null && $pengajuan->status == 3 && $pinjaman != null && $pinjaman->status == 2)
+                      @if($pengajuan != null && $pengajuan->status == 3)
                         <tr>
                             <td>{{++$key}}</td>
                             <td>{{$angs->id_pinjaman}}</td>
