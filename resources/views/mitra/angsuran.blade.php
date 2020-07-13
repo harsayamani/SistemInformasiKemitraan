@@ -47,8 +47,8 @@
                                 -
                                 @endif
                             </td>
-                            <td>{{$angs->jumlah_angsuran}}</td>
-                            <td>{{$angs->utang}}</td>
+                            <td>Rp.{{$angs->jumlah_angsuran}}</td>
+                            <td>Rp.{{$angs->utang}}</td>
                             <td>
                                 @if ($angs->status == 0)
                                     <button type="button" class="btn btn-warning btn-sm" disabled>
