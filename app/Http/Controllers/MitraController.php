@@ -26,6 +26,12 @@ use Veritrans_Snap;
 
 class MitraController extends Controller
 {
+    public function __construct()
+    {
+    	//Penyiapkan Client Disk Dropbox
+        $this->dropbox = Storage::disk('dropbox')->getDriver()->getAdapter()->getClient();
+    }
+
     public function loginIndex(){
         if(!Session::get('loginMitra')){
             return view('mitra/loginMitra');
@@ -245,7 +251,7 @@ class MitraController extends Controller
             $sertifikat_jaminan = null;
 
             if($request->sertifikat_jaminan != null){
-                $sertifikat_jaminan = Storage::putFile('public/files/sertifikat_jaminan', $request->file('sertifikat_jaminan'));
+                $sertifikat_jaminan = Storage::disk('dropbox')->put('jaminan/1', $request->file('sertifikat_jaminan'));
             }
 
             if($request->pas_foto != null){

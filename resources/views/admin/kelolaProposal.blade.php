@@ -139,7 +139,7 @@
                                 <td>{{$prop->npwp}}</td>
                                 <td>
                                     <a href="
-                                    <?php $path = Storage::url($prop->laporan_keuangan);
+                                    <?php $path = Storage::disk('dropbox')->url($prop->laporan_keuangan);
                                         echo url($path);
                                     ?>
                                     " class="btn btn-primary btn-sm">
@@ -149,7 +149,7 @@
                                 </td>
                                 <td>
                                     <a href="
-                                    <?php $path = Storage::url($prop->sku);
+                                    <?php $path = Storage::disk('dropbox')->url($prop->sku);
                                         echo url($path);
                                     ?>
                                     " class="btn btn-primary btn-sm">
@@ -159,7 +159,7 @@
                                 </td>
                                 <td>
                                     <a href="
-                                    <?php $path = Storage::url($prop->ktp_pengaju);
+                                    <?php $path = Storage::disk('dropbox')->url($prop->ktp_pengaju);
                                         echo url($path);
                                     ?>
                                     " class="btn btn-primary btn-sm">

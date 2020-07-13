@@ -333,7 +333,7 @@
                     @if($mitra->jaminan->sertifikat_jaminan!=null)
                     <div class="col-12 col-md-3">
                         <a href="
-                            <?php $path = Storage::url($mitra->jaminan->sertifikat_jaminan);
+                            <?php $path = Storage::disk('dropbox')->url($mitra->jaminan->sertifikat_jaminan);
                                 echo url($path);
                             ?>
                             " target="_blank" class="btn btn-primary btn-sm">

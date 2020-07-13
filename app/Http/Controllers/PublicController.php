@@ -8,10 +8,15 @@ use App\FAQ;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use UxWeb\SweetAlert\SweetAlert;
 
 class PublicController extends Controller
 {
+    public function __construct()
+    {
+    	//Penyiapkan Client Disk Dropbox
+        $this->dropbox = Storage::disk('dropbox')->getDriver()->getAdapter()->getClient();
+    }
+
     public function index(){
         $berita = Berita::orderBy('created_at', 'desc')->paginate(3);
 
@@ -114,9 +119,9 @@ class PublicController extends Controller
         $unit_usaha = $request->unit_usaha;
         $npwp = $request->npwp;
         $sektor_usaha = $request->sektor_usaha;
-        $ktp_pengaju = Storage::putFile('public/files/ktp', $request->file('ktp_pengaju'));
-        $laporan_keuangan = Storage::putFile('public/files/laporan_keuangan', $request->file('laporan_keuangan'));
-        $sku = Storage::putFile('public/files/sku', $request->file('sku'));
+        $ktp_pengaju = Storage::disk('dropbox')->put('files/ktp', $request->file('ktp_pengaju'));
+        $laporan_keuangan = Storage::disk('dropbox')->put('files/laporan_keuangan', $request->file('laporan_keuangan'));
+        $sku = Storage::disk('dropbox')->put('files/sku', $request->file('sku'));
 
         $proposal = new DataProposal();
         $proposal->no_proposal = random_int(100000000, 999999999);

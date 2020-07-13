@@ -15,9 +15,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use JD\Cloudder\Facades\Cloudder;
 use Veritrans_Config;
 use Veritrans_Notification;
 use Veritrans_Snap;
+use Veritrans_Transaction;
 
 class PinjamanController extends Controller
 {
@@ -250,79 +252,60 @@ class PinjamanController extends Controller
         Veritrans_Config::$isSanitized = config('services.midtrans.isSanitized');
         Veritrans_Config::$is3ds = config('services.midtrans.is3ds');
 
-        $notif = new Veritrans_Notification();
-        $transaction = $notif->transaction_status;
-        $type = $notif->payment_type;
-        $orderId = $notif->order_id;
-        $fraud = $notif->fraud_status;
+        $pinjam = Pinjaman::where('status', 1)->get();
 
-        $pinjaman = Pinjaman::where('id_pinjaman', $orderId)->firstOrFail();
-        $angsuran = Angsuran::fwhere('id_angsuran', $orderId)->firstOrFail();
+        if(!empty($pinjam)){
+            foreach($pinjam as $pinj){
+                $transaction = Veritrans_Transaction::status($pinj->token);
+                $pinjaman = Pinjaman::where('token', $pinj->token)->firstOrFail();
 
-        if($pinjaman!=null && $angsuran==null){
-            if ($transaction == 'capture') {
-
-                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
-                if ($type == 'credit_card') {
-
-                  if($fraud == 'challenge') {
-                    $pinjaman->status = 1;
-                    $pinjaman->save();
-                  } else {
+                if ($transaction == 'settlement') {
                     $pinjaman->status = 2;
                     $pinjaman->save();
-                  }
+                } elseif($transaction == 'pending'){
+                    $pinjaman->status = 1;
+                    $pinjaman->save();
+                } elseif ($transaction == 'deny') {
+                    $pinjaman->status = 0;
+                    $pinjaman->save();
+                } elseif ($transaction == 'expire') {
+                    $pinjaman->status = 0;
+                    $pinjaman->save();
 
+                } elseif ($transaction == 'cancel') {
+                    $pinjaman->status = 0;
+                    $pinjaman->save();
                 }
-
-            } elseif ($transaction == 'settlement') {
-                $pinjaman->status = 2;
-                $pinjaman->save();
-            } elseif($transaction == 'pending'){
-                $pinjaman->status = 1;
-                $pinjaman->save();
-            } elseif ($transaction == 'deny') {
-                $pinjaman->status = 0;
-                $pinjaman->save();
-            } elseif ($transaction == 'expire') {
-                $pinjaman->status = 0;
-                $pinjaman->save();
-
-            } elseif ($transaction == 'cancel') {
-                $pinjaman->status = 0;
-                $pinjaman->save();
             }
-            return;
-        }elseif($angsuran!=null && $pinjaman==null){
-            if ($transaction == 'capture') {
-                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
-                if ($type == 'credit_card') {
-
-                  if($fraud == 'challenge') {
-                    $angsuran->status = 1;
-                  } else {
-                    $angsuran->status = 2;
-                  }
-
-                }
-            } elseif ($transaction == 'settlement') {
-                $angsuran->status = 2;
-                $angsuran->save();
-            } elseif($transaction == 'pending'){
-                $angsuran->status = 1;
-                $angsuran->save();
-            } elseif ($transaction == 'deny') {
-                $angsuran->status = 0;
-                $angsuran->save();
-            } elseif ($transaction == 'expire') {
-                $angsuran->status = 0;
-                $angsuran->save();
-            } elseif ($transaction == 'cancel') {
-                $angsuran->status = 0;
-                $angsuran->save();
-            }
-            return;
         }
+
+        $angsur = Angsuran::where('status', 1)->get();
+
+        if(!empty($angsur)){
+            foreach($angsur as $angs){
+                $transaction = Veritrans_Transaction::status($angs->token);
+                $angsuran = Angsuran::where('token', $angs->token)->firstOrFail();
+                if ($transaction == 'settlement') {
+                    $angsuran->status = 2;
+                    $angsuran->save();
+                } elseif($transaction == 'pending'){
+                    $angsuran->status = 1;
+                    $angsuran->save();
+                } elseif ($transaction == 'deny') {
+                    $angsuran->status = 0;
+                    $angsuran->save();
+                } elseif ($transaction == 'expire') {
+                    $angsuran->status = 0;
+                    $angsuran->save();
+                } elseif ($transaction == 'cancel') {
+                    $angsuran->status = 0;
+                    $angsuran->save();
+                }
+
+            }
+        }
+
+        return;
     }
 
     public function hasilSurvei(Request $request){
@@ -352,11 +335,11 @@ class PinjamanController extends Controller
             $kepemilikan_usaha = $survei->kepemilikan_usaha;
             $rekening_bank = $survei->rekening_bank;
             $penghasilan_diluar_usaha = $survei->penghasilan_diluar_usaha;
-            $surat_ijin_usaha = Storage::url($survei->surat_ijin_usaha);
-            $dokumen_hasil_survei = Storage::url($survei->dokumen_hasil_survei);
-            $surat_berita_acara = Storage::url($survei->surat_berita_acara);
-            $foto_pemilik = Storage::url($survei->foto_pemilik);
-            $foto_tempat_usaha = Storage::url($survei->foto_tempat_usaha);
+            $surat_ijin_usaha = Cloudder::show($survei->surat_ijin_usaha, ['width'=>1920, 'height'=>1080]);
+            $dokumen_hasil_survei = Cloudder::show($survei->dokumen_hasil_survei, ['width'=>1920, 'height'=>1080]);
+            $surat_berita_acara = Cloudder::show($survei->surat_berita_acara, ['width'=>1920, 'height'=>1080]);
+            $foto_pemilik = Cloudder::show($survei->foto_pemilik, ['width'=>1920, 'height'=>1080]);
+            $foto_tempat_usaha = Cloudder::show($survei->foto_tempat_usaha, ['width'=>1920, 'height'=>1080]);
 
             return response()->json([
                 'no_pk' => $no_pk,

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use JD\Cloudder\Facades\Cloudder;
 
 class SurveiController extends Controller
 {
@@ -108,13 +109,18 @@ class SurveiController extends Controller
             $surat_ijin_usaha = null;
 
             if($request->surat_ijin_usaha != null){
-                $surat_ijin_usaha = Storage::putFile('public/files/surat_ijin_usaha', $request->file('surat_ijin_usaha'));
+                Cloudder::upload($request->surat_ijin_usaha);
+                $surat_ijin_usaha = Cloudder::getPublicId();
             }
 
-            $dokumen_hasil_survei = Storage::putFile('public/files/hasil_survei', $request->file('dokumen_hasil_survei'));
-            $surat_berita_acara = Storage::putFile('public/files/surat_berita_acara', $request->file('surat_berita_acara'));
-            $foto_pemilik = Storage::putFile('public/images/foto_pemilik', $request->file('foto_pemilik'));
-            $foto_tempat_usaha = Storage::putFile('public/images/foto_tempat_usaha', $request->file('foto_tempat_usaha'));
+            Cloudder::upload($request->dokumen_hasil_survei);
+            $dokumen_hasil_survei = Cloudder::getPublicId();
+            Cloudder::upload($request->surat_berita_acara);
+            $surat_berita_acara = Cloudder::getPublicId();
+            Cloudder::upload($request->foto_pemilik);
+            $foto_pemilik = Cloudder::getPublicId();
+            Cloudder::upload($request->foto_tempat_usaha);
+            $foto_tempat_usaha = Cloudder::getPublicId();
             $anggota_tim1 = $request->anggota_tim1;
             $anggota_tim2 = $request->anggota_tim2;
             $anggota_tim3 = $request->anggota_tim3;
