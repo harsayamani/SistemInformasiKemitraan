@@ -59,13 +59,21 @@
 			            <section>
 			                <div class="inner">
                                 <h5>Unduh Contoh Dokumen Hasil Survei
-                                    <a href="/storage/default/hasil_survey_lapangan.docx" target="_blank" class="btn btn-primary btn-sm">
+                                    <a href="
+                                    <?php $path = Storage::disk('dropbox')->url('files/dokumen_hasil_survei/hasil_survei_lapangan.docx');
+                                        echo url($path);
+                                    ?>
+                                    " target="_blank" class="btn btn-primary btn-sm">
                                         DISINI
                                     </a>
                                 </h5>
 
                                 <h5>Unduh Contoh Berita Acara Peninjauan
-                                    <a href="/storage/default/berita_acara_peninjauan.docx" target="_blank" class="btn btn-primary btn-sm">
+                                    <a href="
+                                    <?php $path = Storage::disk('dropbox')->url('files/surat_berita_acara/berita_acara_peninjauan.docx');
+                                        echo url($path);
+                                    ?>
+                                    " target="_blank" class="btn btn-primary btn-sm">
                                         DISINI
                                     </a>
                                 </h5>
