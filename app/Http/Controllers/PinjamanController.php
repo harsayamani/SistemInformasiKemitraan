@@ -256,7 +256,7 @@ class PinjamanController extends Controller
 
         if(!empty($pinjam)){
             foreach($pinjam as $pinj){
-                $transaction = Veritrans_Transaction::status($pinj->token);
+                $transaction = Veritrans_Transaction::status($pinj->id_pinjaman);
                 $pinjaman = Pinjaman::where('token', $pinj->token)->firstOrFail();
 
                 if ($transaction == 'settlement') {
@@ -283,7 +283,7 @@ class PinjamanController extends Controller
 
         if(!empty($angsur)){
             foreach($angsur as $angs){
-                $transaction = Veritrans_Transaction::status($angs->token);
+                $transaction = Veritrans_Transaction::status($angs->id_angsuran);
                 $angsuran = Angsuran::where('token', $angs->token)->firstOrFail();
                 if ($transaction == 'settlement') {
                     $angsuran->status = 2;
