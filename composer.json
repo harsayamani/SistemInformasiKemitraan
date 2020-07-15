@@ -16,7 +16,6 @@
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "league/flysystem-aws-s3-v3": "^1.0",
-        "league/flysystem-dropbox": "^1.0",
         "midtrans/midtrans-php": "^2.3",
         "spatie/flysystem-dropbox": "^1.2",
         "uxweb/sweet-alert": "^2.0",
