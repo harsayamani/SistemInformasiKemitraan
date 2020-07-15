@@ -10,19 +10,29 @@ use App\Pinjaman;
 use App\Survei;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use JD\Cloudder\Facades\Cloudder;
 use Veritrans_Config;
 use Veritrans_Notification;
 use Veritrans_Snap;
-use Veritrans_Transaction;
 
 class PinjamanController extends Controller
 {
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+
+        // Set midtrans configuration
+        Veritrans_Config::$serverKey = config('services.midtrans.serverKey');
+        Veritrans_Config::$isProduction = config('services.midtrans.isProduction');
+        Veritrans_Config::$isSanitized = config('services.midtrans.isSanitized');
+        Veritrans_Config::$is3ds = config('services.midtrans.is3ds');
+    }
+
     public function kelolaPinjaman(){
         if(!Session::get('loginAdmin')){
             return redirect('/admin/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
@@ -197,14 +207,9 @@ class PinjamanController extends Controller
     }
 
     public function transferPinjaman(Request $request){
-        // Buat transaksi ke midtrans kemudian save snap tokennya.
-        Veritrans_Config::$serverKey = config('services.midtrans.serverKey');
-        Veritrans_Config::$isProduction = config('services.midtrans.isProduction');
-        Veritrans_Config::$isSanitized = config('services.midtrans.isSanitized');
-        Veritrans_Config::$is3ds = config('services.midtrans.is3ds');
-
         $id_pinjaman = $request->id_pinjaman;
         $pinjaman = Pinjaman::findOrFail($id_pinjaman);
+        $nama_admin = Session::get('namaAdmin');
 
         $payload = [
             'transaction_details' => [
@@ -212,7 +217,7 @@ class PinjamanController extends Controller
                 'gross_amount'  => $pinjaman->nominal_pinjaman,
             ],
             'customer_details' => [
-                'first_name'    => $pinjaman->dataMitra->dataProposal->nama_pengaju,
+                'first_name'    => $nama_admin,
                 'email'         => $pinjaman->dataMitra->users->email,
                 // 'phone'         => '08888888888',
                 // 'address'       => '',
@@ -247,65 +252,177 @@ class PinjamanController extends Controller
 
     public function notificationHandler(Request $request)
     {
-        Veritrans_Config::$serverKey = config('services.midtrans.serverKey');
-        Veritrans_Config::$isProduction = config('services.midtrans.isProduction');
-        Veritrans_Config::$isSanitized = config('services.midtrans.isSanitized');
-        Veritrans_Config::$is3ds = config('services.midtrans.is3ds');
+        $notif = new Veritrans_Notification();
+        DB::transaction(function() use($notif) {
 
-        $pinjam = Pinjaman::where('status', 1)->get();
+          $transaction = $notif->transaction_status;
+          $type = $notif->payment_type;
+          $orderId = $notif->order_id;
+          $fraud = $notif->fraud_status;
+          $pinjaman = Pinjaman::findOrFail($orderId);
+          $angsuran = Angsuran::findOrFail($orderId);
 
-        if(!empty($pinjam)){
-            foreach($pinjam as $pinj){
-                $transaction = Veritrans_Transaction::status($pinj->id_pinjaman);
-                $pinjaman = Pinjaman::where('token', $pinj->token)->firstOrFail();
+          if(!empty($pinjaman)){
+            if ($transaction == 'capture') {
 
-                if ($transaction == 'settlement') {
-                    $pinjaman->status = 2;
-                    $pinjaman->save();
-                } elseif($transaction == 'pending'){
-                    $pinjaman->status = 1;
-                    $pinjaman->save();
-                } elseif ($transaction == 'deny') {
-                    $pinjaman->status = 0;
-                    $pinjaman->save();
-                } elseif ($transaction == 'expire') {
-                    $pinjaman->status = 0;
-                    $pinjaman->save();
+                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+                if ($type == 'credit_card') {
 
-                } elseif ($transaction == 'cancel') {
-                    $pinjaman->status = 0;
-                    $pinjaman->save();
-                }
-            }
-        }
+                  if($fraud == 'challenge') {
+                    // TODO set payment status in merchant's database to 'Challenge by FDS'
+                    // TODO merchant should decide whether this transaction is authorized or not in MAP
+                    // $donation->addUpdate("Transaction order_id: " . $orderId ." is challenged by FDS");
+                    $pinjaman->setPending();
+                  } else {
+                    // TODO set payment status in merchant's database to 'Success'
+                    // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully captured using " . $type);
+                    $pinjaman->setSuccess();
+                  }
 
-        $angsur = Angsuran::where('status', 1)->get();
-
-        if(!empty($angsur)){
-            foreach($angsur as $angs){
-                $transaction = Veritrans_Transaction::status($angs->id_angsuran);
-                $angsuran = Angsuran::where('token', $angs->token)->firstOrFail();
-                if ($transaction == 'settlement') {
-                    $angsuran->status = 2;
-                    $angsuran->save();
-                } elseif($transaction == 'pending'){
-                    $angsuran->status = 1;
-                    $angsuran->save();
-                } elseif ($transaction == 'deny') {
-                    $angsuran->status = 0;
-                    $angsuran->save();
-                } elseif ($transaction == 'expire') {
-                    $angsuran->status = 0;
-                    $angsuran->save();
-                } elseif ($transaction == 'cancel') {
-                    $angsuran->status = 0;
-                    $angsuran->save();
                 }
 
-            }
-        }
+              } elseif ($transaction == 'settlement') {
+
+                // TODO set payment status in merchant's database to 'Settlement'
+                // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully transfered using " . $type);
+                $pinjaman->setSuccess();
+
+              } elseif($transaction == 'pending'){
+
+                // TODO set payment status in merchant's database to 'Pending'
+                // $donation->addUpdate("Waiting customer to finish transaction order_id: " . $orderId . " using " . $type);
+                $pinjaman->setPending();
+
+              } elseif ($transaction == 'deny') {
+
+                // TODO set payment status in merchant's database to 'Failed'
+                // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is Failed.");
+                $pinjaman->setFailed();
+
+              } elseif ($transaction == 'expire') {
+
+                // TODO set payment status in merchant's database to 'expire'
+                // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is expired.");
+                $pinjaman->setExpired();
+
+              } elseif ($transaction == 'cancel') {
+
+                // TODO set payment status in merchant's database to 'Failed'
+                // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is canceled.");
+                $pinjaman->setFailed();
+
+              }
+          }
+
+          if(!empty($angsuran)){
+            if ($transaction == 'capture') {
+
+                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+                if ($type == 'credit_card') {
+
+                  if($fraud == 'challenge') {
+                    // TODO set payment status in merchant's database to 'Challenge by FDS'
+                    // TODO merchant should decide whether this transaction is authorized or not in MAP
+                    // $donation->addUpdate("Transaction order_id: " . $orderId ." is challenged by FDS");
+                    $angsuran->setPending();
+                  } else {
+                    // TODO set payment status in merchant's database to 'Success'
+                    // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully captured using " . $type);
+                    $angsuran->setSuccess();
+                  }
+
+                }
+
+              } elseif ($transaction == 'settlement') {
+
+                // TODO set payment status in merchant's database to 'Settlement'
+                // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully transfered using " . $type);
+                $angsuran->setSuccess();
+
+              } elseif($transaction == 'pending'){
+
+                // TODO set payment status in merchant's database to 'Pending'
+                // $donation->addUpdate("Waiting customer to finish transaction order_id: " . $orderId . " using " . $type);
+                $angsuran->setPending();
+
+              } elseif ($transaction == 'deny') {
+
+                // TODO set payment status in merchant's database to 'Failed'
+                // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is Failed.");
+                $angsuran->setFailed();
+
+              } elseif ($transaction == 'expire') {
+
+                // TODO set payment status in merchant's database to 'expire'
+                // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is expired.");
+                $angsuran->setExpired();
+
+              } elseif ($transaction == 'cancel') {
+
+                // TODO set payment status in merchant's database to 'Failed'
+                // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is canceled.");
+                $angsuran->setFailed();
+              }
+          }
+        });
 
         return;
+
+
+        // $pinjam = Pinjaman::where('status', 1)->get();
+
+        // if(!empty($pinjam)){
+        //     foreach($pinjam as $pinj){
+        //         $transaction = Veritrans_Transaction::status($pinj->id_pinjaman);
+        //         $pinjaman = Pinjaman::where('token', $pinj->token)->firstOrFail();
+
+        //         if ($transaction == 'settlement') {
+        //             $pinjaman->status = 2;
+        //             $pinjaman->save();
+        //         } elseif($transaction == 'pending'){
+        //             $pinjaman->status = 1;
+        //             $pinjaman->save();
+        //         } elseif ($transaction == 'deny') {
+        //             $pinjaman->status = 0;
+        //             $pinjaman->save();
+        //         } elseif ($transaction == 'expire') {
+        //             $pinjaman->status = 0;
+        //             $pinjaman->save();
+
+        //         } elseif ($transaction == 'cancel') {
+        //             $pinjaman->status = 0;
+        //             $pinjaman->save();
+        //         }
+        //     }
+        // }
+
+        // $angsur = Angsuran::where('status', 1)->get();
+
+        // if(!empty($angsur)){
+        //     foreach($angsur as $angs){
+        //         $transaction = Veritrans_Transaction::status($angs->id_angsuran);
+        //         $angsuran = Angsuran::where('token', $angs->token)->firstOrFail();
+        //         if ($transaction == 'settlement') {
+        //             $angsuran->status = 2;
+        //             $angsuran->save();
+        //         } elseif($transaction == 'pending'){
+        //             $angsuran->status = 1;
+        //             $angsuran->save();
+        //         } elseif ($transaction == 'deny') {
+        //             $angsuran->status = 0;
+        //             $angsuran->save();
+        //         } elseif ($transaction == 'expire') {
+        //             $angsuran->status = 0;
+        //             $angsuran->save();
+        //         } elseif ($transaction == 'cancel') {
+        //             $angsuran->status = 0;
+        //             $angsuran->save();
+        //         }
+
+        //     }
+        // }
+
+        // return;
     }
 
     public function hasilSurvei(Request $request){
