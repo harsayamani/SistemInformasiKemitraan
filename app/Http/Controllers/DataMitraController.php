@@ -51,10 +51,10 @@ class DataMitraController extends Controller
             $no_pk = $request->no_pk;
 
             $mitra = DataMitra::findOrFail($no_pk);
-            $ktp = Storage::url($mitra->dataProposal->ktp_pengaju);
-            $sertifikat_jaminan = Storage::url($mitra->jaminan->sertifikat_jaminan);
-            $laporan_keuangan = Storage::url($mitra->dataProposal->laporan_keuangan);
-            $sku = Storage::url($mitra->dataProposal->sku);
+            $ktp = Storage::disk('dropbox')->url($mitra->dataProposal->ktp_pengaju);
+            $sertifikat_jaminan = Storage::disk('dropbox')->url($mitra->jaminan->sertifikat_jaminan);
+            $laporan_keuangan = Storage::disk('dropbox')->url($mitra->dataProposal->laporan_keuangan);
+            $sku = Storage::disk('dropbox')->url($mitra->dataProposal->sku);
             $pas_foto = Cloudder::show($mitra->pas_foto, ['width'=>100, 'height'=>150, "crop"=>"scale"]);
 
             return response()->json([

@@ -142,7 +142,7 @@
             </div>
             <div class="pos" id="_100:682" style="top:682;left:100">
             <span id="_15.0" style=" font-family:Times New Roman; font-size:15.0px; color:#000000">
-            sebesar <b>Rp. {{$mitra->dataProposal->dana_aju}} </b> dengan rencana penggunaan dana pinjaman untuk {{$mitra->dataProposal->unit_usaha}}</span>
+            sebesar <b>Rp. {{$pengajuan->dana_aju}} </b> dengan rencana penggunaan dana pinjaman untuk {{$mitra->dataProposal->unit_usaha}}</span>
             </div>
     </div>
 

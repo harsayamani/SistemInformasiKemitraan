@@ -170,6 +170,7 @@
                                             Info
                                     </button>
 
+                                    @if(\App\PengajuanDana::where('no_pk', $mit->no_pk)->get()->count()<1)
                                     <button type="button" class="btn btn-danger btn-sm"
                                         data-target="#hapusMitra"
                                         data-toggle="modal"
@@ -177,6 +178,7 @@
                                         <i class="fa fa-trash-o"></i>&nbsp;
                                             Hapus
                                     </button>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
