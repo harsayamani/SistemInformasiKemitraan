@@ -85,6 +85,8 @@ Route::post('/admin/kelola/pinjaman/pengajuan/survei/hasilSurvei', 'PinjamanCont
 
 Route::get('/admin/kelola/angsuran', 'AngsuranController@kelolaAngsuran');
 
+Route::post('/admin/kelola/angsuran/filter', 'AngsuranController@filter');
+
 //Route FAQ
 
 Route::get('/admin/kelola/faq', 'FAQController@faq');

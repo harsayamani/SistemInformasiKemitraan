@@ -298,7 +298,7 @@
                                         <p><center><b>{{$persetujuan}}</b></center></p>
                                         <p>Untuk langkah selanjutnya anda dipersilahkan datang ke PT. LEN INDUSTRI untuk penandatangan kontrak dan pengumpulan sejumlah berkas sebagai berikut :</p>
                                         <ol>
-                                            <li>Foto copy KTP/li>
+                                            <li>Foto copy KTP</li>
                                             <li>Foto copy surat nikah</li>
                                             <li>Foto copy KK</li>
                                             <li>Pas foto 3x4 berwarna (suami dan istri) masing-masing 1 lembar</li>

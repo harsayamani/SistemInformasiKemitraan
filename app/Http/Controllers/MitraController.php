@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use JD\Cloudder\Facades\Cloudder;
 use Veritrans_Config;
 use Veritrans_Snap;
@@ -212,19 +213,56 @@ class MitraController extends Controller
         if(!Session::get('loginMitra')){
             return redirect('/mitra/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
         }else{
-            $this->validate($request, [
-                'ktp' => '|required|min:16|max:16',
+
+            $validatedKTP = Validator::make($request->all(), [
+                'ktp' => '|required|min:16|max:16|',
+            ]);
+
+            $validatedNamaPengaju = Validator::make($request->all(), [
                 'nama_pengaju' => '|required|max:50',
+            ]);
+
+            $validatedJenisKelamin = Validator::make($request->all(), [
                 'jenis_kelamin' => '|required',
+            ]);
+
+            $validatedTempatLahir = Validator::make($request->all(), [
                 'tempat_lahir' => '|required',
+            ]);
+
+            $validatedTanggalLahir = Validator::make($request->all(), [
                 'tgl_lahir' => '|required',
+            ]);
+
+            $validatedNoTelp = Validator::make($request->all(), [
                 'no_telp' => '|required|min:11!numeric',
+            ]);
+
+            $validatedAlamatKantor = Validator::make($request->all(), [
                 'alamat_kantor' => '|required|max:255',
+            ]);
+
+            $validatedLokasiUsaha = Validator::make($request->all(), [
                 'lokasi_usaha' => '|required|max:255',
+            ]);
+
+            $validatedAhliWaris = Validator::make($request->all(), [
                 'ahli_waris' => '|required|max:50',
+            ]);
+
+            $validatedJumlahKaryawan = Validator::make($request->all(), [
                 'jumlah_karyawan' => '|required|numeric|regex:/^([1-9][0-9]+)/',
+            ]);
+
+            $validatedNoRek = Validator::make($request->all(), [
                 'no_rek' => '|required|numeric',
+            ]);
+
+            $validatedUnitUsaha = Validator::make($request->all(), [
                 'unit_usaha' => '|required|max:50',
+            ]);
+
+            $validatedSertifikatJaminan = Validator::make($request->all(), [
                 'sertifikat_jaminan' => '|file|max:7000'
             ]);
 
@@ -252,6 +290,9 @@ class MitraController extends Controller
 
             if($request->sertifikat_jaminan != null){
                 $sertifikat_jaminan = Storage::disk('dropbox')->put('jaminan/1', $request->file('sertifikat_jaminan'));
+            }else{
+                $data_mitra = DataMitra::findOrFail($no_pk);
+                $sertifikat_jaminan = $data_mitra->jaminan->sertifikat_jaminan;
             }
 
             if($request->pas_foto != null){
@@ -261,6 +302,69 @@ class MitraController extends Controller
                 }catch(Exception $e){
                     return redirect()->back()->with('alert-danger', $e->getMessage());
                 }
+            }else{
+                $data_mitra = DataMitra::findOrFail($no_pk);
+                $pas_foto = $data_mitra->pas_foto;
+            }
+
+            $message = '';
+            $alert = '';
+
+            if($validatedKTP->fails()){
+                $ktp = null;
+                $message = $validatedKTP->errors()->first();
+                $alert = 'alert-modal-danger';
+            }elseif($validatedNamaPengaju->fails()){
+                $nama_pengaju = null;
+                $message = $validatedNamaPengaju->errors()->first();
+                $alert = 'alert-modal-danger';
+            }elseif($validatedAhliWaris->fails()){
+                $ahli_waris = null;
+                $message = $validatedAhliWaris->errors()->first();
+                $alert = 'alert-modal-danger';
+            }elseif($validatedAlamatKantor->fails()){
+                $alamat_kantor = null;
+                $message = $validatedAlamatKantor->errors()->first();
+                $alert = 'alert-modal-danger';
+            }elseif($validatedJenisKelamin->fails()){
+                $jenis_kelamin = null;
+                $message = $validatedJenisKelamin->errors()->first();
+                $alert = 'alert-modal-danger';
+            }elseif($validatedJumlahKaryawan->fails()){
+                $jenis_kelamin = null;
+                $message = $validatedJumlahKaryawan->errors()->first();
+                $alert = 'alert-modal-danger';
+            }elseif($validatedLokasiUsaha->fails()){
+                $lokasi_usaha = null;
+                $message = $validatedLokasiUsaha->errors()->first();
+                $alert = 'alert-modal-danger';
+            }elseif($validatedNoTelp->fails()){
+                $no_telp = null;
+                $message = $validatedNoTelp->errors()->first();
+                $alert = 'alert-modal-danger';
+            }elseif($validatedNoRek->fails()){
+                $no_rek = null;
+                $message = $validatedNoRek->errors()->first();
+                $alert = 'alert-modal-danger';
+            }elseif($validatedUnitUsaha->fails()){
+                $unit_usaha = null;
+                $message = $validatedUnitUsaha->errors()->first();
+                $alert = 'alert-modal-danger';
+            }elseif($validatedTanggalLahir->fails()){
+                $tgl_lahir = null;
+                $message = $validatedTanggalLahir->errors()->first();
+                $alert = 'alert-modal-danger';
+            }elseif($validatedTempatLahir->fails()){
+                $tempat_lahir = null;
+                $message = $validatedTempatLahir->errors()->first();
+                $alert = 'alert-modal-danger';
+            }elseif($validatedSertifikatJaminan->fails()){
+                $tempat_lahir = null;
+                $message = $validatedSertifikatJaminan->errors()->first();
+                $alert = 'alert-modal-danger';
+            }else{
+                $message = 'Data mitra berhasil disimpan!';
+                $alert = 'alert-modal-success';
             }
 
             $mitra = DataMitra::findOrFail($no_pk);
@@ -294,7 +398,7 @@ class MitraController extends Controller
                         $mitra->no_rek = $no_rek;
 
                         if($mitra->save()){
-                            return redirect('/mitra/dataMitra')->with('alert-modal-success', 'Data mitra berhasil disimpan!');
+                            return redirect('/mitra/dataMitra')->with($alert, $message);
                         }else{
                             return redirect('/mitra/dataMitra')->with('alert-modal-danger', 'Terjadi kesalahan!');
                         }

@@ -349,7 +349,9 @@
                                             <div class="col-12 col-md-2">
                                                 <input type="number" class="form-control" id="bunga" name="bunga" value="3" required>
                                             </div>
-                                            %
+                                            <div class="col-12 col-md-2">
+                                                %
+                                            </div>
                                         </div>
 
                                         <div class="row form-group">
@@ -364,13 +366,15 @@
                                             <div class="col-12 col-md-2">
                                                 <input type="number" class="form-control" id="lama_angsuran" name="lama_angsuran"  required>
                                             </div>
-                                            bulan
+                                            <div class="col-12 col-md-2">
+                                                bulan
+                                            </div>
                                         </div>
 
                                         <div class="row form-group">
                                             <label class="control-label col-md-2" for="nominal_angsuran">Nominal Angsuran</label>
                                             <div class="col-12 col-md-6">
-                                                <input type="number" class="form-control" id="nominal_angsuran" name="nominal_angsuran" required>
+                                                <input type="number" class="form-control" id="nominal_angsuran" name="nominal_angsuran" readonly required>
                                             </div>
                                         </div>
 
@@ -479,7 +483,11 @@
         <script src="{{ !config('services.midtrans.isProduction') ? 'https://app.sandbox.midtrans.com/snap/snap.js' : 'https://app.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('services.midtrans.clientKey') }}"></script>
 
         <script>
-            $('#jadwal').datepicker();
+            var today, datepicker;
+                today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+                datepicker = $('#jadwal').datepicker({
+                    minDate: today
+                })
         </script>
 
         <!-- page script -->
@@ -577,6 +585,16 @@
                     var bunga = parseFloat(document.getElementById("bunga").value);
                     var nominal_pinjaman = parseFloat(document.getElementById("nominal_pinjaman").value);
                     var lama_angsuran = parseFloat( document.getElementById("lama_angsuran").value);
+
+                    if(lama_angsuran > 36){
+                        lama_angsuran = 36
+                        $('#lama_angsuran').val(lama_angsuran)
+                    }
+
+                    // if(lama_angsuran < 6){
+                    //     lama_angsuran = 6
+                    //     $('#lama_angsuran').val(lama_angsuran)
+                    // }
 
                     var total_pinjaman = nominal_pinjaman + (nominal_pinjaman*(bunga/100));
                     var nominal_angsuran = total_pinjaman/lama_angsuran;
