@@ -1,477 +1,88 @@
-<html>
+<!DOCTYPE html>
+<!-- Created by pdf2htmlEX (https://github.com/coolwanglu/pdf2htmlex) -->
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Dokumen Pengajuan Pinjaman - {{$pengajuan->id_pengajuan_dana}}</title>
-	<style type="text/css">
-			.lead {
-				font-family: "Verdana";
-				font-weight: bold;
-			}
-			.value {
-				font-family: "Verdana";
-			}
-			.value-big {
-				font-family: "Verdana";
-				font-weight: bold;
-				font-size: large;
-			}
-			.td {
-				valign : "top";
-			}
+<meta charset="utf-8"/>
 
-            body { font-family: Arial; font-size: 20.4px }
-            .pos { position: absolute; z-index: 0; left: 0px; top: 0px }
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<link rel="stylesheet" href="/proposal/base.min.css"/>
+<link rel="stylesheet" href="/proposal/fancy.min.css"/>
+<link rel="stylesheet" href="/proposal/main.css"/>
+<style type="text/css">
+    /* @page { size: with x height */
+    /* @page { size: 20cm 13cm; margin: 0px; } */
+    @page {
+        size: A4;
+        margin : 0px;
+    }
 
-			/* @page { size: with x height */
-			/* @page { size: 20cm 13cm; margin: 0px; } */
-			@page {
-				size: Letter;
-				margin : 0px;
-			}
-
-	/*		@media print {
-			  html, body {
-			  	width: 210mm;
-			  }
-			}*/
+/*		@media print {
+      html, body {
+          width: 210mm;
+      }
+    }*/
 
 
 
-            @media print{
-                .page-breaker {
-                    page-break-before: always;
-                }
+    @media print{
+        .page-breaker {
+            page-break-before: always;
+        }
+    }
+    /*body { border: 2px solid #000000;  }*/
+</style>
+<script type="text/javascript">
+    var beforePrint = function() {
+    };
+    var afterPrint = function() {
+        document.location.href = '/admin/kelola/pinjaman';
+    };
+    if (window.matchMedia) {
+        var mediaQueryList = window.matchMedia('print');
+        mediaQueryList.addListener(function(mql) {
+            if (mql.matches) {
+                beforePrint();
+            } else {
+                afterPrint();
             }
-			/*body { border: 2px solid #000000;  }*/
-	</style>
-	<script type="text/javascript">
-		var beforePrint = function() {
-		};
-		var afterPrint = function() {
-			document.location.href = '/admin/kelola/pinjaman';
-		};
-		if (window.matchMedia) {
-			var mediaQueryList = window.matchMedia('print');
-			mediaQueryList.addListener(function(mql) {
-				if (mql.matches) {
-					beforePrint();
-				} else {
-					afterPrint();
-				}
-			});
-		}
-		window.onbeforeprint = beforePrint;
-		window.onafterprint = afterPrint;
-    </script>
+        });
+    }
+    window.onbeforeprint = beforePrint;
+    window.onafterprint = afterPrint;
+</script>
+<script src="/proposal/compatibility.min.js"></script>
+<script src="/proposal/theViewer.min.js"></script>
+<script>
+try{
+theViewer.defaultViewer = new theViewer.Viewer({});
+}catch(e){}
+</script>
+<title>Dokumen Pengajuan Pinjaman - {{$pengajuan->id_pengajuan_dana}}</title>
 </head>
 <body>
-   <nobr><nowrap>
-    <div class="page-breaker">
-        <div class="pos" id="_0:0" style="top:0">
-            <img name="_1100:850" src="/img/page_001.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
-            <div class="pos" id="_100:101" style="top:101;left:100">
-            <span id="_15.0" style="font-weight:bold; font-family:Times New Roman; font-size:15.0px; color:#000000">
-            Kepada </span>
-            </div>
-            <div class="pos" id="_100:139" style="top:139;left:100">
-            <span id="_15.0" style="font-weight:bold; font-family:Times New Roman; font-size:15.0px; color:#000000">
-            Yth. Bagian Program Kemitraan dan Bina Lingkungan (PKBL)</span>
-            </div>
-            <div class="pos" id="_100:176" style="top:176;left:100">
-            <span id="_15.0" style="font-weight:bold; font-family:Times New Roman; font-size:15.0px; color:#000000">
-            PT. Len industri (persero)</span>
-            </div>
-            <div class="pos" id="_100:214" style="top:214;left:100">
-            <span id="_15.0" style="font-weight:bold; font-family:Times New Roman; font-size:15.0px; color:#000000">
-            Jalan Soekarno Hatta No. 442 </span>
-            </div>
-            <div class="pos" id="_100:251" style="top:251;left:100">
-            <span id="_15.0" style="font-weight:bold; font-family:Times New Roman; font-size:15.0px; color:#000000">
-            Bandung, Jawa Barat</span>
-            </div>
-            <div class="pos" id="_100:326" style="top:326;left:100">
-            <span id="_15.0" style="font-weight:bold; font-family:Times New Roman; font-size:15.0px; color:#000000">
-            Dengan hormat<span style="font-weight:normal"> , </span></span>
-            </div>
-            <div class="pos" id="_100:363" style="top:363;left:100">
-            <span id="_15.0" style=" font-family:Times New Roman; font-size:15.0px; color:#000000">
-            Saya bertanda tangan dibawah ini :</span>
-            </div>
-            <div class="pos" id="_100:401" style="top:401;left:100">
-            <span id="_15.0" style=" font-family:Times New Roman; font-size:15.0px; color:#000000">
-            Nama</span>
-            </div>
-            <div class="pos" id="_249:401" style="top:401;left:249">
-            <span id="_15.0" style=" font-family:Times New Roman; font-size:15.0px; color:#000000">
-            : {{$mitra->dataProposal->nama_pengaju}}</span>
-            </div>
-            <div class="pos" id="_100:438" style="top:438;left:100">
-            <span id="_15.0" style=" font-family:Times New Roman; font-size:15.0px; color:#000000">
-            Tempat, tanggal lahir</span>
-            </div>
-            <div class="pos" id="_100:438" style="top:438;left:249">
-            <span id="_15.0" style=" font-family:Times New Roman; font-size:15.0px; color:#000000">
-            : {{$mitra->tempat_lahir}}, {{$mitra->tgl_lahir}}</span>
-            </div>
-            <div class="pos" id="_100:476" style="top:476;left:100">
-            <span id="_15.0" style=" font-family:Times New Roman; font-size:15.0px; color:#000000">
-            Alamat</span>
-            </div>
-            <div class="pos" id="_249:476" style="top:476;left:249">
-            <span id="_15.0" style=" font-family:Times New Roman; font-size:15.0px; color:#000000">
-            : {{$mitra->alamat_kantor}}</span>
-            </div>
-            <div class="pos" id="_100:551" style="top:551;left:100">
-            <span id="_15.0" style=" font-family:Times New Roman; font-size:15.0px; color:#000000">
-            Berdasarkan  peraturan  menteri  negara  BUMN  No:  PER-02-MBU-2017  tanggal  5  juli  2017  tentang </span>
-            </div>
-            <div class="pos" id="_100:577" style="top:577;left:100">
-            <span id="_15.0" style=" font-family:Times New Roman; font-size:15.0px; color:#000000">
-            Perubahan Ke-2 atas Peraturan Menteri BADAN USAHA MILIK NEGARA No. PER-09/MBU/07/2015 </span>
-            </div>
-            <div class="pos" id="_100:603" style="top:603;left:100">
-            <span id="_15.0" style=" font-family:Times New Roman; font-size:15.0px; color:#000000">
-            tentang Program Kemitraan BUMN dengan Usaha Kecil dan Program Bina Lingkungan (PKBL) Badan </span>
-            </div>
-            <div class="pos" id="_100:630" style="top:630;left:100">
-            <span id="_15.0" style=" font-family:Times New Roman; font-size:15.0px; color:#000000">
-            Usaha  Milik  Negara,  maka  dengan  ini  saya  mengajukan  dengan  hormat  sebagai  penerima  pinjaman </span>
-            </div>
-            <div class="pos" id="_100:656" style="top:656;left:100">
-            <span id="_15.0" style=" font-family:Times New Roman; font-size:15.0px; color:#000000">
-            Program Kemitraan BUMN dari PT. Len Industri (Persero) untuk sektor usaha : <b>{{$mitra->dataProposal->unit_usaha}}</b></span>
-            </div>
-            <div class="pos" id="_100:682" style="top:682;left:100">
-            <span id="_15.0" style=" font-family:Times New Roman; font-size:15.0px; color:#000000">
-            sebesar <b>Rp. {{$pengajuan->dana_aju}} </b> dengan rencana penggunaan dana pinjaman untuk {{$mitra->dataProposal->unit_usaha}}</span>
-            </div>
-    </div>
+<div id="sidebar">
+<div id="outline">
+</div>
+</div>
+<div id="page-container">
+<div id="pf1" class="pf w0 h0" data-page-no="1"><div class="pc pc1 w0 h0"><div class="t m0 x0 h1 y0 ff1 fs0 fc0 sc0 ls0 ws0">Yth. Bagian Program Kemitraan dan Bina Lingkungan (PKBL)</div><div class="t m0 x0 h1 y1 ff1 fs0 fc0 sc0 ls0 ws0">PT. Len industri (persero)</div><div class="t m0 x0 h1 y2 ff1 fs0 fc0 sc0 ls0 ws0">Jalan Soekarno Hatta No. 442</div><div class="t m0 x0 h1 y3 ff1 fs0 fc0 sc0 ls0 ws0">Bandung, Jawa Barat</div><div class="t m0 x0 h2 y4 ff1 fs0 fc0 sc0 ls0 ws0">Dengan hormat <span class="ff2">,</span></div><div class="t m0 x0 h2 y5 ff2 fs0 fc0 sc0 ls0 ws0">Saya bertanda tangan dibawah ini :</div><div class="t m0 x0 h2 y6 ff2 fs0 fc0 sc0 ls0 ws0">Nama <span class="_ _0"> </span>: {{$mitra->dataProposal->nama_pengaju}} </div><div class="t m0 x0 h2 y7 ff2 fs0 fc0 sc0 ls0 ws0">Tempat, tanggal lahir<span class="_ _1"> </span>: {{$tempat_lahir}}, {{$mitra->tgl_lahir}} </div><div class="t m0 x0 h2 y8 ff2 fs0 fc0 sc0 ls0 ws0">Alamat <span class="_ _2"> </span>: {{$mitra->alamat_kantor}} </div><div class="t m0 x0 h2 y9 ff2 fs0 fc0 sc0 ls0 ws0">Berdasarkan <span class="_ _3"> </span>peraturan <span class="_ _3"> </span>menteri <span class="_ _3"> </span>negara <span class="_ _3"> </span>BUMN <span class="_ _3"> </span>No: <span class="_ _3"> </span>PER-02-MBU-2017 <span class="_ _3"> </span>tanggal <span class="_ _3"> </span>5 <span class="_ _3"> </span>juli <span class="_ _3"> </span>2017 </div><div class="t m0 x0 h2 ya ff2 fs0 fc0 sc0 ls0 ws0">tentang <span class="_ _4"> </span>Perubahan <span class="_ _4"> </span>Ke-2 <span class="_ _4"> </span>atas <span class="_ _4"> </span>Peraturan <span class="_ _4"> </span>Menteri <span class="_ _4"> </span>Badan <span class="_ _4"> </span>Usaha <span class="_ _4"> </span>Milik <span class="_ _4"> </span>Negara <span class="_ _4"> </span>No. <span class="_ _4"> </span>PER-</div><div class="t m0 x0 h2 yb ff2 fs0 fc0 sc0 ls0 ws0">09/MBU/07/2015 tentang Program Kemitraan <span class="_ _5"></span>BUMN dengan Usaha Kecil <span class="_ _5"></span>dan Program Bina </div><div class="t m0 x0 h2 yc ff2 fs0 fc0 sc0 ls0 ws0">Lingkungan <span class="_ _6"></span>(PKBL) <span class="_ _6"></span>Badan <span class="_ _6"></span>Usaha <span class="_ _6"></span>Milik <span class="_ _6"></span>Negara, <span class="_ _6"></span>maka <span class="_ _6"></span>dengan <span class="_ _6"></span>ini <span class="_ _6"></span>saya <span class="_ _6"></span>mengajukan <span class="_ _6"></span>dengan </div><div class="t m0 x0 h2 yd ff2 fs0 fc0 sc0 ls0 ws0">hormat <span class="_ _7"></span>sebagai <span class="_ _7"></span>penerima <span class="_ _7"></span>pinjaman <span class="_ _7"></span>program <span class="_ _7"></span>Kemitraan <span class="_ _7"></span>BUMN <span class="_ _7"></span>dari <span class="_ _7"></span>PT. <span class="_ _7"></span>Len <span class="_ _7"></span>Industri <span class="_ _7"></span>(Persero) </div><div class="t m0 x0 h2 ye ff2 fs0 fc0 sc0 ls0 ws0">untuk <span class="_ _8"> </span>sektor <span class="_ _8"> </span>usaha <span class="_ _8"> </span><b>{{$mitra->dataProposal->sektor_usaha}}</b> <span class="_ _8"> </span>sebesar <span class="_ _8"> </span><b>Rp</b> <span class="_ _8"> </span><b>{{$pengajuan->dana_aju}}</b> <span class="ff1"> </span></div><div class="t m0 x0 h2 yf ff2 fs0 fc0 sc0 ls0 ws0">dengan <span class="_ _3"> </span>rencana <span class="_ _9"> </span>penggunaan <span class="_ _3"> </span>dana <span class="_ _9"> </span>pinjaman <span class="_ _3"> </span>untuk <span class="_ _9"> </span>pengembangan <span class="_ _3"> </span>usaha <span class="_ _9"> </span><b>{{$mitra->dataProposal->unit_usaha}}</b> </div><div class="t m0 x0 h2 y10 ff2 fs0 fc0 sc0 ls0 ws0">agar lebih maju dan dikenal masyarakat. </div></div><div class="pi" data-data='{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}'></div></div>
+<div id="pf2" class="pf w0 h0" data-page-no="2"><div class="pc pc2 w0 h0"><div class="t m0 x0 h2 y0 ff2 fs0 fc0 sc0 ls0 ws0">Sebagai kelengkapan persyaratan sebagai penerima pinjaman program kemitraan BUMN dan </div><div class="t m0 x0 h2 y1 ff2 fs0 fc0 sc0 ls0 ws0">pertimbangan Bapak/Ibu selanjutnya yaitu:</div><div class="t m0 x1 h2 y11 ff2 fs0 fc0 sc0 ls0 ws0">1.<span class="_ _a"> </span>Proposal permohonan bantuan dana PKBL Len</div><div class="t m0 x1 h2 y12 ff2 fs0 fc0 sc0 ls0 ws0">2.<span class="_ _a"> </span>Foto copy KTP</div><div class="t m0 x1 h2 y13 ff2 fs0 fc0 sc0 ls0 ws0">3.<span class="_ _a"> </span>Foto copy Kartu Keluarga</div><div class="t m0 x1 h2 y14 ff2 fs0 fc0 sc0 ls0 ws0">4.<span class="_ _a"> </span>Foto copy surat nikah</div><div class="t m0 x1 h2 y15 ff2 fs0 fc0 sc0 ls0 ws0">5.<span class="_ _a"> </span>Pas Foto 3x4 </div><div class="t m0 x1 h2 y16 ff2 fs0 fc0 sc0 ls0 ws0">6.<span class="_ _a"> </span>Surat Keterangan Usaha PKBL PT. LEN </div><div class="t m0 x1 h2 y17 ff2 fs0 fc0 sc0 ls0 ws0">7.<span class="_ _a"> </span>Foto copy buku tabungan </div><div class="t m0 x1 h2 y18 ff2 fs0 fc0 sc0 ls0 ws0">8.<span class="_ _a"> </span>Foto copy barang titipan yang akan diserahkan </div><div class="t m0 x1 h2 y19 ff2 fs0 fc0 sc0 ls0 ws0">9.<span class="_ _a"> </span>Surat keterangan kerja bagi yang memiliki pekerjaan tetap</div><div class="t m0 x1 h2 y1a ff2 fs0 fc0 sc0 ls0 ws0">10. Surat pernyataan sedang tidak sedang mendapatkan pinjaman kemitraan BUMN lain.</div><div class="t m0 x0 h2 y1b ff2 fs0 fc0 sc0 ls0 ws0">Besar harapan saya agar Bapak/Ibu berkenan untuk menyetujui permohonan saya sebagai </div><div class="t m0 x0 h2 y1c ff2 fs0 fc0 sc0 ls0 ws0">penerima pinjaman program kemitraan. Atas perhatian dan kebijaksanaannya saya ucapkan </div><div class="t m0 x0 h2 y1d ff2 fs0 fc0 sc0 ls0 ws0">terimakasih. </div></div><div class="pi" data-data='{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}'></div></div>
+<div id="pf3" class="pf w0 h0" data-page-no="3"><div class="pc pc3 w0 h0"><img class="bi x2 y1e w1 h3" alt="" src="<?php
+    $url = JD\Cloudder\Facades\Cloudder::show($mitra->pas_foto, ['width'=>300, 'height'=>400, "crop"=>"scale"]);
+    echo $url;
+?>"/><div class="t m0 x3 h1 y0 ff1 fs0 fc0 sc0 ls0 ws0">PROPOSAL PERMOHONAN BANTUAN PKBL PT. LEN INDUSTRI (PERSERO)</div><div class="c x0 y1f w2 h4"><div class="t m0 x4 h1 y20 ff1 fs0 fc0 sc0 ls0 ws0">Data Pemohon/Pemilik Usaha</div></div><div class="c x0 y21 w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">Nama </div></div><div class="c x5 y21 w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$mitra->dataProposal->nama_pengaju}} </div></div><div class="c x0 y22 w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">Tempat, tanggal lahir</div></div><div class="c x5 y22 w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$tempat_lahir}}, {{$mitra->tgl_lahir}}</div></div><div class="c x0 y23 w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">Alamat</div></div><div class="c x5 y23 w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$mitra->alamat_kantor}}</div></div><div class="c x0 y24 w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">No. KTP</div></div><div class="c x5 y24 w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$mitra->ktp}} </div></div><div class="c x0 y25 w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">No. Telp/HP</div></div><div class="c x5 y25 w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$mitra->no_telp}}</div></div><div class="c x0 y26 w3 h5"><div class="t m0 x4 h1 y20 ff1 fs0 fc0 sc0 ls0 ws0">Unit Usaha </div></div><div class="c x0 y27 w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">Nama usaha </div></div><div class="c x5 y27 w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$mitra->dataProposal->unit_usaha}}</div></div><div class="c x0 y28 w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">Sektor usaha </div></div><div class="c x5 y28 w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$mitra->dataProposal->sektor_usaha}}</div></div><div class="c x0 y29 w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">Lokasi usaha </div></div><div class="c x5 y29 w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$mitra->lokasi_usaha}}</div></div><div class="c x0 y2a w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">Jumlah tenaga kerja </div></div><div class="c x5 y2a w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$mitra->jumlah_karyawan}}</div></div><div class="c x0 y2b w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">Nomor rekening </div></div><div class="c x5 y2b w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$mitra->no_rek}}</div></div><div class="c x0 y2c w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">Pemilik rekening </div></div><div class="c x5 y2c w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$mitra->dataProposal->nama_pengaju}}</div></div><div class="c x0 y2d w3 h5"><div class="t m0 x4 h1 y20 ff1 fs0 fc0 sc0 ls0 ws0">Ahli waris </div></div><div class="c x0 y2e w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">Nama </div></div><div class="c x5 y2e w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$mitra->ahli_waris}} </div></div><div class="c x0 y2f w3 h5"><div class="t m0 x4 h1 y20 ff1 fs0 fc0 sc0 ls0 ws0">Barang Titipan </div></div><div class="c x0 y30 w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">Jenis barang titipan </div></div><div class="c x5 y30 w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$mitra->jaminan->jaminan}} </div></div><div class="c x0 y31 w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">No. barang titipan </div></div><div class="c x5 y31 w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$mitra->jaminan->no_jaminan}} </div></div><div class="c x0 y32 w3 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">Nama pemilik </div></div><div class="c x5 y32 w4 h4"><div class="t m0 x4 h2 y20 ff2 fs0 fc0 sc0 ls0 ws0">: {{$mitra->jaminan->pemilik_jaminan}}</div></div><div class="t m0 x0 h2 y33 ff2 fs0 fc0 sc0 ls0 ws0">Demikianlah proposal ini saya buat dengan sebenar-benarnya, atas perhatiannya saya </div><div class="t m0 x0 h2 y34 ff2 fs0 fc0 sc0 ls0 ws0">ucapkan terimakasih. </div></div><div class="pi" data-data='{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}'></div></div>
+<div id="pf4" class="pf w0 h0" data-page-no="4"><div class="pc pc4 w0 h0"><div class="t m0 x6 h1 y0 ff1 fs0 fc0 sc0 ls0 ws0">SURAT PERNYATAAN BUKAN MITRA BINAAN BUMN LAIN</div><div class="t m0 x0 h2 y35 ff2 fs0 fc0 sc0 ls0 ws0">Yang bertanda tangan dibawah ini :</div><div class="t m0 x0 h2 y36 ff2 fs0 fc0 sc0 ls0 ws0">Nama <span class="_ _b"> </span>: {{$mitra->dataProposal->nama_pengaju}}</div><div class="t m0 x0 h2 y37 ff2 fs0 fc0 sc0 ls0 ws0">No. KTP <span class="_ _c"> </span>: {{$mitra->ktp}}</div><div class="t m0 x0 h2 y38 ff2 fs0 fc0 sc0 ls0 ws0">Alamat<span class="_ _d"> </span> : {{$mitra->alamat_kantor}}</div><div class="t m0 x0 h2 y39 ff2 fs0 fc0 sc0 ls0 ws0">Sehubungan <span class="_ _7"></span>dengan permohonan <span class="_ _7"></span>bantuan <span class="_ _7"></span>pembinaan <span class="_ _7"></span>yang <span class="_ _7"></span>kami <span class="_ _7"></span>ajukan kepada <span class="_ _7"></span>PKBL <span class="_ _7"></span>PT.Len </div><div class="t m0 x0 h2 y3a ff2 fs0 fc0 sc0 ls0 ws0">Industri (Persero), menyatakan dengan sesungguhnya :</div><div class="t m0 x7 h2 y3b ff2 fs0 fc0 sc0 ls0 ws0">1.<span class="_ _a"> </span> Pada saat bersamaan tidak menerima bantuan pinjaman dari BUMN lain.</div><div class="t m0 x7 h2 y3c ff2 fs0 fc0 sc0 ls0 ws0">2.<span class="_ _a"> </span>Bersedia menerima kunjungan tim PKBL PT. Len Industri (Persero)</div><div class="t m0 x7 h2 y3d ff2 fs0 fc0 sc0 ls0 ws0">3.<span class="_ _a"> </span>ersedia <span class="_ _e"> </span>memberikan <span class="_ _e"> </span>data <span class="_ _e"> </span>atau <span class="_ _e"> </span>informasi <span class="_ _e"> </span>yang <span class="_ _e"> </span>diperlukan <span class="_ _e"> </span>oleh <span class="_ _e"> </span>tim <span class="_ _e"> </span>PKBL <span class="_ _e"> </span>PT. <span class="_ _e"> </span>Len </div><div class="t m0 x8 h2 y3e ff2 fs0 fc0 sc0 ls0 ws0">Industri (Persero), mengenai keberadaan perusahaan.</div><div class="t m0 x7 h2 y3f ff2 fs0 fc0 sc0 ls0 ws0">4.<span class="_ _a"> </span>Apabila <span class="_ _5"></span>perusahaan <span class="_ _5"></span>kami <span class="_ _5"></span>menjadi <span class="_ _f"></span>mitra <span class="_ _5"></span>binaan <span class="_ _5"></span>tim <span class="_ _5"></span>PKBL <span class="_ _f"></span>PT. <span class="_ _5"></span>Len <span class="_ _5"></span>Industri <span class="_ _5"></span>(Persero), </div><div class="t m0 x8 h2 y40 ff2 fs0 fc0 sc0 ls0 ws0">kami <span class="_ _6"></span>bersedia <span class="_ _6"></span>melaksanakan <span class="_ _6"></span>segala <span class="_ _10"></span>ketentuan <span class="_ _6"></span>yang <span class="_ _6"></span>tercantum <span class="_ _6"></span>dalam <span class="_ _10"></span>surat <span class="_ _6"></span>perjanjian </div><div class="t m0 x8 h2 y41 ff2 fs0 fc0 sc0 ls0 ws0">kerjasama dengan penuh tanggung jawab.</div><div class="t m0 x0 h2 y42 ff2 fs0 fc0 sc0 ls0 ws0">Demikian <span class="_ _5"></span>surat <span class="_ _f"></span>pernyataan <span class="_ _f"></span>ini <span class="_ _f"></span>saya <span class="_ _f"></span>buat <span class="_ _f"></span>dengan <span class="_ _f"></span>sebenarnya <span class="_ _f"></span>dan <span class="_ _f"></span>tanpa <span class="_ _5"></span>adanya <span class="_ _f"></span>unsur <span class="_ _f"></span>paksaan </div><div class="t m0 x0 h2 y43 ff2 fs0 fc0 sc0 ls0 ws0">dari pihak manapun, serta untuk dapat dipergunakan sebagaimana mestinya.</div></div><div class="pi" data-data='{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}'></div></div>
+<div id="pf5" class="pf w0 h0" data-page-no="5"><div class="pc pc5 w0 h0"><div class="t m0 x9 h1 y0 ff1 fs0 fc0 sc0 ls0 ws0">SURAT PERNYATAAN KEPEMILIKAN BARANG TITIPAN</div><div class="t m0 x0 h2 y11 ff2 fs0 fc0 sc0 ls0 ws0">Yang bertanda tangan dibawah ini :</div><div class="t m0 x0 h2 y44 ff2 fs0 fc0 sc0 ls0 ws0">Nama <span class="_ _b"> </span>: {{$mitra->dataProposal->nama_pengaju}}</div><div class="t m0 x0 h2 y45 ff2 fs0 fc0 sc0 ls0 ws0">No. KTP <span class="_ _c"> </span>: {{$mitra->ktp}}</div><div class="t m0 x0 h2 y46 ff2 fs0 fc0 sc0 ls0 ws0">Alamat <span class="_ _11"> </span>: {{$mitra->alamat_kantor}}</div><div class="t m0 x0 h2 y47 ff2 fs0 fc0 sc0 ls0 ws0">Dengan  ini  menyatakan  bahwa  barang  titipan  yang  diserahkan <span class="_ _12"> </span>kepada  PT.  Len  Industri </div><div class="t m0 x0 h2 y48 ff2 fs0 fc0 sc0 ls0 ws0">(Persero) <span class="_ _13"> </span>berupa <span class="_ _13"> </span><b>{{$mitra->jaminan->jaminan}}</b> <span class="_ _13"> </span>dengan <span class="_ _13"> </span>Nomor <span class="_ _13"> </span><b>{{$mitra->jaminan->no_jaminan}}</b><span class="_ _13"> </span>, <span class="_ _13"> </span>adalah <span class="_ _13"> </span>benar <span class="_ _13"> </span>milik </div><div class="t m0 x0 h2 y49 ff2 fs0 fc0 sc0 ls0 ws0"><b>Bpk/Ibu {{$mitra->jaminan->pemilik_jaminan}}</b> secara sah, <span class="_ _7"></span>dan apabila dikemudian <span class="_ _7"></span>hari terjadi sesuatu <span class="_ _7"></span>hal yang mengakibatkan </div><div class="t m0 x0 h2 y4a ff2 fs0 fc0 sc0 ls0 ws0">saya  tidak  dapat <span class="_ _14"> </span>melaksanakan  kewajiban  mengangsur <span class="_ _14"> </span>pinjaman  kepada  PKBL <span class="_ _14"> </span>PT.  Len </div><div class="t m0 x0 h2 y4b ff2 fs0 fc0 sc0 ls0 ws0">Industri <span class="_ _3"> </span>(Persero) <span class="_ _9"> </span>maka <span class="_ _3"> </span>saya <span class="_ _9"> </span>siap <span class="_ _3"> </span>bertanggung <span class="_ _9"> </span>jawab <span class="_ _9"> </span>secara <span class="_ _3"> </span>hukum <span class="_ _9"> </span>maupun <span class="_ _3"> </span>dalam <span class="_ _9"> </span>bentuk </div><div class="t m0 x0 h2 y4c ff2 fs0 fc0 sc0 ls0 ws0">lainnya <span class="_ _15"> </span>yang <span class="_ _15"> </span>akan <span class="_ _15"> </span>diberikan <span class="_ _15"> </span>oleh <span class="_ _15"> </span>pihak <span class="_ _15"> </span>PT. <span class="_ _15"> </span>Len <span class="_ _15"> </span>Industri <span class="_ _15"> </span>(Persero).</div><div class="t m0 x0 h2 y4d ff2 fs0 fc0 sc0 ls0 ws0">Demikian <span class="_ _5"></span>surat <span class="_ _f"></span>pernyataan <span class="_ _f"></span>ini <span class="_ _f"></span>saya <span class="_ _f"></span>buat <span class="_ _f"></span>dengan <span class="_ _f"></span>sebenarnya <span class="_ _f"></span>dan <span class="_ _f"></span>tanpa <span class="_ _5"></span>adanya <span class="_ _f"></span>unsur <span class="_ _f"></span>paksaan </div><div class="t m0 x0 h2 y4e ff2 fs0 fc0 sc0 ls0 ws0">dari pihak manapun, serta untuk dapat dipergunakan sebagaimana mestinya.</div></div><div class="pi" data-data='{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}'></div></div>
+</div>
+<div class="loading-indicator">
 
-    <div class="page-breaker">
-        <div class="pos" id="_0:0" style="top:1100">
-        <img name="_1100:850" src="/img/page_001.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
-        <div class="pos" id="_100:1201" style="top:1201;left:100">
-        <span id="_14.7" style="font-weight:bold; font-family:Times New Roman; font-size:14.7px; color:#000000">
-        PROPOSAL PERMOHONAN BANTUAN PKBL PT. LEN INDUSTRI (PERSERO)</span>
-        </div>
-        <div class="pos" id="_553:1388" style="top:1250;left:603">
-        <img src="
-        <?php
-            $url = JD\Cloudder\Facades\Cloudder::show($mitra->pas_foto, ['width'=>200, 'height'=>300, "crop"=>"scale"]);
-            echo $url;
-        ?>
-        " style="width: 2cm; height:3cm">
-        </div>
-        <div class="pos" id="_553:1388" style="top:1388;left:553">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Foto yang mengajukan proposal</span>
-        </div>
-        <div class="pos" id="_100:1426" style="top:1426;left:100">
-        <span id="_14.7" style="font-weight:bold; font-family:Times New Roman; font-size:14.7px; color:#000000">
-        PEMOHON/ PEMILIK USAHA </span>
-        </div>
-        <div class="pos" id="_100:1463" style="top:1463;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Nama</span>
-        </div>
-        <div class="pos" id="_300:1463" style="top:1463;left:300">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->dataProposal->nama_pengaju}}</span>
-        </div>
-        <div class="pos" id="_100:1501" style="top:1501;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Tempat, tanggal lahir </span>
-        </div>
-        <div class="pos" id="_300:1501" style="top:1501;left:300">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->tempat_lahir}}, {{$mitra->tgl_lahir}}</span>
-        </div>
-        <div class="pos" id="_100:1538" style="top:1538;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Alamat</span>
-        </div>
-        <div class="pos" id="_300:1538" style="top:1538;left:300">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->alamat_kantor}}</span>
-        </div>
-        <div class="pos" id="_100:1576" style="top:1576;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        No. KTP</span>
-        </div>
-        <div class="pos" id="_300:1576" style="top:1576;left:300">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->ktp}}</span>
-        </div>
-        <div class="pos" id="_100:1613" style="top:1613;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        No. TELP/HP</span>
-        </div>
-        <div class="pos" id="_300:1613" style="top:1613;left:300">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->no_telp}}</span>
-        </div>
-        <div class="pos" id="_100:1688" style="top:1688;left:100">
-        <span id="_14.7" style="font-weight:bold; font-family:Times New Roman; font-size:14.7px; color:#000000">
-        UNIT USAHA </span>
-        </div>
-        <div class="pos" id="_100:1726" style="top:1726;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Nama usaha </span>
-        </div>
-        <div class="pos" id="_300:1726" style="top:1726;left:300">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->dataProposal->unit_usaha}}</span>
-        </div>
-        <div class="pos" id="_100:1763" style="top:1763;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Sektor usaha </span>
-        </div>
-        <div class="pos" id="_300:1763" style="top:1763;left:300">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->dataProposal->sektor_usaha}}</span>
-        </div>
-        <div class="pos" id="_100:1801" style="top:1801;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Lokasi usaha </span>
-        </div>
-        <div class="pos" id="_300:1801" style="top:1801;left:300">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->lokasi_usaha}}</span>
-        </div>
-        <div class="pos" id="_100:1838" style="top:1838;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Jumlah tenaga kerja </span>
-        </div>
-        <div class="pos" id="_300:1838" style="top:1838;left:300">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->jumlah_karyawan}}</span>
-        </div>
-        <div class="pos" id="_100:1875" style="top:1875;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Nomor rekening </span>
-        </div>
-        <div class="pos" id="_100:1875" style="top:1875;left:300">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->no_rek}}</span>
-        </div>
-        <div class="pos" id="_100:1913" style="top:1913;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Pemilik rekening</span>
-        </div>
-        <div class="pos" id="_300:1913" style="top:1913;left:300">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->dataProposal->nama_pengaju}}</span>
-        </div>
-        <div class="pos" id="_0:0" style="top:2200">
-        <img name="_1100:850" src="/img/page_003.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
-        <div class="pos" id="_100:2301" style="top:2301;left:100">
-        <span id="_14.8" style="font-weight:bold; font-family:Times New Roman; font-size:14.8px; color:#000000">
-        AHLI WARIS USAHA </span>
-        </div>
-        <div class="pos" id="_100:2339" style="top:2339;left:100">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        Nama</span>
-        </div>
-        <div class="pos" id="_300:2339" style="top:2339;left:300">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        : {{$mitra->ahli_waris}}</span>
-        </div>
-        <div class="pos" id="_100:2414" style="top:2414;left:100">
-        <span id="_14.8" style="font-weight:bold; font-family:Times New Roman; font-size:14.8px; color:#000000">
-        BARANG TITIPAN </span>
-        </div>
-        <div class="pos" id="_100:2451" style="top:2451;left:100">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        Jenis barang titipan</span>
-        </div>
-        <div class="pos" id="_300:2451" style="top:2451;left:300">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        : {{$mitra->jaminan->jaminan}}</span>
-        </div>
-        <div class="pos" id="_100:2488" style="top:2488;left:100">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        No. barang titipan</span>
-        </div>
-        <div class="pos" id="_300:2488" style="top:2488;left:300">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        : {{$mitra->jaminan->no_jaminan}}</span>
-        </div>
-        <div class="pos" id="_100:2526" style="top:2526;left:100">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        Nama Pemilik</span>
-        </div>
-        <div class="pos" id="_300:2526" style="top:2526;left:300">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        : {{$mitra->jaminan->pemilik_jaminan}}</span>
-        </div>
-        <div class="pos" id="_100:2563" style="top:2563;left:100">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        Demikian proposal ini saya buat dengan sebenar-benarnya, atas perhatiannya saya ucapkan terimakasih.</span>
-        </div>
-        <div class="pos" id="_100:2601" style="top:2601;left:100">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        Pemohon. </span>
-        </div>
-    </div>
-
-    <div class="page_breaker">
-        <div class="pos" id="_0:0" style="top:3300">
-        <img name="_1100:850" src="/img/page_004.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
-        <div class="pos" id="_100:3401" style="top:3401;left:100">
-        <span id="_14.8" style="font-weight:bold; font-family:Times New Roman; font-size:14.8px; color:#000000">
-        SURAT PERNYATAAN BUKAN MITRA BINAAN BUMN LAIN </span>
-        </div>
-        <div class="pos" id="_100:3476" style="top:3476;left:100">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        Yang bertanda tangan dibawah ini : </span>
-        </div>
-        <div class="pos" id="_100:3514" style="top:3514;left:100">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        Nama</span>
-        </div>
-        <div class="pos" id="_199:3514" style="top:3514;left:199">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        : {{$mitra->dataProposal->nama_pengaju}}</span>
-        </div>
-        <div class="pos" id="_100:3551" style="top:3551;left:100">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        No. KTP</span>
-        </div>
-        <div class="pos" id="_199:3551" style="top:3551;left:199">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        : {{$mitra->ktp}}</span>
-        </div>
-        <div class="pos" id="_100:3588" style="top:3588;left:100">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        Alamat</span>
-        </div>
-        <div class="pos" id="_199:3588" style="top:3588;left:199">
-        <span id="_14.8" style=" font-family:Times New Roman; font-size:14.8px; color:#000000">
-        : {{$mitra->alamat_kantor}}</span>
-        </div>
-        <div class="pos" id="_100:3663" style="top:3663;left:100">
-        <span id="_15.2" style=" font-family:Times New Roman; font-size:15.2px; color:#000000">
-        Sehubungan dengan permohonan bantuan pembinaan yang kami ajukan kepada PKBL PT. Len Industri </span>
-        </div>
-        <div class="pos" id="_100:3690" style="top:3690;left:100">
-        <span id="_15.2" style=" font-family:Times New Roman; font-size:15.2px; color:#000000">
-        (Persero), menyatakan dengan sesungguhnya : </span>
-        </div>
-        <div class="pos" id="_125:3727" style="top:3727;left:125">
-        <span id="_15.2" style=" font-family:Times New Roman; font-size:15.2px; color:#000000">
-        1. Pada saat bersamaan tidak menerima bantuan pinjaman dari BUMN lain. </span>
-        </div>
-        <div class="pos" id="_125:3754" style="top:3754;left:125">
-        <span id="_15.2" style=" font-family:Times New Roman; font-size:15.2px; color:#000000">
-        2. Bersedia menerima kunjungan tim PKBL PT. Len Industri (Persero)</span>
-        </div>
-        <div class="pos" id="_125:3780" style="top:3780;left:125">
-        <span id="_15.2" style=" font-family:Times New Roman; font-size:15.2px; color:#000000">
-        3. Bersedia  memberikan  data  atau  informasi  yang  diperlukan  oleh  tim  PKBL  PT.  Len  Industri </span>
-        </div>
-        <div class="pos" id="_150:3806" style="top:3806;left:150">
-        <span id="_15.2" style=" font-family:Times New Roman; font-size:15.2px; color:#000000">
-        (Persero), mengenai keberadaan perusahaan. </span>
-        </div>
-        <div class="pos" id="_125:3833" style="top:3833;left:125">
-        <span id="_15.2" style=" font-family:Times New Roman; font-size:15.2px; color:#000000">
-        4. Apabila  perusahaan  kami  menjadi  mitra  binaan  tim  PKBL  PT.  Len  Industri  (Persero),  kami </span>
-        </div>
-        <div class="pos" id="_150:3859" style="top:3859;left:150">
-        <span id="_15.2" style=" font-family:Times New Roman; font-size:15.2px; color:#000000">
-        bersedia melaksanakan segala ketentuan yang tercantum dalam surat perjanjian kerjasama dengan </span>
-        </div>
-        <div class="pos" id="_150:3885" style="top:3885;left:150">
-        <span id="_15.2" style=" font-family:Times New Roman; font-size:15.2px; color:#000000">
-        penuh tanggung jawab. </span>
-        </div>
-        <div class="pos" id="_100:3923" style="top:3923;left:100">
-        <span id="_15.2" style=" font-family:Times New Roman; font-size:15.2px; color:#000000">
-        Demikian surat pernyataan ini saya buat dengan sebenarnya dan tanpa adanya unsur paksaan dari pihak </span>
-        </div>
-        <div class="pos" id="_100:3949" style="top:3949;left:100">
-        <span id="_15.2" style=" font-family:Times New Roman; font-size:15.2px; color:#000000">
-        manapun, serta untuk dapat dipergunakan sebagaimana mestinya. </span>
-        </div>
-    </div>
-
-    <div>
-        <div class="pos" id="_0:0" style="top:4400">
-        <img name="_1100:850" src="/img/page_005.jpg" height="1100" width="850" border="0" usemap="#Map"></div>
-        <div class="pos" id="_100:4501" style="top:4501;left:100">
-        <span id="_14.7" style="font-weight:bold; font-family:Times New Roman; font-size:14.7px; color:#000000">
-        SURAT PERNYATAAN KEPEMILIKAN BARANG TITIPAN </span>
-        </div>
-        <div class="pos" id="_100:4576" style="top:4576;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Yang bertanda tangan dibawah ini : </span>
-        </div>
-        <div class="pos" id="_100:4614" style="top:4614;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Nama</span>
-        </div>
-        <div class="pos" id="_199:4614" style="top:4614;left:199">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->dataProposal->nama_pengaju}}</span>
-        </div>
-        <div class="pos" id="_100:4651" style="top:4651;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        No. KTP</span>
-        </div>
-        <div class="pos" id="_199:4651" style="top:4651;left:199">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->ktp}}</span>
-        </div>
-        <div class="pos" id="_100:4688" style="top:4688;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Alamat</span>
-        </div>
-        <div class="pos" id="_199:4688" style="top:4688;left:199">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        : {{$mitra->alamat_kantor}}</span>
-        </div>
-        <div class="pos" id="_100:4726" style="top:4726;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Dengan ini menyatakan bahwa barang titipan yang diserahkan kepada PT. Len Industri (Persero) berupa </span>
-        </div>
-        <div class="pos" id="_100:4752" style="top:4752;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        {{$mitra->jaminan->jaminan}} dengan Nomor {{$mitra->jaminan->no_jaminan}}, adalah <U>b</U><U>e</U><U>n</U><U>a</U><U>r</U><U> </U>milik {{$mitra->jaminan->pemilik_jaminan}} secara sah, dan apabila </span>
-        </div>
-        <div class="pos" id="_100:4779" style="top:4779;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        dikemudian  hari  terjadi  sesuatu  hal  yang  mengakibatkan  saya  tidak  dapat  melaksanakan  kewajiban </span>
-        </div>
-        <div class="pos" id="_100:4805" style="top:4805;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        mengangsur pinjaman kepada PKBL PT. Len Industri (Persero) maka saya siap bertanggung jawab secara </span>
-        </div>
-        <div class="pos" id="_100:4831" style="top:4831;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        hukum maupun dalam bentuk lainnya yang akan diberikan oleh pihak PT. Len Industri (Persero). </span>
-        </div>
-        <div class="pos" id="_100:4869" style="top:4869;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        Demikian surat pernyataan ini saya buat dengan sebenarnya dan tanpa adanya unsur paksaan dari pihak </span>
-        </div>
-        <div class="pos" id="_100:4895" style="top:4895;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-        manapun, serta untuk dapat dipergunakan sebagaimana mestinya. </span>
-        </div>
-        <div class="pos" id="_100:5082" style="top:5082;left:100">
-        <span id="_14.7" style=" font-family:Times New Roman; font-size:14.7px; color:#000000">
-         </span>
-        </div>
-    </div>
-
-    </nowrap></nobr>
-
-    <hr>
-    <!-- jQuery 2.0.2 -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function () {
-            window.print();
-		});
-	</script>
+</div>
+<!-- jQuery 2.0.2 -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        window.print();
+    });
+</script>
 </body>
 </html>

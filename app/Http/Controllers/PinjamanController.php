@@ -18,6 +18,7 @@ use JD\Cloudder\Facades\Cloudder;
 use Veritrans_Config;
 use Veritrans_Notification;
 use Veritrans_Snap;
+use App\Http\Controllers\RajaOngkirController as API;
 
 class PinjamanController extends Controller
 {
@@ -56,8 +57,21 @@ class PinjamanController extends Controller
             $mitra = DataMitra::findOrFail($no_pk);
             $pengajuan = PengajuanDana::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->first();
 
+            $api = new API;
+            $ac = $api->getCURL('city');
+            $kota = $ac->rajaongkir->results;
+
+            $tempat_lahir = "";
+
+            foreach($kota as $city){
+                if($mitra->tempat_lahir == $city->city_id){
+                    $tempat_lahir = $city->city_name;
+                    break;
+                }
+            }
+
             if($mitra){
-                return view('admin/dokumenPengajuanDana', compact('mitra', 'pengajuan'));
+                return view('admin/dokumenPengajuanDana', compact('mitra', 'pengajuan', 'tempat_lahir'));
             }
         }
     }

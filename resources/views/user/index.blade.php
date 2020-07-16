@@ -93,7 +93,7 @@
                     </div>
                     <div class="services-caption">
                         <h4>2. Pengajuan Propsal</h4>
-                        <p>Setelah anda melakukan pendaftaran silahkan anda akses halaman yang berisi form melengkapi data registrasi anda</p>
+                        <p>Setelah anda melakukan regsitrasi dan anda diterima menjadi mitra silahkan lengkapi data diri dan ajukan proposal pengajuan dana.</p>
                     </div>
                 </div>
             </div>
@@ -104,7 +104,7 @@
                     </div>
                     <div class="services-caption">
                         <h4>3. Mendapatkan Notifikasi</h4>
-                        <p>Setelah semua registrasi selesai anda tinggal menunggu notifikasi keputusan proposal anda melalui email, jika anda diterima anda akan mendapatkan username dan password untuk login</p>
+                        <p>Setelah melakukan pengajuan proposal anda akan mendapatkan informasi selanjutnya melalui email seperti jadwal survei, status pengajuan dana anda dan informasi lainnya.</p>
                     </div>
                 </div>
             </div>

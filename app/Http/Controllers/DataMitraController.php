@@ -55,7 +55,7 @@ class DataMitraController extends Controller
             $sertifikat_jaminan = Storage::disk('dropbox')->url($mitra->jaminan->sertifikat_jaminan);
             $laporan_keuangan = Storage::disk('dropbox')->url($mitra->dataProposal->laporan_keuangan);
             $sku = Storage::disk('dropbox')->url($mitra->dataProposal->sku);
-            $pas_foto = Cloudder::show($mitra->pas_foto, ['width'=>100, 'height'=>150, "crop"=>"scale"]);
+            $pas_foto = Cloudder::show($mitra->pas_foto, ['width'=>150, 'height'=>200, "crop"=>"scale"]);
 
             return response()->json([
                 'ktp' => $ktp,
