@@ -97,9 +97,9 @@
                                 $('#tabel_angsuran').empty()
                             }else{
                                 var no = 1;
+                                $('#tabel_angsuran').empty();
 
                                 for(let i=0; i<panjang_angsuran; i++){
-                                    $('#tabel_angsuran').empty();
                                     var html = `
                                         <tr>
                                             <td>${no++}</td>
