@@ -92,6 +92,8 @@
                                                 <dd id="jumlah_karyawan"></dd>
                                                 <dt>Nomor Rekening</dt>
                                                 <dd id="no_rek"></dd>
+                                                <dt>Nama Bank</dt>
+                                                <dd id="bank"></dd>
                                                 <dt>Jaminan</dt>
                                                 <dd id="jaminan"></dd>
                                                 <dt>Pemilik Jaminan</dt>
@@ -154,6 +156,7 @@
                                         data-tgl_lahir = "{{$mit->tgl_lahir}}"
                                         data-no_telp ="{{$mit->no_telp}}"
                                         data-email ="{{$mit->users->email}}"
+                                        data-bank ="{{$mit->bank}}"
                                         data-alamat_kantor ="{{$mit->alamat_kantor}}"
                                         data-lokasi_usaha ="{{$mit->lokasi_usaha}}"
                                         data-ahli_waris ="{{$mit->ahli_waris}}"
@@ -242,6 +245,7 @@
                     var laporan_keuangan = button.data('laoran_keuangan');
                     var sku = button.data('sku');
                     var ktp_pengaju = button.data('ktp_pengaju');
+                    var bank = button.data('bank');
 
                     var modal = $(this);
 
@@ -259,6 +263,7 @@
                     modal.find('.modal-body #ahli_waris').html(ahli_waris);
                     modal.find('.modal-body #jumlah_karyawan').html(jumlah_karyawan);
                     modal.find('.modal-body #no_rek').html(no_rek);
+                    modal.find('.modal-body #bank').html(bank);
                     modal.find('.modal-body #jaminan').html(jaminan);
                     modal.find('.modal-body #pemilik_jaminan').html(pemilik_jaminan);
 

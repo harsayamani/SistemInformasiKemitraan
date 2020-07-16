@@ -73,6 +73,13 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
+        @elseif ($mitra->bank == null)
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         @elseif ($mitra->jaminan->jaminan == null)
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
@@ -286,6 +293,16 @@
                     <div class="col-12 col-md-6">
                         <input type="text" id="no_rek" name="no_rek" placeholder="Masukkan nomor rekening" class="form-control" value="{{$mitra->no_rek}}" required>
                         <small class="form-text text-muted">Tuliskan nomor rekening!</small>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="text-input" class=" form-control-label">Nama Bank</label>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <input type="text" id="bank" name="bank" placeholder="Masukkan nama bank" class="form-control" value="{{$mitra->bank}}" required>
+                        <small class="form-text text-muted">Tuliskan nama bank!</small>
                     </div>
                 </div>
 

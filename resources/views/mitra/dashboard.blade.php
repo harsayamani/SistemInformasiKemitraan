@@ -94,6 +94,13 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
+        @elseif ($mitra->bank == null)
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         @elseif ($mitra->jaminan->jaminan == null)
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             Data mitra anda belum lengkap silahkan lengkapi terlebih dahulu!

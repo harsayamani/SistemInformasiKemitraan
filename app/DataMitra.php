@@ -10,7 +10,7 @@ class DataMitra extends Model
 
     protected $primaryKey = 'no_pk';
 
-    protected $fillable = ['no_pk', 'ktp', 'jenis_kelamin', 'tempat_lahir', 'tgl_lahir', 'no_telp', 'alamat_kantor', 'lokasi_usaha', 'ahli_waris', 'jumlah_karyawan', 'no_rek', 'username', 'no_jaminan', 'no_proposal'];
+    protected $fillable = ['no_pk', 'ktp', 'jenis_kelamin', 'tempat_lahir', 'tgl_lahir', 'no_telp', 'alamat_kantor', 'lokasi_usaha', 'ahli_waris', 'jumlah_karyawan', 'no_rek', 'bank', 'username', 'no_jaminan', 'no_proposal'];
 
     public $incrementing = false;
 

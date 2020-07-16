@@ -26,6 +26,7 @@ class CreateDataMitraTable extends Migration
             $table->string('ahli_waris')->nullable();
             $table->integer('jumlah_karyawan')->nullable();
             $table->bigInteger('no_rek')->nullable();
+            $table->string('bank')->nullable();
             $table->string('username');
             $table->foreign('username')->references('username')->on('users');
             $table->integer('no_jaminan');
