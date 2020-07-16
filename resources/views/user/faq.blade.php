@@ -41,7 +41,7 @@
                     <div class="row">
                         <div class="col-12">
                             <a class="genric-btn default radius" data-toggle="collapse" href="#collapse{{$adm->id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                <h5>{{$adm->pertanyaan}}</h5>
+                                <h5 class="text-left">{{$adm->pertanyaan}}</h5>
                             </a>
                             <div class="col-12">
                                 <div class="collapse" id="collapse{{$adm->id}}">
@@ -60,7 +60,7 @@
                     <div class="row">
                         <div class="col-12">
                             <a class="genric-btn default radius" data-toggle="collapse" href="#collapse{{$adm->id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                <h5>{{$adm->pertanyaan}}</h5>
+                                <h5 class="text-left">{{$adm->pertanyaan}}</h5>
                             </a>
                             <div class="col-12">
                                 <div class="collapse" id="collapse{{$adm->id}}">
@@ -79,7 +79,7 @@
                     <div class="row">
                         <div class="col-12">
                             <a class="genric-btn default radius" data-toggle="collapse" href="#collapse{{$adm->id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                <h5>{{$adm->pertanyaan}}</h5>
+                                <h5 class="text-left">{{$adm->pertanyaan}}</h5>
                             </a>
                             <div class="col-12">
                                 <div class="collapse" id="collapse{{$adm->id}}">
