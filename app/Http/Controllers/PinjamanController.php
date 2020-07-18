@@ -267,11 +267,11 @@ class PinjamanController extends Controller
     public function notificationHandler(Request $request)
     {
         $notif = new Veritrans_Notification();
-        $transaction = $notif->transaction_status;
-        $type = $notif->payment_type;
-        $orderId = $notif->order_id;
-        $transactionId = $notif->transaction_id;
-        $fraud = $notif->fraud_status;
+        // $transaction = $notif->transaction_status;
+        // $type = $notif->payment_type;
+        // $orderId = $notif->order_id;
+        // $transactionId = $notif->transaction_id;
+        // $fraud = $notif->fraud_status;
         // DB::transaction(function() use($notif) {
 
 
