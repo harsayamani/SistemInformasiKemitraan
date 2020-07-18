@@ -266,7 +266,7 @@ class PinjamanController extends Controller
 
     public function notificationHandler(Request $request)
     {
-        // $notif = new Veritrans_Notification();
+        $notif = new Veritrans_Notification();
         // DB::transaction(function() use($notif) {
 
         //   $transaction = $notif->transaction_status;

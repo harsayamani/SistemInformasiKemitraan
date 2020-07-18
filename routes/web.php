@@ -167,15 +167,15 @@ Route::post('/daftar/proses', 'PublicController@registrasiProses');
 
 Route::post('/midtrans/notification', 'PinjamanController@notificationHandler');
 
-Route::get('/midtrans/finish', function () {
+Route::post('/midtrans/finish', function () {
     return redirect()->back()->with('alert-success', 'Pembayaran berhasil!');
 });
 
-Route::get('/midtrans/unfinish', function () {
+Route::post('/midtrans/unfinish', function () {
     return redirect()->back()->with('alert-warning', 'Pembayaran belum selesai, segera lakukan pembayaran sebelum batas waktu!');
 });
 
-Route::get('/midtrans/error', function () {
+Route::post('/midtrans/error', function () {
     return redirect()->back()->with('alert-danger', 'Pembayaran gagal, silahkan ulang pembayaran anda!');
 });
 
