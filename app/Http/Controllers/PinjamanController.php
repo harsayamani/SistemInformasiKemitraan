@@ -273,114 +273,115 @@ class PinjamanController extends Controller
 
         error_log("Order ID $notif->order_id: "."transaction status = $transaction, fraud staus = $fraud");
 
-        $pinjaman = Pinjaman::findOrFail($notif->order_id);
-        $angsuran = Angsuran::findOrFail($notif->order_id);
+        // $pinjaman = Pinjaman::findOrFail($notif->order_id);
+        // $angsuran = Angsuran::findOrFail($notif->order_id);
 
-        if(!empty($pinjaman)){
-            if ($transaction == 'capture') {
+        // if(!empty($pinjaman)){
+        //     if ($transaction == 'capture') {
 
-                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
-                if ($type == 'credit_card') {
+        //         // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+        //         if ($type == 'credit_card') {
 
-                  if($fraud == 'challenge') {
-                    // TODO set payment status in merchant's database to 'Challenge by FDS'
-                    // TODO merchant should decide whether this transaction is authorized or not in MAP
-                    // $donation->addUpdate("Transaction order_id: " . $orderId ." is challenged by FDS");
-                    $pinjaman->setPending();
-                  } else {
-                    // TODO set payment status in merchant's database to 'Success'
-                    // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully captured using " . $type);
-                    $pinjaman->setSuccess();
-                  }
+        //           if($fraud == 'challenge') {
+        //             // TODO set payment status in merchant's database to 'Challenge by FDS'
+        //             // TODO merchant should decide whether this transaction is authorized or not in MAP
+        //             // $donation->addUpdate("Transaction order_id: " . $orderId ." is challenged by FDS");
+        //             $pinjaman->setPending();
+        //           } else {
+        //             // TODO set payment status in merchant's database to 'Success'
+        //             // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully captured using " . $type);
+        //             $pinjaman->setSuccess();
+        //           }
 
-                }
+        //         }
 
-              } elseif ($transaction == 'settlement') {
+        //       } elseif ($transaction == 'settlement') {
 
-                // TODO set payment status in merchant's database to 'Settlement'
-                // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully transfered using " . $type);
-                $pinjaman->setSuccess();
+        //         // TODO set payment status in merchant's database to 'Settlement'
+        //         // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully transfered using " . $type);
+        //         $pinjaman->setSuccess();
 
-              } elseif($transaction == 'pending'){
+        //       } elseif($transaction == 'pending'){
 
-                // TODO set payment status in merchant's database to 'Pending'
-                // $donation->addUpdate("Waiting customer to finish transaction order_id: " . $orderId . " using " . $type);
-                $pinjaman->setPending();
+        //         // TODO set payment status in merchant's database to 'Pending'
+        //         // $donation->addUpdate("Waiting customer to finish transaction order_id: " . $orderId . " using " . $type);
+        //         $pinjaman->setPending();
 
-              } elseif ($transaction == 'deny') {
+        //       } elseif ($transaction == 'deny') {
 
-                // TODO set payment status in merchant's database to 'Failed'
-                // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is Failed.");
-                $pinjaman->setFailed();
+        //         // TODO set payment status in merchant's database to 'Failed'
+        //         // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is Failed.");
+        //         $pinjaman->setFailed();
 
-              } elseif ($transaction == 'expire') {
+        //       } elseif ($transaction == 'expire') {
 
-                // TODO set payment status in merchant's database to 'expire'
-                // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is expired.");
-                $pinjaman->setExpired();
+        //         // TODO set payment status in merchant's database to 'expire'
+        //         // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is expired.");
+        //         $pinjaman->setExpired();
 
-              } elseif ($transaction == 'cancel') {
+        //       } elseif ($transaction == 'cancel') {
 
-                // TODO set payment status in merchant's database to 'Failed'
-                // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is canceled.");
-                $pinjaman->setFailed();
+        //         // TODO set payment status in merchant's database to 'Failed'
+        //         // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is canceled.");
+        //         $pinjaman->setFailed();
 
-              }
-              return;
-          }elseif(!empty($angsuran)){
-            if ($transaction == 'capture') {
+        //       }
+        //       return;
+        //   }elseif(!empty($angsuran)){
+        //     if ($transaction == 'capture') {
 
-                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
-                if ($type == 'credit_card') {
+        //         // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+        //         if ($type == 'credit_card') {
 
-                  if($fraud == 'challenge') {
-                    // TODO set payment status in merchant's database to 'Challenge by FDS'
-                    // TODO merchant should decide whether this transaction is authorized or not in MAP
-                    // $donation->addUpdate("Transaction order_id: " . $orderId ." is challenged by FDS");
-                    $angsuran->setPending();
-                  } else {
-                    // TODO set payment status in merchant's database to 'Success'
-                    // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully captured using " . $type);
-                    $angsuran->setSuccess();
-                  }
+        //           if($fraud == 'challenge') {
+        //             // TODO set payment status in merchant's database to 'Challenge by FDS'
+        //             // TODO merchant should decide whether this transaction is authorized or not in MAP
+        //             // $donation->addUpdate("Transaction order_id: " . $orderId ." is challenged by FDS");
+        //             $angsuran->setPending();
+        //           } else {
+        //             // TODO set payment status in merchant's database to 'Success'
+        //             // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully captured using " . $type);
+        //             $angsuran->setSuccess();
+        //           }
 
-                }
+        //         }
 
-              } elseif ($transaction == 'settlement') {
+        //       } elseif ($transaction == 'settlement') {
 
-                // TODO set payment status in merchant's database to 'Settlement'
-                // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully transfered using " . $type);
-                $angsuran->setSuccess();
+        //         // TODO set payment status in merchant's database to 'Settlement'
+        //         // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully transfered using " . $type);
+        //         $angsuran->setSuccess();
 
-              } elseif($transaction == 'pending'){
+        //       } elseif($transaction == 'pending'){
 
-                // TODO set payment status in merchant's database to 'Pending'
-                // $donation->addUpdate("Waiting customer to finish transaction order_id: " . $orderId . " using " . $type);
-                $angsuran->setPending();
+        //         // TODO set payment status in merchant's database to 'Pending'
+        //         // $donation->addUpdate("Waiting customer to finish transaction order_id: " . $orderId . " using " . $type);
+        //         $angsuran->setPending();
 
-              } elseif ($transaction == 'deny') {
+        //       } elseif ($transaction == 'deny') {
 
-                // TODO set payment status in merchant's database to 'Failed'
-                // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is Failed.");
-                $angsuran->setFailed();
+        //         // TODO set payment status in merchant's database to 'Failed'
+        //         // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is Failed.");
+        //         $angsuran->setFailed();
 
-              } elseif ($transaction == 'expire') {
+        //       } elseif ($transaction == 'expire') {
 
-                // TODO set payment status in merchant's database to 'expire'
-                // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is expired.");
-                $angsuran->setExpired();
+        //         // TODO set payment status in merchant's database to 'expire'
+        //         // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is expired.");
+        //         $angsuran->setExpired();
 
-              } elseif ($transaction == 'cancel') {
+        //       } elseif ($transaction == 'cancel') {
 
-                // TODO set payment status in merchant's database to 'Failed'
-                // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is canceled.");
-                $angsuran->setFailed();
-              }
-              return;
-        }else{
-            return;
-        }
+        //         // TODO set payment status in merchant's database to 'Failed'
+        //         // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is canceled.");
+        //         $angsuran->setFailed();
+        //       }
+        //       return;
+        // }else{
+        //     return;
+        // }
 
+        return;
 
 
         // $pinjam = Pinjaman::where('status', 1)->get();
