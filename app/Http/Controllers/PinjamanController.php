@@ -272,9 +272,10 @@ class PinjamanController extends Controller
           $transaction = $notif->transaction_status;
           $type = $notif->payment_type;
           $orderId = $notif->order_id;
+          $transactionId = $notif->transaction_id;
           $fraud = $notif->fraud_status;
-          $pinjaman = Pinjaman::findOrFail($orderId);
-          $angsuran = Angsuran::findOrFail($orderId);
+          $pinjaman = Pinjaman::where('token', $transactionId)->first();
+          $angsuran = Angsuran::where('token', $transactionId)->first();
 
           if(!empty($pinjaman)){
             if ($transaction == 'capture') {
