@@ -326,6 +326,7 @@ class PinjamanController extends Controller
                 $pinjaman->setFailed();
 
               }
+              return;
           }elseif(!empty($angsuran)){
             if ($transaction == 'capture') {
 
@@ -375,9 +376,11 @@ class PinjamanController extends Controller
                 // $donation->addUpdate("Payment using " . $type . " for transaction order_id: " . $orderId . " is canceled.");
                 $angsuran->setFailed();
               }
+              return;
+        }else{
+            return;
         }
 
-        return;
 
 
         // $pinjam = Pinjaman::where('status', 1)->get();
