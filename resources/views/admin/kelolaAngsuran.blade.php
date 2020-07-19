@@ -37,6 +37,7 @@
                                 <th>No.</th>
                                 <th>Id Pinjaman</th>
                                 <th>Nomor Mitra</th>
+                                <th>Angsuran Ke-</th>
                                 <th>Jumlah Angsuran</th>
                                 <th>Tanggal Angsuran</th>
                                 <th>Utang</th>
@@ -49,6 +50,7 @@
                                 <td>{{$no+=1}}</td>
                                 <td>{{$angs->id_pinjaman}}</td>
                                 <td>{{$angs->no_pk}}</td>
+                                <Td>{{++$key}}</td>
                                 <td>Rp.{{$angs->jumlah_angsuran}}</td>
                                 <td>{{$angs->tgl_angsuran}}</td>
                                 <td>Rp.{{$angs->utang}}</td>
@@ -97,19 +99,32 @@
                                 $('#tabel_angsuran').empty()
                             }else{
                                 var no = 1;
+                                var a = 0;
                                 $('#tabel_angsuran').empty();
 
                                 for(let i=0; i<panjang_angsuran; i++){
-                                    var html = `
-                                        <tr>
-                                            <td>${no++}</td>
-                                            <td>${res.angsuran[i].id_pinjaman}</td>
-                                            <td>${res.angsuran[i].no_pk}</td>
-                                            <td>Rp.${res.angsuran[i].jumlah_angsuran}</td>
-                                            <td>${res.angsuran[i].tgl_angsuran}</td>
-                                            <td>Rp.${res.angsuran[i].utang}</td>
-                                        </tr>
-                                    `;
+
+                                    var html;
+
+                                    if(res.angsuran[i].id_pinjaman == res.angsuran[Math.abs(i-1)].id_pinjaman){
+                                        a += 1;
+                                    }else{
+                                        a = 1;
+                                        a += 1;
+                                    }
+
+                                    html = `
+                                            <tr>
+                                                <td>${no++}</td>
+                                                <td>${res.angsuran[i].id_pinjaman}</td>
+                                                <td>${res.angsuran[i].no_pk}</td>
+                                                <td>${a}</td>
+                                                <td>Rp.${res.angsuran[i].jumlah_angsuran}</td>
+                                                <td>${res.angsuran[i].tgl_angsuran}</td>
+                                                <td>Rp.${res.angsuran[i].utang}</td>
+                                            </tr>
+                                        `;
+
                                     $('#tabel_angsuran').append(html);
                                 }
                             }
