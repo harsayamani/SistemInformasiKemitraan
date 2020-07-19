@@ -106,12 +106,17 @@
 
                                     var html;
 
-                                    if(res.angsuran[i].id_pinjaman == res.angsuran[Math.abs(i-1)].id_pinjaman){
-                                        a += 1;
+                                    if(i!=0){
+                                        if(res.angsuran[i].id_pinjaman == res.angsuran[Math.abs(i-1)].id_pinjaman){
+                                            a += 1;
+                                        }else{
+                                            a = 1;
+                                            a += 1;
+                                        }
                                     }else{
                                         a = 1;
-                                        a += 1;
                                     }
+
 
                                     html = `
                                             <tr>
