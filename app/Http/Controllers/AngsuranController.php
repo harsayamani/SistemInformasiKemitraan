@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Angsuran;
 use App\DataMitra;
+use App\Exports\AngsuranExport;
+use App\Pinjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel as FacadesExcel;
 
 class AngsuranController extends Controller
 {
@@ -27,10 +30,17 @@ class AngsuranController extends Controller
         }else{
             $no_pk = $request->no_pk;
             $angsuran = Angsuran::where('no_pk', $no_pk)->where('status', 1)->get();
+            $id_pinjaman = Pinjaman::where('no_pk', $no_pk)->orderBy('created_at', 'desc')->value('id_pinjaman');
 
             return response()->json([
-                'angsuran' => $angsuran
+                'angsuran' => $angsuran,
+                'id_pinjaman' => $id_pinjaman
             ], 200);
         }
+    }
+
+    public function exportExcel($id_pinjaman){
+        $nama = Pinjaman::where('id_pinjaman', $id_pinjaman)->first()->dataMitra->dataProposal->nama_pengaju;
+        return FacadesExcel::download(new AngsuranExport($id_pinjaman), 'Angsuran - '.$nama.'.xlsx');
     }
 }

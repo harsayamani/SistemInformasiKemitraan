@@ -16,8 +16,10 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">Daftar Angsuran</h3>
-                    <br>
+                    <div class="col-md-12">
+                        <h3 class="box-title">Daftar Angsuran </h3>
+                        <br>
+                    </div>
                     <br>
                         <div class="col-md-9">
                             <select class="form-control" id="no_pk" name="no_pk">
@@ -26,6 +28,9 @@
                                 <option value="{{$mit->no_pk}}">{{$mit->dataProposal->nama_pengaju}}</option>
                                 @endforeach
                             </select>
+                            <br>
+                            <div id="unduh">
+                            </div>
                         </div>
                     <br>
                 </div><!-- /.box-header -->
@@ -44,7 +49,7 @@
                             </tr>
                         </thead>
                         <tbody id="tabel_angsuran">
-                            @foreach ($angsuran as $key => $angs)
+                            {{-- @foreach ($angsuran as $key => $angs)
                             @if($angs->tgl_angsuran!=null)
                             <tr>
                                 <td>{{$no+=1}}</td>
@@ -56,7 +61,7 @@
                                 <td>Rp.{{$angs->utang}}</td>
                             </tr>
                             @endif
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                 </div><!-- /.box-body -->
@@ -94,6 +99,16 @@
                             console.log(res.angsuran);
 
                             var panjang_angsuran = res.angsuran.length;
+
+                            var id_pinjaman = res.id_pinjaman;
+
+                            if(id_pinjaman != null){
+                                $('#unduh').html(`<a href="/admin/kelola/angsuran/export/excel/${id_pinjaman}" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-print"></i>&nbsp;
+                                Unduh Excel</a>`)
+                            }else{
+                                $('#unduh').empty()
+                            }
 
                             if(panjang_angsuran < 1){
                                 $('#tabel_angsuran').empty()

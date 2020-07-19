@@ -87,6 +87,8 @@ Route::get('/admin/kelola/angsuran', 'AngsuranController@kelolaAngsuran');
 
 Route::post('/admin/kelola/angsuran/filter', 'AngsuranController@filter');
 
+Route::get('/admin/kelola/angsuran/export/excel/{id_pinjaman}', 'AngsuranController@exportExcel');
+
 //Route FAQ
 
 Route::get('/admin/kelola/faq', 'FAQController@faq');
