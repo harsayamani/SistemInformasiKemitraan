@@ -17,7 +17,7 @@ class DataProposalController extends Controller
         if(!Session::get('loginAdmin')){
             return redirect('/admin/login')->with('alert-danger', 'Anda harus login terlebih dahulu!');
         }else{
-            $proposal = DataProposal::get();
+            $proposal = DataProposal::orderBy('created_at', 'desc')->get();
             return view('admin/kelolaProposal', compact('proposal'));
         }
     }
