@@ -117,6 +117,7 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
+                                <th>Nomor Proposal</th>
                                 <th>Nama Pengaju</th>
                                 <th>Tanggal Pengajuan</th>
                                 <th>Unit Usaha</th>
@@ -131,6 +132,7 @@
                         <tbody>
                             @foreach ($proposal as $prop)
                             <tr>
+                                <td>{{$no+=1}}<td>
                                 <td>{{$prop->no_proposal}}</td>
                                 <td>{{$prop->nama_pengaju}}</td>
                                 <td>{{$prop->tgl_pengajuan}}</td>
