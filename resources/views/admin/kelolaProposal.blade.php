@@ -117,6 +117,7 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
+                                <th>Nomor Proposal</th>
                                 <th>Nama Pengaju</th>
                                 <th>Tanggal Pengajuan</th>
                                 <th>Unit Usaha</th>
